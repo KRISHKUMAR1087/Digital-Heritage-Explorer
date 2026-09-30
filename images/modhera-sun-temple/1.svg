@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <rect width="800" height="500" fill="#FAF5EC"/>
+  <!-- Sun Rays background -->
+  <circle cx="400" cy="160" r="90" fill="#B5502F" opacity="0.9"/>
+  <circle cx="400" cy="160" r="110" fill="none" stroke="#C9A36B" stroke-width="6" stroke-dasharray="10,15"/>
+  
+  <!-- Temple Shikhara & Mandapa Silhouette -->
+  <polygon points="400,100 340,250 460,250" fill="#3B2A1A"/>
+  <rect x="300" y="250" width="200" height="50" fill="#C9A36B"/>
+  
+  <!-- Surya Kunda Stepped Tank -->
+  <polygon points="100,450 700,450 620,300 180,300" fill="#B38D56"/>
+  <!-- Water Reservoir -->
+  <polygon points="260,440 540,440 500,360 300,360" fill="#4A7C59" opacity="0.85"/>
+  
+  <!-- Miniature Shrines -->
+  <rect x="200" y="310" width="30" height="30" fill="#B5502F"/>
+  <rect x="570" y="310" width="30" height="30" fill="#B5502F"/>
+  <rect x="140" y="370" width="35" height="35" fill="#B5502F"/>
+  <rect x="625" y="370" width="35" height="35" fill="#B5502F"/>
+
+  <text x="400" y="480" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#3B2A1A" text-anchor="middle">Modhera Sun Temple &amp; Sacred Surya Kunda</text>
+</svg>

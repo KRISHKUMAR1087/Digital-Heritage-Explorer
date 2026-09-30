@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <rect width="800" height="500" fill="#E8D9C5"/>
+  <!-- Desert background Rann of Kutch -->
+  <rect x="0" y="220" width="800" height="280" fill="#D8B57F"/>
+  <path d="M 0 220 Q 200 180 400 220 Q 600 260 800 220 L 800 500 L 0 500 Z" fill="#C9A36B"/>
+  
+  <!-- Harappan Stone Reservoir Excavation -->
+  <polygon points="120,440 680,440 600,280 200,280" fill="#3B2A1A"/>
+  <!-- Steps descending into reservoir -->
+  <polygon points="220,290 580,290 560,320 240,320" fill="#B5502F"/>
+  <polygon points="250,330 550,330 530,360 270,360" fill="#B5502F"/>
+  <polygon points="280,370 520,370 500,400 300,400" fill="#B5502F"/>
+  
+  <!-- Water in bottom of reservoir -->
+  <rect x="310" y="410" width="180" height="25" fill="#4A7C59"/>
+  
+  <text x="400" y="475" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#FAF5EC" text-anchor="middle">Ancient Indus Valley Stone-Cut Reservoir at Dholavira</text>
+</svg>

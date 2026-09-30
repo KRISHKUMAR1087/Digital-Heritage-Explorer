@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <rect width="800" height="500" fill="#FAF5EC"/>
+  <!-- Multi-storey stepwell perspective -->
+  <polygon points="120,50 680,50 760,450 40,450" fill="#C9A36B"/>
+  
+  <!-- Storey levels -->
+  <rect x="80" y="120" width="640" height="20" fill="#3B2A1A"/>
+  <rect x="110" y="200" width="580" height="20" fill="#3B2A1A"/>
+  <rect x="140" y="280" width="520" height="20" fill="#3B2A1A"/>
+  <rect x="170" y="360" width="460" height="20" fill="#3B2A1A"/>
+  
+  <!-- Light shaft & water basin at bottom -->
+  <rect x="240" y="400" width="320" height="40" fill="#3B7A87"/>
+  <polygon points="350,50 450,50 480,400 320,400" fill="#FFFFFF" opacity="0.2"/>
+  
+  <!-- Pillars on each floor -->
+  <g fill="#B5502F">
+    <rect x="200" y="140" width="16" height="60"/>
+    <rect x="584" y="140" width="16" height="60"/>
+    <rect x="230" y="220" width="16" height="60"/>
+    <rect x="554" y="220" width="16" height="60"/>
+    <rect x="260" y="300" width="16" height="60"/>
+    <rect x="524" y="300" width="16" height="60"/>
+  </g>
+  <text x="400" y="480" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#3B2A1A" text-anchor="middle">Adalaj Stepwell — 5-Storey Subterranean Architecture</text>
+</svg>

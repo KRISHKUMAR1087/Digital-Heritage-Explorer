@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <rect width="800" height="500" fill="#3B2A1A"/>
+  <rect x="60" y="40" width="680" height="420" rx="8" fill="#D8B57F"/>
+  <!-- Islamic Jali / Floral Motif Frame -->
+  <circle cx="400" cy="220" r="140" fill="none" stroke="#B5502F" stroke-width="12"/>
+  <path d="M 400 80 Q 450 170 400 220 Q 350 170 400 80 Z" fill="#B5502F"/>
+  <path d="M 400 360 Q 450 270 400 220 Q 350 270 400 360 Z" fill="#B5502F"/>
+  <path d="M 260 220 Q 350 170 400 220 Q 350 270 260 220 Z" fill="#B5502F"/>
+  <path d="M 540 220 Q 450 170 400 220 Q 450 270 540 220 Z" fill="#B5502F"/>
+  <text x="400" y="435" font-family="'Playfair Display', serif" font-size="20" font-weight="bold" fill="#3B2A1A" text-anchor="middle">Floral &amp; Geometric Solanki Carving Details</text>
+</svg>
