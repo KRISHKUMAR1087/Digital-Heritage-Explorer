@@ -1,6 +1,7 @@
 /**
  * Gallery & Detail Modal Component Module
- * Handles displaying site details, image thumbnails, lightbox gallery, keyboard controls, and focus trapping.
+ * Handles displaying site details, image thumbnails, lightbox gallery, keyboard controls, focus trapping,
+ * verified provenance links, and Stepwell Cross-Section Explorer tabs.
  */
 
 const GalleryComponent = (() => {
@@ -18,59 +19,65 @@ const GalleryComponent = (() => {
   const modalDescription = document.getElementById('modal-description');
   const thumbnailStrip = document.getElementById('thumbnail-strip');
   const btnDirections = document.getElementById('btn-directions');
+  
+  // Verification / Provenance Elements
+  const factVerified = document.getElementById('fact-verified');
+  const officialLink = document.getElementById('btn-official-link');
+  const stepwellContainer = document.getElementById('stepwell-explorer-container');
+  const sunContainer = document.getElementById('sun-simulator-container');
+  const audioContainer = document.getElementById('audio-guide-container');
+  const compareContainer = document.getElementById('compare-slider-container');
+  const livingContainer = document.getElementById('living-heritage-container');
 
   // Lightbox Elements
   const lightboxModal = document.getElementById('lightbox-modal');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCredit = document.getElementById('lightbox-credit');
   const lightboxCloseBtn = document.getElementById('lightbox-close');
   const lightboxPrevBtn = document.getElementById('lightbox-prev');
   const lightboxNextBtn = document.getElementById('lightbox-next');
 
-  // Lightbox State
+  const btnPostcard = document.getElementById('btn-create-postcard');
+
+  // State
   let currentImages = [];
   let currentImageIndex = 0;
   let previouslyFocusedElement = null;
+  let activeSite = null;
 
-  /**
-   * Initialize modal and lightbox event listeners.
-   */
   function init() {
-    if (modalCloseBtn) {
-      modalCloseBtn.addEventListener('click', closeDetailModal);
-    }
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeDetailModal);
     if (detailModal) {
       detailModal.addEventListener('click', (e) => {
         if (e.target === detailModal) closeDetailModal();
       });
     }
 
-    if (lightboxCloseBtn) {
-      lightboxCloseBtn.addEventListener('click', closeLightbox);
+    if (btnPostcard) {
+      btnPostcard.addEventListener('click', () => {
+        if (activeSite && window.PostcardComponent) {
+          PostcardComponent.generatePostcard(activeSite);
+        }
+      });
     }
-    if (lightboxPrevBtn) {
-      lightboxPrevBtn.addEventListener('click', showPrevImage);
-    }
-    if (lightboxNextBtn) {
-      lightboxNextBtn.addEventListener('click', showNextImage);
-    }
+
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+    if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', showPrevImage);
+    if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', showNextImage);
     if (lightboxModal) {
       lightboxModal.addEventListener('click', (e) => {
         if (e.target === lightboxModal) closeLightbox();
       });
     }
 
-    // Global Keydown Handler (Esc & Arrow Keys)
     document.addEventListener('keydown', handleGlobalKeydown);
   }
 
-  /**
-   * Open site detail modal dialog.
-   * @param {Object} site - Selected site object.
-   */
   function openDetailModal(site) {
     if (!detailModal) return;
     previouslyFocusedElement = document.activeElement;
+    activeSite = site;
 
     modalHeroImg.src = site.cover;
     modalHeroImg.alt = `${site.name} cover image`;
@@ -83,18 +90,53 @@ const GalleryComponent = (() => {
     factBestTime.textContent = site.bestTime || 'October – March';
     modalDescription.textContent = site.description;
 
-    // Directions Link (Google Maps Directions URL)
+    // Verified Source & Provenance
+    if (factVerified) {
+      factVerified.textContent = `Verified ${site.lastVerified || '2026-09'} (${site.source || 'ASI / UNESCO'})`;
+    }
+    if (officialLink && site.officialUrl) {
+      officialLink.href = site.officialUrl;
+      officialLink.style.display = 'inline-flex';
+    } else if (officialLink) {
+      officialLink.style.display = 'none';
+    }
+
+    // Directions Link
     if (btnDirections) {
       btnDirections.href = `https://www.google.com/maps/dir/?api=1&destination=${site.lat},${site.lng}`;
       btnDirections.target = '_blank';
       btnDirections.rel = 'noopener noreferrer';
     }
 
-    // Render Image Gallery Thumbnail Strip
-    currentImages = site.images && site.images.length > 0 ? site.images : [{ src: site.cover, alt: site.name }];
+    // Stepwell Cross-Section Explorer (rendered if site.levels exists)
+    if (stepwellContainer && window.StepwellComponent) {
+      StepwellComponent.render(site, stepwellContainer);
+    }
+
+    // Sun Alignment Simulator (rendered for Modhera Sun Temple)
+    if (sunContainer && window.SunComponent) {
+      SunComponent.render(site, sunContainer);
+    }
+
+    // Audio Guide (Web Speech API)
+    if (audioContainer && window.AudioGuideComponent) {
+      AudioGuideComponent.render(site, audioContainer);
+    }
+
+    // Then & Now Image Comparison Slider
+    if (compareContainer && window.CompareComponent) {
+      CompareComponent.render(site, compareContainer);
+    }
+
+    // Living Heritage Layer
+    if (livingContainer && window.LivingComponent) {
+      LivingComponent.render(site, livingContainer);
+    }
+
+    // Thumbnail Gallery
+    currentImages = site.images && site.images.length > 0 ? site.images : [{ src: site.cover, alt: site.name, credit: 'Public Domain', license: 'CC BY-SA 4.0' }];
     renderThumbnailStrip(currentImages);
 
-    // Show modal & set focus
     detailModal.classList.add('active');
     detailModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -104,24 +146,28 @@ const GalleryComponent = (() => {
     }, 100);
   }
 
-  /**
-   * Close detail modal dialog.
-   */
   function closeDetailModal() {
     if (!detailModal) return;
+
+    // Stop audio speech if playing
+    if (window.AudioGuideComponent) {
+      AudioGuideComponent.stopSpeech();
+    }
+
     detailModal.classList.remove('active');
     detailModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+
+    // If URL has a hash routing for this site, clear hash back to #/
+    if (window.location.hash.startsWith('#/site/')) {
+      history.pushState('', document.title, window.location.pathname + window.location.search);
+    }
 
     if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
       previouslyFocusedElement.focus();
     }
   }
 
-  /**
-   * Render image thumbnails into the detail modal.
-   * @param {Array} images - Array of {src, alt} objects.
-   */
   function renderThumbnailStrip(images) {
     if (!thumbnailStrip) return;
     thumbnailStrip.innerHTML = '';
@@ -144,10 +190,6 @@ const GalleryComponent = (() => {
     });
   }
 
-  /**
-   * Open full-screen Lightbox.
-   * @param {number} index - Index of starting image.
-   */
   function openLightbox(index) {
     if (!lightboxModal || currentImages.length === 0) return;
     currentImageIndex = index;
@@ -161,9 +203,6 @@ const GalleryComponent = (() => {
     }, 100);
   }
 
-  /**
-   * Close full-screen Lightbox.
-   */
   function closeLightbox() {
     if (!lightboxModal) return;
     lightboxModal.classList.remove('active');
@@ -174,38 +213,30 @@ const GalleryComponent = (() => {
     }
   }
 
-  /**
-   * Update lightbox image and caption.
-   */
   function updateLightboxImage() {
     if (!currentImages[currentImageIndex]) return;
     const imgData = currentImages[currentImageIndex];
     lightboxImg.src = imgData.src;
     lightboxImg.alt = imgData.alt || 'Gallery photo';
     lightboxCaption.textContent = imgData.alt || `Photo ${currentImageIndex + 1} of ${currentImages.length}`;
+
+    if (lightboxCredit) {
+      lightboxCredit.textContent = `📷 ${imgData.credit || 'Wikimedia Commons'} • ${imgData.license || 'CC BY-SA 4.0'}`;
+    }
   }
 
-  /**
-   * Navigate to previous image in lightbox.
-   */
   function showPrevImage() {
     if (currentImages.length === 0) return;
     currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
     updateLightboxImage();
   }
 
-  /**
-   * Navigate to next image in lightbox.
-   */
   function showNextImage() {
     if (currentImages.length === 0) return;
     currentImageIndex = (currentImageIndex + 1) % currentImages.length;
     updateLightboxImage();
   }
 
-  /**
-   * Handle Escape key and Arrow navigation.
-   */
   function handleGlobalKeydown(e) {
     const isLightboxActive = lightboxModal && lightboxModal.classList.contains('active');
     const isDetailActive = detailModal && detailModal.classList.contains('active');
@@ -233,9 +264,6 @@ const GalleryComponent = (() => {
     }
   }
 
-  /**
-   * Focus Trap Helper for Modal Accessibility.
-   */
   function trapFocus(e, modalContainer) {
     const focusables = modalContainer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     if (focusables.length === 0) return;

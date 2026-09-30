@@ -1,23 +1,46 @@
 /**
  * Main Application Bootstrap Module
- * Initializes data fetching, state management, search/category filtering, image recognition, and mobile view toggling.
+ * Integrates Heritage Trails, Time Travel Slider, Multilingual Support (EN/GU/HI),
+ * Passport Stamps, Tourist Plan-a-Visit Tools, Image Recognition, and Service Worker.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Application State
+  // State
   let allSites = [];
   let currentCategory = 'All';
+  let currentEra = 'All';
   let searchQuery = '';
+  let activeTrailSiteIds = null;
+  let maxTimelineYear = 2000;
+  let filterThisMonthOnly = false;
   let debounceTimer = null;
 
   // DOM References
   const searchInput = document.getElementById('search-input');
   const chipsContainer = document.getElementById('category-chips');
+  const eraChipsContainer = document.getElementById('era-chips');
+  const timelineSlider = document.getElementById('timeline-slider');
+  const timelineYearLabel = document.getElementById('timeline-year-label');
   const mobileToggleListBtn = document.getElementById('btn-view-list');
   const mobileToggleMapBtn = document.getElementById('btn-view-map');
+  const btnThisMonth = document.getElementById('btn-this-month');
 
-  // Initialize Gallery Module Event Listeners
+  // Register Offline Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('[SW] Registered scope:', reg.scope))
+      .catch(err => console.log('[SW] Registration failed:', err));
+  }
+
+  // Initialize Modules
   GalleryComponent.init();
+  PassportComponent.init();
+
+  I18nComponent.init((lang) => {
+    renderCategoryChips(allSites);
+    renderEraChips();
+    applyFilters();
+  });
 
   // Set initial mobile view mode
   document.body.classList.add('mobile-view-list');
@@ -25,16 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch Site Data from data/sites.json
   fetch('data/sites.json')
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return response.json();
     })
     .then(sites => {
       allSites = sites;
 
-      // Render Category Filter Chips
+      // Render Category Chips & Era Chips
       renderCategoryChips(allSites);
+      renderEraChips();
+
+      // Initialize Site Comparison Module
+      if (window.SiteCompareComponent) {
+        SiteCompareComponent.init(allSites);
+      }
 
       // Initialize Leaflet Map
       MapComponent.init(
@@ -43,14 +70,51 @@ document.addEventListener('DOMContentLoaded', () => {
         handleDetailsClick
       );
 
-      // Initialize Image Landmark Recognition Module
+      // Initialize Image Recognition Module
       RecognitionComponent.init(
         allSites,
         handleRecognizedSiteSelect
       );
 
-      // Render Initial Card Grid & Map Markers
+      // Initialize Heritage Trails Module
+      TrailsComponent.init((trailSiteIds) => {
+        activeTrailSiteIds = trailSiteIds;
+        applyFilters();
+      });
+
+      // Initialize Tourist Tools (Near Me & Hidden Gems)
+      TouristToolsComponent.init((userLocation) => {
+        // Location updated, re-apply filters & sort cards by GPS distance
+        applyFilters();
+      });
+
+      // Timeline Slider Listener
+      if (timelineSlider) {
+        timelineSlider.addEventListener('input', (e) => {
+          maxTimelineYear = parseInt(e.target.value, 10);
+          if (timelineYearLabel) {
+            timelineYearLabel.textContent = maxTimelineYear < 0 
+              ? `${Math.abs(maxTimelineYear)} BCE` 
+              : `${maxTimelineYear} AD`;
+          }
+          applyFilters();
+        });
+      }
+
+      // Happening This Month Filter Button Listener
+      if (btnThisMonth) {
+        btnThisMonth.addEventListener('click', () => {
+          filterThisMonthOnly = !filterThisMonthOnly;
+          btnThisMonth.classList.toggle('active', filterThisMonthOnly);
+          applyFilters();
+        });
+      }
+
+      // Initial Render & Hash Routing
       applyFilters();
+
+      window.addEventListener('hashchange', handleHashRouting);
+      handleHashRouting();
 
       // Setup Search Listener with Debounce
       if (searchInput) {
@@ -63,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // Setup Mobile Toggle Listeners
       setupMobileToggle();
     })
     .catch(error => {
@@ -74,32 +137,58 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="empty-state">
             <div class="empty-icon">⚠️</div>
             <h3 class="empty-title">Error Loading Data</h3>
-            <p class="empty-desc">Could not load heritage site data. Please ensure you are running the project on a local HTTP server (e.g., <code>python -m http.server</code>).</p>
+            <p class="empty-desc">Could not load heritage site data. Please serve via local HTTP server (<code>python -m http.server</code>).</p>
           </div>
         `;
       }
     });
 
   /**
-   * Unified Filtering Function
-   * Filters allSites according to search query and category, then updates cards and map markers together.
+   * Unified Filtering & Sorting Function
    */
   function applyFilters() {
-    const filteredSites = allSites.filter(site => {
+    let filteredSites = allSites.filter(site => {
+      // Trail Filter
+      if (activeTrailSiteIds && !activeTrailSiteIds.includes(site.id)) {
+        return false;
+      }
+
       // Category Match
       const matchesCategory = currentCategory === 'All' || site.category === currentCategory;
 
-      // Search Query Match (Name, City, Summary, Description)
+      // Era Match
+      const matchesEra = currentEra === 'All' || site.era === currentEra;
+
+      // Timeline Year Match (site year <= slider year)
+      const matchesTimeline = site.year === undefined || site.year <= maxTimelineYear;
+
+      // Happening This Month Match
+      const matchesThisMonth = !filterThisMonthOnly || (window.LivingComponent && LivingComponent.isHappeningThisMonth(site));
+
+      // Search Query Match (Multilingual)
       const q = searchQuery;
+      const nameStr = (I18nComponent.getSiteText(site, 'name') || '').toLowerCase();
+      const cityStr = (I18nComponent.getSiteText(site, 'city') || '').toLowerCase();
+      const summaryStr = (I18nComponent.getSiteText(site, 'summary') || '').toLowerCase();
+      
       const matchesSearch = !q || (
-        site.name.toLowerCase().includes(q) ||
-        site.city.toLowerCase().includes(q) ||
-        site.summary.toLowerCase().includes(q) ||
-        (site.description && site.description.toLowerCase().includes(q))
+        nameStr.includes(q) ||
+        cityStr.includes(q) ||
+        summaryStr.includes(q)
       );
 
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesEra && matchesTimeline && matchesThisMonth && matchesSearch;
     });
+
+    // If User GPS Location is active, sort by nearest distance
+    const userLoc = TouristToolsComponent.getUserLocation();
+    if (userLoc) {
+      filteredSites.sort((a, b) => {
+        const distA = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, a.lat, a.lng);
+        const distB = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, b.lat, b.lng);
+        return distA - distB;
+      });
+    }
 
     // Update Cards Grid
     CardsComponent.render(
@@ -108,18 +197,50 @@ document.addEventListener('DOMContentLoaded', () => {
       handleDetailsClick
     );
 
-    // Update Map Markers & Bounds
+    // Update Map Markers
     MapComponent.updateMarkers(filteredSites);
   }
 
-  /**
-   * Render category filter chips.
-   * @param {Array} sites - All site objects.
-   */
+  function handleHashRouting() {
+    const hash = window.location.hash;
+    if (!hash || !allSites.length) return;
+
+    if (hash.startsWith('#/site/')) {
+      const siteId = hash.replace('#/site/', '').trim();
+      const targetSite = allSites.find(s => s.id === siteId);
+      if (targetSite) {
+        currentCategory = 'All';
+        currentEra = 'All';
+        searchQuery = '';
+        activeTrailSiteIds = null;
+        if (searchInput) searchInput.value = '';
+        updateChipsActiveUI('All');
+        applyFilters();
+
+        CardsComponent.highlightCard(targetSite.id);
+        MapComponent.flyToSite(targetSite.id, true);
+        GalleryComponent.openDetailModal(targetSite);
+      }
+    } else if (hash.startsWith('#/category/')) {
+      const catName = decodeURIComponent(hash.replace('#/category/', '').trim());
+      currentCategory = catName;
+      updateChipsActiveUI(catName);
+      applyFilters();
+    }
+  }
+
+  function updateChipsActiveUI(categoryName) {
+    if (!chipsContainer) return;
+    const allChips = chipsContainer.querySelectorAll('.chip');
+    allChips.forEach(c => {
+      const isActive = c.textContent === categoryName;
+      c.classList.toggle('active', isActive);
+      c.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
   function renderCategoryChips(sites) {
     if (!chipsContainer) return;
-
-    // Extract unique categories
     const categories = ['All', ...new Set(sites.map(s => s.category))];
     chipsContainer.innerHTML = '';
 
@@ -128,19 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
       chip.className = `chip ${cat === currentCategory ? 'active' : ''}`;
       chip.type = 'button';
       chip.textContent = cat;
-      chip.setAttribute('aria-pressed', cat === currentCategory ? 'true' : 'false');
 
       chip.addEventListener('click', () => {
         currentCategory = cat;
-        // Update active chip UI
-        const allChips = chipsContainer.querySelectorAll('.chip');
-        allChips.forEach(c => {
-          c.classList.remove('active');
-          c.setAttribute('aria-pressed', 'false');
-        });
-        chip.classList.add('active');
-        chip.setAttribute('aria-pressed', 'true');
-
+        updateChipsActiveUI(cat);
+        window.location.hash = cat === 'All' ? '#/' : `#/category/${encodeURIComponent(cat)}`;
         applyFilters();
       });
 
@@ -148,71 +261,56 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /**
-   * Sync Handler: Card Click -> Fly Map to Marker & Highlight Pin
-   */
+  function renderEraChips() {
+    if (!eraChipsContainer) return;
+    const eras = ['All', 'Harappan', 'Mauryan', 'Solanki', 'Sultanate', 'Colonial'];
+    eraChipsContainer.innerHTML = '';
+
+    eras.forEach(era => {
+      const chip = document.createElement('button');
+      chip.className = `chip era-chip ${era === currentEra ? 'active' : ''}`;
+      chip.type = 'button';
+      chip.textContent = era;
+
+      chip.addEventListener('click', () => {
+        currentEra = era;
+        const allEraChips = eraChipsContainer.querySelectorAll('.chip');
+        allEraChips.forEach(c => c.classList.toggle('active', c.textContent === era));
+        applyFilters();
+      });
+
+      eraChipsContainer.appendChild(chip);
+    });
+  }
+
   function handleCardClick(site) {
+    window.location.hash = `#/site/${site.id}`;
     CardsComponent.highlightCard(site.id);
     MapComponent.flyToSite(site.id, true);
 
-    // If in mobile view, switch to map view tab smoothly when card clicked
     if (window.innerWidth <= 768 && document.body.classList.contains('mobile-view-list')) {
       switchToMobileView('map');
       MapComponent.flyToSite(site.id, true);
     }
   }
 
-  /**
-   * Sync Handler: Marker Click -> Highlight & Scroll to Card
-   */
   function handleMarkerClick(siteId) {
+    window.location.hash = `#/site/${siteId}`;
     CardsComponent.highlightCard(siteId);
   }
 
-  /**
-   * Detail Handler: Open Detail Modal & Lightbox
-   */
   function handleDetailsClick(site) {
+    window.location.hash = `#/site/${site.id}`;
     GalleryComponent.openDetailModal(site);
   }
 
-  /**
-   * Photo Recognition Handler: Focus & View Recognized Site
-   */
   function handleRecognizedSiteSelect(site) {
-    // Reset filters to show the site if filtered out
-    currentCategory = 'All';
-    searchQuery = '';
-    if (searchInput) searchInput.value = '';
-    
-    // Refresh active chips UI
-    const allChips = chipsContainer.querySelectorAll('.chip');
-    allChips.forEach(c => {
-      c.classList.toggle('active', c.textContent === 'All');
-    });
-
-    applyFilters();
-
-    // Highlight card & fly map
-    CardsComponent.highlightCard(site.id);
-    MapComponent.flyToSite(site.id, true);
-
-    // Open detail modal
-    setTimeout(() => {
-      GalleryComponent.openDetailModal(site);
-    }, 400);
+    window.location.hash = `#/site/${site.id}`;
   }
 
-  /**
-   * Setup Mobile View Toggle Buttons
-   */
   function setupMobileToggle() {
-    if (mobileToggleListBtn) {
-      mobileToggleListBtn.addEventListener('click', () => switchToMobileView('list'));
-    }
-    if (mobileToggleMapBtn) {
-      mobileToggleMapBtn.addEventListener('click', () => switchToMobileView('map'));
-    }
+    if (mobileToggleListBtn) mobileToggleListBtn.addEventListener('click', () => switchToMobileView('list'));
+    if (mobileToggleMapBtn) mobileToggleMapBtn.addEventListener('click', () => switchToMobileView('map'));
   }
 
   function switchToMobileView(viewMode) {

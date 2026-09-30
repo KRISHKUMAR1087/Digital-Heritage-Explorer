@@ -2,751 +2,814 @@
   {
     "id": "rani-ki-vav",
     "name": "Rani ki Vav",
+    "name_gu": "રાણી કી વાવ",
+    "name_hi": "रानी की वाव",
     "category": "Stepwell",
-    "city": "Patan, Gujarat",
+    "city": "Patan",
+    "city_gu": "પાટણ",
+    "city_hi": "पाटन",
     "lat": 23.8593,
     "lng": 72.1017,
-    "summary": "UNESCO World Heritage subterranean stepwell built in 1063 AD, featuring 7 storeys of over 500 principal carved sculptures.",
-    "description": "Rani ki Vav (The Queen's Stepwell) is an architectural masterpiece located on the banks of the Saraswati River in Patan, Gujarat. Constructed during the reign of the Chaulukya dynasty, it was commissioned by Queen Udayamati in memory of her husband King Bhimdev I in 1063 AD. Designed as an inverted temple highlighting the sanctity of water, it descends through seven subterranean storeys of stepped terraces. The stepwell features over 500 principal sculptures depicting Vishnu avatars (including Dasavatara), apsaras, sadhus, and intricate geometric panels carved into high-relief sandstone.",
+    "year": 1063,
+    "era": "Solanki",
+    "openHour": 8,
+    "closeHour": 18,
+    "summary": "UNESCO World Heritage 11th-century subterranean stepwell constructed by Queen Udayamati, featuring over 500 intricate sculptures.",
+    "summary_gu": "૧૧મી સદીની યુનેસ્કો વર્લ્ડ હેરિટેજ સ્ટેપવેલ જેમાં ૫૦૦ થી વધુ બારીક કોતરણીવાળી મુર્તિઓ આવેલી છે.",
+    "summary_hi": "11वीं शताब्दी की यूनेस्को विश्व धरोहर बावड़ी जिसमें 500 से अधिक बारीक नक्काशीदार मूर्तियां हैं।",
+    "description": "Rani ki Vav (The Queen's Stepwell) is a World Heritage site located on the banks of the Saraswati River in Patan. Built in 1063 AD by Queen Udayamati of the Chaulukya (Solanki) dynasty in memory of King Bhimdev I, it was designed as an inverted temple highlighting the sanctity of water.",
     "period": "11th Century AD (Chaulukya Dynasty)",
     "timings": "8:00 AM – 6:00 PM (Daily)",
     "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
     "bestTime": "October – March",
-    "cover": "images/rani-ki-vav/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Archaeological Survey of India (ASI) & UNESCO World Heritage",
+    "officialUrl": "https://whc.unesco.org/en/list/1098",
+    "cover": "images/rani-ki-vav/1.webp",
     "images": [
       {
-        "src": "images/rani-ki-vav/1.jpg",
-        "alt": "Intricately carved sandstone wall decorations and statues at Rani ki Vav"
+        "src": "images/rani-ki-vav/1.webp",
+        "alt": "Intricately carved sandstone wall decorations and statues at Rani ki Vav",
+        "credit": "Wikimedia Commons / Gujarat Tourism",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/rani-ki-vav/2.jpg",
-        "alt": "Subterranean multi-tiered gallery corridors and carved pillared halls"
+        "src": "images/rani-ki-vav/2.webp",
+        "alt": "Subterranean multi-tiered gallery corridors and carved pillared halls",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "levels": [
+      {
+        "title": "Level 1 — Ground Entrance & Upper Torana Pavilion",
+        "description": "The uppermost storey featuring the stepped corridor entrance and pillared Torana gateways leading down from ground level.",
+        "lookFor": "Ornamental sandstone lintels and the original stepped entry corridor layout (TODO verify original pillar count)."
+      },
+      {
+        "title": "Level 2 — Upper Subterranean Gallery",
+        "description": "First subterranean tier housing carved niches dedicated to celestial apsaras, musicians, and guardian deities.",
+        "lookFor": "High-relief carvings of apsaras applying kajal and holding mirrors."
+      },
+      {
+        "title": "Level 3 — Vishnu Avatar Tier",
+        "description": "A prominent sculptural gallery dedicated to the Dashavatara (ten principal incarnations of Lord Vishnu).",
+        "lookFor": "Exquisite sculptures of Varaha (boar avatar) and Narasimha (lion avatar) standing in high relief."
+      },
+      {
+        "title": "Level 4 — Central Multi-Storey Pillared Corridor",
+        "description": "The central pavilion hall displaying multi-tiered stone columns designed to support the immense earth pressure.",
+        "lookFor": "Intricate geometric friezes and brackets supporting the upper stone beams (TODO verify exact gallery depth)."
+      },
+      {
+        "title": "Level 5 — Sacred Sheshashayi Vishnu Gallery",
+        "description": "A deep subterranean gallery housing sacred relief panels directly associated with the water sanctum.",
+        "lookFor": "Large relief panel of Lord Vishnu reclining on the thousand-headed serpent Shesha (Sheshashayi Vishnu)."
+      },
+      {
+        "title": "Level 6 — Lower Well Shaft Corridor",
+        "description": "Penultimate subterranean level immediately above the deep circular well pit.",
+        "lookFor": "Refined geometric stone lattices and brackets engineered for structural weight distribution."
+      },
+      {
+        "title": "Level 7 — Deepest Circular Well Pit & Water Reservoir",
+        "description": "The lowest point of the stepwell featuring the 28-meter deep circular stone well shaft.",
+        "lookFor": "Circular stone wall masonry descending into the subterranean water table (TODO verify exact well shaft diameter)."
+      }
+    ],
+    "story": {
+      "en": "Welcome to Rani ki Vav, the Queen's Stepwell in Patan. Built in 1063 AD by Queen Udayamati in memory of King Bhimdev I of the Solanki dynasty, this subterranean masterpiece is designed as an inverted temple. Descending seven storeys into the earth, it holds over 500 major sculptures of Lord Vishnu, celestial apsaras, and guardian deities. Submerged under Saraswati river silt for centuries, its sandstones were preserved in pristine detail until archaeological excavation restored it to the world.",
+      "gu": "પાટણમાં આવેલી રાણી કી વાવમાં આપનું સ્વાગત છે. સોલંકી વંશના રાજા ભીમદેવ પહેલાની યાદમાં રાણી ઉદયમતી દ્વારા ૧૦૬૩ માં બંધાવવામાં આવેલી આ વાવ જમીનની અંદર ઊંધા મંદિર આકારે કંડારેલી સ્થાપત્યની ઉત્કૃષ્ટ રચના છે. સાત માળ ઊંડે ઊતરતી આ વાવમાં ભગવાન વિષ્ણુ, અપ્સરાઓ અને દેવતાઓની ૫૦૦ થી વધુ અદ્ભુત મુર્તિઓ કોતરેલી છે. સદીઓ સુધી સરસ્વતી નદીના પૂરમાં દટાયેલી રહેવાને કારણે તેના પથ્થરો આજે પણ સુરક્ષિત રહેલા છે.",
+      "hi": "पाटन की रानी की वाव में आपका स्वागत है। 1063 ईस्वी में सोलंकी राजवंश के राजा भीमदेव प्रथम की याद में रानी उदयामती द्वारा निर्मित यह बावड़ी एक उल्टे मंदिर के रूप में बनाई गई है। सात मंजिलों में गहराई तक जाती इस वाव में भगवान विष्णु, अप्सराओं और देवताओं की 500 से अधिक मूर्तियां उकेरी गई हैं। सदियों तक सरस्वती नदी की गाद में दबे रहने के कारण इसके बलुआ पत्थर आज भी सुरक्षित हैं।"
+    },
+    "historic": {
+      "src": "TODO add image",
+      "year": "c. 1890",
+      "credit": "Archaeological Survey of India Archives (TODO verify)",
+      "license": "Public Domain (Pre-1923)"
+    },
+    "living": [
+      {
+        "type": "Craft",
+        "name": "Patan Patola Double Ikat Weaving",
+        "note": "Traditional silk weaving dating back to the Solanki era. Salvi artisan family workshops operating in Patan. (TODO verify loom visit hours)",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Maru-Gurjara (Solanki)",
+    "builder": "Queen Udayamati",
+    "material": "Sandstone & Brick",
+    "unesco": true
   },
   {
     "id": "modhera-sun-temple",
     "name": "Modhera Sun Temple",
+    "name_gu": "મોઢેરા સૂર્ય મંદિર",
+    "name_hi": "मोढेरा सूर्य मंदिर",
     "category": "Temple",
-    "city": "Modhera, Gujarat",
+    "city": "Modhera",
+    "city_gu": "મોઢેરા",
+    "city_hi": "मोढेरा",
     "lat": 23.5835,
     "lng": 72.1331,
-    "summary": "Solanki architectural triumph dedicated to Sun God Surya, with 108 miniature shrines around the Surya Kunda tank.",
-    "description": "Built in 1026–27 AD by King Bhima I of the Solanki dynasty, the Modhera Sun Temple is a monument of mathematical and astrological precision. Aligned to the geographic line of the Tropic of Cancer, it comprises three aligned structures: Surya Kunda (a stepped water tank with 108 miniature shrines), Sabha Mandapa (assembly hall supported by 52 intricately carved pillars symbolizing the weeks of a year), and Guda Mandapa (sanctum sanctorum engineered so sunrise during equinoxes illuminated the golden statue of Surya).",
+    "year": 1026,
+    "era": "Solanki",
+    "openHour": 7,
+    "closeHour": 18,
+    "summary": "Solanki architectural triumph dedicated to Sun God Surya, featuring 108 miniature shrines along the Surya Kunda tank.",
+    "summary_gu": "સૂર્ય દેવને સમર્પિત ૧૧મી સદીનું સોલંકી સ્થાપત્ય જેમાં ૧૦૮ નાના મંદિરોવાળો સૂર્ય કુંડ આવેલ છે.",
+    "summary_hi": "सूर्य देव को समर्पित 11वीं शताब्दी का सोलंकी स्थापत्य जिसमें 108 लघु मंदिरों वाला सूर्य कुंड है।",
+    "description": "Constructed in 1026–27 AD by King Bhima I of the Solanki dynasty, the Sun Temple at Modhera is set along the Pushpavati River.",
     "period": "11th Century AD (1026 AD)",
     "timings": "7:00 AM – 6:00 PM (Daily)",
     "entryFee": "₹25 (Indian citizens) / ₹300 (Foreign nationals)",
     "bestTime": "October – March (Sun Temple Dance Festival in January)",
-    "cover": "images/modhera-sun-temple/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Archaeological Survey of India (ASI)",
+    "officialUrl": "https://en.wikipedia.org/wiki/Sun_Temple,_Modhera",
+    "cover": "images/modhera-sun-temple/1.webp",
     "images": [
       {
-        "src": "images/modhera-sun-temple/1.jpg",
-        "alt": "Carved stone pillars of Sabha Mandap at Modhera Sun Temple"
+        "src": "images/modhera-sun-temple/1.webp",
+        "alt": "Carved stone pillars of Sabha Mandap at Modhera Sun Temple",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/modhera-sun-temple/2.jpg",
-        "alt": "Architectural carvings inside Guda Mandap sanctum hall"
+        "src": "images/modhera-sun-temple/2.webp",
+        "alt": "Architectural carvings inside Guda Mandap sanctum hall",
+        "credit": "Wikimedia Commons / Gujarat Tourism",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to the Sun Temple at Modhera, built in 1026 AD by King Bhima I of the Solanki dynasty. Set along the Pushpavati River, this temple is designed so that during the Vernal and Autumnal Equinoxes, the first golden rays of the rising sun pass through the Torana arches, across the 52-pillared Sabha Mandapa, and directly illuminate the golden sanctum. Step along the Surya Kunda, a magnificent stepped water tank lined with 108 miniature shrines.",
+      "gu": "મોઢેરા સૂર્ય મંદિરમાં આપનું સ્વાગત છે. સોલંકી વંશના રાજા ભીમદેવ પહેલા દ્વારા ૧૦૨૬ માં પુષ્પાવતી નદી કિનારે આ મંદિરનું નિર્માણ કરાયું હતું. આ મંદિર એ રીતે રચાયેલું છે કે વિષુવવૃત્તીય દિન (ઇક્વિનોક્સ) પર ઊગતા સૂર્યનું પહેલું કિરણ ૫૨ સ્તંભોવાળા સભા મંડપમાંથી પસાર થઈને સીધું ગર્ભગૃહમાં પ્રવેશે છે. મંદિર સામે આવેલો સૂર્યકુંડ ૧૦૮ નાના મંદિરોથી સુશોભિત છે.",
+      "hi": "मोढेरा सूर्य मंदिर में आपका स्वागत है। 1026 ईस्वी में सोलंकी वंश के राजा भीम प्रथम द्वारा पुष्पावती नदी के तट पर निर्मित यह मंदिर स्थापत्य का अद्भुत नमूना है। यह मंदिर इस तरह संरेखित है कि विषुव (इक्विनोक्स) के दिन सूर्य की पहली किरणें सभा मंडप से होती हुई सीधे गर्भगृह को आलोकित करती हैं। सूर्य कुंड के चारों ओर 108 लघु मंदिर बने हुए हैं।"
+    },
+    "historic": {
+      "src": "TODO add image",
+      "year": "c. 1886",
+      "credit": "Henry Cousens / ASI Western Circle (TODO verify)",
+      "license": "Public Domain (Pre-1923)"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Uttarardh Mahotsav (Modhera Dance Festival)",
+        "note": "Annual 3-day classical dance festival held against the illuminated backdrop of the Sun Temple every January.",
+        "months": [
+          1
+        ]
+      }
+    ],
+    "style": "Chaulukya (Solanki)",
+    "builder": "King Bhima I",
+    "material": "Golden Sandstone",
+    "unesco": false
   },
   {
     "id": "adalaj-stepwell",
     "name": "Adalaj Stepwell",
+    "name_gu": "અડાલજની વાવ",
+    "name_hi": "अडालज की बावड़ी",
     "category": "Stepwell",
-    "city": "Adalaj, Gujarat",
+    "city": "Adalaj",
+    "city_gu": "અડાલજ",
+    "city_hi": "अडાલજ",
     "lat": 23.1667,
     "lng": 72.5801,
-    "summary": "Five-storey deep sandstone stepwell constructed in 1498, harmonizing Hindu Solanki motifs with Islamic stone jali craft.",
-    "description": "Adalaj Stepwell (Adalaj ni Vav) was commissioned in 1498 AD by Queen Rudabai in memory of her husband Rana Veer Singh. Built five storeys deep into the earth, it provided cool relief for travelers and locals. The structure features an octagonal well opening at the bottom, stone pillars carved with mythological friezes, erotic sculptures, flowers, and fine Islamic geometric screens (jalis).",
+    "year": 1498,
+    "era": "Sultanate",
+    "openHour": 8,
+    "closeHour": 18,
+    "summary": "Five-storey deep sandstone stepwell constructed in 1498, harmonizing Solanki stone motifs with Islamic jali craft.",
+    "summary_gu": "૧૪૯૮માં બનેલી ૫ માળ ઊંડી વાવ જે હિન્દુ અને ઇસ્લામિક સ્થાપત્ય શૈલીનો અદ્ભુત સંગમ છે.",
+    "summary_hi": "1498 में बनी 5 मंजिल गहरी बावड़ी जो हिंदू और इस्लामिक वास्तुकला शैली का अद्भुत संगम है।",
+    "description": "Adalaj Stepwell (Adalaj ni Vav) was commissioned in 1498 AD by Queen Rudabai in memory of her husband Rana Veer Singh. Built five storeys deep into the earth, it provided cool sanctuary for travelers.",
     "period": "15th Century AD (1498 AD)",
     "timings": "8:00 AM – 6:00 PM (Daily)",
     "entryFee": "Free entry",
     "bestTime": "November – February",
-    "cover": "images/adalaj-stepwell/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Archaeological Survey of India (ASI)",
+    "officialUrl": "https://en.wikipedia.org/wiki/Adalaj_Stepwell",
+    "cover": "images/adalaj-stepwell/1.webp",
     "images": [
       {
-        "src": "images/adalaj-stepwell/1.jpg",
-        "alt": "Subterranean view of Adalaj stepwell staircase and carved balconies"
+        "src": "images/adalaj-stepwell/1.webp",
+        "alt": "Subterranean view of Adalaj stepwell staircase and carved balconies",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/adalaj-stepwell/2.jpg",
-        "alt": "Perspective view down five storeys of sandstone pillars"
+        "src": "images/adalaj-stepwell/2.webp",
+        "alt": "Perspective view down five storeys of sandstone pillars",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "levels": [
+      {
+        "title": "Level 1 — Top Pavilion & Three-Way Entrance Landing",
+        "description": "The main ground-level entry pavilion where three staircases converge onto an open landing balcony.",
+        "lookFor": "Carved stone lintels and Kalpavriksha (tree of life) motifs at the entry."
+      },
+      {
+        "title": "Level 2 — Second Storey Gallery",
+        "description": "First subterranean gallery featuring stone columns carved with floral patterns and friezes.",
+        "lookFor": "Geometric wall friezes and carved stone brackets supporting upper beams."
+      },
+      {
+        "title": "Level 3 — Central Octagonal Light Shaft",
+        "description": "An octagonal opening engineered to allow sunlight and fresh air to descend while maintaining cool underground temperatures.",
+        "lookFor": "Natural light well shaft and temperature drop gradient (TODO verify exact microclimate temperature delta)."
+      },
+      {
+        "title": "Level 4 — Fourth Storey Pillared Balcony",
+        "description": "Deep gallery containing detailed stone carvings of musicians, dancers, and women churning buttermilk.",
+        "lookFor": "Friezes of village life, musicians, and ornamental elephant processions."
+      },
+      {
+        "title": "Level 5 — Subterranean Water Basin & Octagonal Well",
+        "description": "The lowest level opening into the octagonal water well shaft at the base of the stepwell.",
+        "lookFor": "The deep octagonal well pool and structural stone foundation pillars at water level."
+      }
+    ],
+    "story": {
+      "en": "Welcome to Adalaj Stepwell, constructed in 1498 AD by Queen Rudabai in memory of Rana Veer Singh. Descending five storeys underground, this sandstone structure harmonizes Hindu Solanki floral motifs with Islamic geometric jali carvings. Designed as a cool retreat for weary travelers and caravans, the underground galleries maintain a temperature five degrees cooler than the scorching summer air above.",
+      "gu": "અડાલજની વાવમાં આપનું સ્વાગત છે. ૧૪૯૯ માં રાણી રુદાબાઈ દ્વારા પોતાના પતિ રાણા વીરસિંહની સ્મૃતિમાં આ વાવ બંધાવવામાં આવી હતી. પાંચ માળ ઊંડી આ સુંદર વાવ હિન્દુ અને ઇસ્લામિક સ્થાપત્ય શૈલીનો અદ્ભુત સંગમ છે. મુસાફરો અને વેપારીઓ માટે વિશ્રામસ્થળ તરીકે બનેલી આ વાવમાં બહારના તાપમાન કરતાં ૫ ડિગ્રી સેલ્સિયસ જેટલી વધુ ઠંડક રહે છે.",
+      "hi": "अडालज की बावड़ी में आपका स्वागत है। 1498 ईस्वी में रानी रूदाबाई द्वारा अपने पति राणा वीर सिंह की स्मृति में निर्मित यह 5 मंजिल गहरी बावड़ी हिंदू और इस्लामिक स्थापत्य शैली का अनूठा संगम है। यात्रियों के विश्राम के लिए बनाई गई यह बावड़ी ऊपर के गर्म तापमान की तुलना में 5 डिग्री अधिक ठंडी रहती है।"
+    },
+    "historic": {
+      "src": "TODO add image",
+      "year": "c. 1910",
+      "credit": "British Library Oriental and India Office Collections (TODO verify)",
+      "license": "Public Domain (Pre-1923)"
+    },
+    "living": [
+      {
+        "type": "Craft",
+        "name": "Bandhani & Mirror-Work Embroidery",
+        "note": "Local artisan tie-dye Bandhani and embroidery stalls around Adalaj and Gandhinagar village markets.",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Solanki-Islamic Fusion",
+    "builder": "Queen Rudabai",
+    "material": "Sandstone",
+    "unesco": false
   },
   {
     "id": "sarkhej-roza",
     "name": "Sarkhej Roza",
+    "name_gu": "સરખેજ રોઝા",
+    "name_hi": "सरखेज रोजा",
     "category": "Mosque & Complex",
-    "city": "Ahmedabad, Gujarat",
+    "city": "Ahmedabad",
+    "city_gu": "અમદાવાદ",
+    "city_hi": "अहमदाबाद",
     "lat": 22.9972,
     "lng": 72.5022,
+    "year": 1445,
+    "era": "Sultanate",
+    "openHour": 9,
+    "closeHour": 18,
     "summary": "Known as the 'Acropolis of Ahmedabad', a 15th-century Sufi saint mausoleum and royal lake pavilion complex.",
-    "description": "Sarkhej Roza is an architectural complex dedicated to Sufi saint Shaikh Ahmed Ganj Baksh. Commissioned during the Gujarat Sultanate (1445–1451 AD) by Sultan Muhammad Shah and completed by Sultan Mahmud Begada, the complex encompasses a grand mosque, mausoleums, royal palace, and summer pavilions surrounding a 17-acre artificial lake.",
+    "summary_gu": "અમદાવાદનો એક્રોપોલિસ તરીકે જાણીતો ૧૫મી સદીનો સૂફી સંત મકબરો અને મહેલ સંકુલ.",
+    "summary_hi": "अहमदाबाद का एक्रोपोलिस कहा जाने वाला 15वीं सदी का सूफी संत मकबरा और झील महल परिसर।",
+    "description": "Sarkhej Roza is an architectural complex dedicated to Sufi saint Shaikh Ahmed Ganj Baksh.",
     "period": "15th Century AD (1445 AD)",
     "timings": "9:00 AM – 6:00 PM (Daily)",
     "entryFee": "Free entry",
     "bestTime": "October – March",
-    "cover": "images/sarkhej-roza/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Sarkhej Roza Committee & ASI",
+    "officialUrl": "https://en.wikipedia.org/wiki/Sarkhej_Roza",
+    "cover": "images/sarkhej-roza/1.webp",
     "images": [
       {
-        "src": "images/sarkhej-roza/1.jpg",
-        "alt": "Reflecting pool and arched pavilions of Sarkhej Roza complex"
+        "src": "images/sarkhej-roza/1.webp",
+        "alt": "Reflecting pool and arched pavilions of Sarkhej Roza complex",
+        "credit": "Wikimedia Commons / Gujarat Tourism",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/sarkhej-roza/2.jpg",
-        "alt": "Intricate stone jali windows and inner court arches"
+        "src": "images/sarkhej-roza/2.webp",
+        "alt": "Intricate stone jali windows and inner court arches",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Sarkhej Roza, known as the Acropolis of Ahmedabad. Constructed in the 15th century, this royal complex surrounds a vast 17-acre artificial lake. Dedicated to Sufi saint Shaikh Ahmed Ganj Baksh, it includes grand mausoleums, central mosques, and royal summer palaces built by Sultan Ahmed Shah and Sultan Mahmud Begada, showcasing delicate stone lattice jali work.",
+      "gu": "સરખેજ રોઝામાં આપનું સ્વાગત છે. અમદાવાદના એક્રોપોલિસ તરીકે જાણીતું આ સૂફી સંત શેખ અહમદ ગંજ બક્ષનું મકબરો અને મહેલ સંકુલ ૧૫મી સદીમાં સલ્તનત યુગ દરમિયાન બંધાયું હતું. ૧૭ એકરમાં ફેલાયેલા વિશાળ તળાવ કિનારે આવેલા આ રોઝામાં બારીક પથ્થરની જાળીઓ, રોયલ મહેલો અને મસ્જિદો આવેલી છે.",
+      "hi": "सरखेज रोजा में आपका स्वागत है। अहमदाबाद का एक्रोपोलिस कहा जाने वाला यह 15वीं सदी का सूफी संत शेख अहमद गंज बख्श का मकबरा परिसर है। 17 एकड़ में फैली कृत्रिम झील के किनारे निर्मित इस परिसर में राजसी मकबरे, मस्जिदें और ग्रीष्मकालीन महल बने हैं जो पत्थर की नक्काशीदार जाली के काम के लिए प्रसिद्ध हैं।"
+    },
+    "historic": {
+      "src": "TODO add image",
+      "year": "c. 1866",
+      "credit": "Colonel Thomas Biggs / ASI Photographic Archive (TODO verify)",
+      "license": "Public Domain (Pre-1923)"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Annual Urs & Sufi Qawwali Evening",
+        "note": "Devotional Sufi music and qawwali performances at the mausoleum of Shaikh Ahmed Ganj Baksh.",
+        "months": [
+          1,
+          2,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Indo-Islamic Sultanate",
+    "builder": "Sultan Ahmed Shah & Mahmud Begada",
+    "material": "Sandstone & Marble",
+    "unesco": false
   },
   {
     "id": "champaner-pavagadh",
     "name": "Champaner-Pavagadh Archaeological Park",
+    "name_gu": "ચાંપાનેર-પાવાગઢ પુરાતત્વીય પાર્ક",
+    "name_hi": "चांपानेर-पावागढ़ पुरातत्व पार्क",
     "category": "Fort & Ruins",
-    "city": "Panchmahal, Gujarat",
+    "city": "Panchmahal",
+    "city_gu": "પંચમહાલ",
+    "city_hi": "पंचमहल",
     "lat": 22.4842,
-    "lng": 73.5350,
+    "lng": 73.535,
+    "year": 1500,
+    "era": "Sultanate",
+    "openHour": 8.5,
+    "closeHour": 17,
     "summary": "UNESCO World Heritage site featuring Chalcolithic ruins, Pavagadh hill fort, and pristine 16th-century Sultanate architecture.",
-    "description": "Champaner-Pavagadh is an extensive UNESCO World Heritage landscape spanning from the 8th to 16th centuries. It includes prehistoric sites, Hindu fortresses atop Pavagadh Hill, and the ruined capital city of Champaner built by Sultan Mahmud Begada. Major monuments include the Jama Masjid with 30-meter high minarets, Kevada Masjid, Nagina Masjid, and fortified military gateways.",
+    "summary_gu": "યુનેસ્કો હેરિટેજ સાઇટ જેમાં પાવાગઢનો કિલ્લો અને ૧૬મી સદીની જામા મસ્જિદ આવેલી છે.",
+    "summary_hi": "यूनेस्को विश्व धरोहर स्थल जिसमें पावागढ़ का किला और 16वीं सदी की जामा मस्जिद स्थित है।",
+    "description": "Champaner-Pavagadh is an extensive UNESCO World Heritage landscape.",
     "period": "8th – 16th Century AD",
     "timings": "8:30 AM – 5:00 PM (Daily)",
     "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
     "bestTime": "October – March",
-    "cover": "images/champaner-pavagadh/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "UNESCO World Heritage & ASI",
+    "officialUrl": "https://whc.unesco.org/en/list/1101",
+    "cover": "images/champaner-pavagadh/1.webp",
     "images": [
       {
-        "src": "images/champaner-pavagadh/1.jpg",
-        "alt": "Grand minarets and courtyard of Jami Masjid Champaner"
+        "src": "images/champaner-pavagadh/1.webp",
+        "alt": "Grand minarets and courtyard of Jami Masjid Champaner",
+        "credit": "Wikimedia Commons / UNESCO",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/champaner-pavagadh/2.jpg",
-        "alt": "Helical stone stepwell inside Champaner archaeological park"
+        "src": "images/champaner-pavagadh/2.webp",
+        "alt": "Helical stone stepwell inside Champaner archaeological park",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Champaner-Pavagadh Archaeological Park, a UNESCO World Heritage landscape spanning prehistoric sites, Hindu hill fort ruins on Pavagadh, and a pristine 16th-century Islamic capital. Explore the Jami Masjid with its grand central dome and soaring minarets, surrounded by ancient stepwells, fortifications, and Kalika Mata temple atop Pavagadh hill.",
+      "gu": "ચાંપાનેર-પાવાગઢ પુરાતત્વીય પાર્કમાં આપનું સ્વાગત છે. યુનેસ્કો હેરિટેજ સ્થળ તરીકે અંકિત આ વિસ્તારમાં પાવાગઢ ડુંગર પરના પ્રાચીન કિલ્લા અને ૧૬મી સદીની સુલતાન મહમૂદ બેગડા દ્વારા વસાવેલી રાજધાનીના અવશેષો છે. વિશાળ ઘુમ્મટ અને મિનારા ધરાવતી જામા મસ્જિદ તથા પહાડ પરનું કાલિકા માતાજીનું મંદિર અહીંના મુખ્ય આકર્ષણો છે.",
+      "hi": "चांपानेर-पावागढ़ पुरातत्व पार्क में आपका स्वागत है। यह यूनेस्को विश्व धरोहर स्थल प्रागैतिहासिक अवशेषों, पावागढ़ की पहाड़ी के किले और 16वीं सदी की सुल्तान महमूद बेगड़ा की राजधानी का अद्भुत संगम है। विशाल गुंबद और मीनारों वाली जामा मस्जिद तथा पहाड़ी पर स्थित कालिका माता मंदिर यहां के मुख्य आकर्षण हैं।"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Pavagadh Navratri Pilgrimage",
+        "note": "Lakhs of pilgrims climb Pavagadh hill for Kalika Mata temple worship and evening Garba dances during Navratri.",
+        "months": [
+          9,
+          10
+        ]
+      }
+    ],
+    "style": "Prehistoric to Sultanate",
+    "builder": "Chavda Rajputs & Mahmud Begada",
+    "material": "Stone Masonry & Brick",
+    "unesco": true
   },
   {
     "id": "dholavira",
     "name": "Dholavira: Harappan City",
+    "name_gu": "ધોળાવીરા: હડપ્પન શહેર",
+    "name_hi": "धोलावीरा: हड़प्पा शहर",
     "category": "Fort & Ruins",
-    "city": "Kutch, Gujarat",
+    "city": "Kutch",
+    "city_gu": "કચ્છ",
+    "city_hi": "कच्छ",
     "lat": 23.8863,
     "lng": 70.2106,
+    "year": -2600,
+    "era": "Harappan",
+    "openHour": 6,
+    "closeHour": 18,
     "summary": "5,000-year-old Indus Valley metropolis on Khadir Bet featuring stone masonry, water reservoirs, and the 10-sign Indus script.",
-    "description": "Dholavira, located in the Great Rann of Kutch, is one of the five largest Harappan (Indus Valley Civilization) metropolises, occupied from 2600 to 1900 BCE. A UNESCO World Heritage site, it exhibits sophisticated urban planning divided into a fortified Citadel, Middle Town, and Lower Town, featuring massive stone-cut water reservoirs and the famous ten-sign Indus script signboard.",
+    "summary_gu": "૫,૦૦૦ વર્ષ જૂનું સિંધુ ખીણની સભ્યતાનું મહાનગર જેમાં વિશાળ પથ્થરના જળાશયો આવેલા છે.",
+    "summary_hi": "5,000 साल पुराना सिंधु घाटी सभ्यता का महानगर जिसमें विशाल पत्थरों के जलाशय बने हैं।",
+    "description": "Dholavira, located in the Great Rann of Kutch, is one of the five largest Harappan metropolises.",
     "period": "c. 2600 – 1900 BCE (Bronze Age)",
     "timings": "6:00 AM – 6:00 PM (Daily)",
     "entryFee": "Free entry (Museum ticket ₹10)",
     "bestTime": "November – February",
-    "cover": "images/dholavira/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "UNESCO World Heritage & ASI",
+    "officialUrl": "https://whc.unesco.org/en/list/1645",
+    "cover": "images/dholavira/1.webp",
     "images": [
       {
-        "src": "images/dholavira/1.jpg",
-        "alt": "Ancient stone-cut reservoir structures at Harappan Dholavira"
+        "src": "images/dholavira/1.webp",
+        "alt": "Ancient stone-cut reservoir structures at Harappan Dholavira",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/dholavira/2.jpg",
-        "alt": "Excavated game board and Indus Valley artifacts at Dholavira"
+        "src": "images/dholavira/2.webp",
+        "alt": "Excavated game board and Indus Valley artifacts at Dholavira",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Dholavira, a 5,000-year-old Harappan metropolis located on Khadir Bet in the Great Rann of Kutch. Flourishing between 2600 and 1900 BCE, Dholavira features sophisticated urban planning, massive stone-cut water reservoirs, underground storm drains, a ceremonial stadium, and the famous 10-sign Indus script signboard.",
+      "gu": "ધોળાવીરા હડપ્પન શહેરમાં આપનું સ્વાગત છે. કચ્છના રણમાં ખદીરબેટ પર આવેલું આ ૫,૦૦૦ વર્ષ જૂનું સિંધુ ખીણની સભ્યતાનું મહાનગર ઈ.સ. પૂર્વે ૨૬૦૦ થી ૧૯૦૦ દરમિયાન ધમધમતું હતું. અહીં પથ્થરથી કાપેલા વિશાળ જળાશયો, નગર આયોજન, ભૂગર્ભ ગટર વ્યવસ્થા અને ૧૦ સાઇનવાળું સાઇનબોર્ડ મળી આવ્યું છે.",
+      "hi": "धौलावीरा में आपका स्वागत है। कच्छ के महान रण में खदीर बेट पर स्थित यह 5,000 साल पुराना हड़प्पा महानगर ईसा पूर्व 2600 से 1900 के बीच समृद्ध था। धोलावीरा अपनी उन्नत नगर योजना, विशाल पत्थरों से तराशे गए जलाशयों, भूमिगत जल निकासी प्रणाली और 10-चिह्नों वाले सिंधु लिपि साइनबोर्ड के लिए प्रसिद्ध है।"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Rann Utsav & Kutchi Artisan Fair",
+        "note": "Cultural festival showcasing Kutchi folk music, Rogan art, and mud-mirror work (Lippan Kaam).",
+        "months": [
+          1,
+          2,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Harappan Dry Stone Masonry",
+    "builder": "Indus Valley Civilization",
+    "material": "Dressed Sandstone & Limestone",
+    "unesco": true
   },
   {
     "id": "somnath-temple",
     "name": "Somnath Temple",
+    "name_gu": "સોમનાથ મંદિર",
+    "name_hi": "सोमनाथ मंदिर",
     "category": "Temple",
-    "city": "Prabhas Patan, Gujarat",
-    "lat": 20.8880,
+    "city": "Prabhas Patan",
+    "city_gu": "પ્રભાસ પાટણ",
+    "city_hi": "प्रभास पाटन",
+    "lat": 20.888,
     "lng": 70.4012,
+    "year": 1951,
+    "era": "Colonial",
+    "openHour": 6,
+    "closeHour": 21.5,
     "summary": "The first of the twelve sacred Jyotirlinga shrines of Lord Shiva, rebuilt in Maru-Gurjara style on the Arabian Sea coast.",
-    "description": "Somnath Temple is one of the most revered pilgrimage sites in India, situated at Triveni Sangam in Prabhas Patan near Veraval. Referred to in ancient texts as 'the Shrine Eternal', the present temple was constructed in 1951 in the Kailash Mahameru Prasad style under Sardar Vallabhbhai Patel.",
+    "summary_gu": "ભગવાન શિવના ૧૨ જ્યોતિર્લિંગોમાં પ્રથમ પવિત્ર સોમનાથ મંદિર.",
+    "summary_hi": "भगवान शिव के 12 ज्योतिर्लिंगों में प्रथम पवित्र सोमनाथ मंदिर।",
+    "description": "Somnath Temple is one of the most revered pilgrimage sites in India.",
     "period": "Ancient Origins (Current structure 1951 AD)",
     "timings": "6:00 AM – 9:30 PM (Daily)",
     "entryFee": "Free entry",
     "bestTime": "October – March",
-    "cover": "images/somnath-temple/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Shree Somnath Trust & Gujarat Tourism",
+    "officialUrl": "https://somnath.org/",
+    "cover": "images/somnath-temple/1.webp",
     "images": [
       {
-        "src": "images/somnath-temple/1.jpg",
-        "alt": "Somnath Temple facade overlooking the sea"
+        "src": "images/somnath-temple/1.webp",
+        "alt": "Somnath Temple facade overlooking the sea",
+        "credit": "Wikimedia Commons / Somnath Trust",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/somnath-temple/2.jpg",
-        "alt": "Aerial coastal view of Somnath Jyotirlinga temple complex"
+        "src": "images/somnath-temple/2.webp",
+        "alt": "Aerial coastal view of Somnath Jyotirlinga temple complex",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to the sacred Somnath Temple, the first among the twelve holy Jyotirlinga shrines of Lord Shiva, situated right on the shore of the Arabian Sea. Rebuilt in 1951 in traditional Maru-Gurjara architectural style under Sardar Vallabhbhai Patel, the temple features a 155-foot high spire and the historic Baan Stambha arrow pillar pointing straight to Antarctica.",
+      "gu": "પવિત્ર સોમનાથ મંદિરમાં આપનું સ્વાગત છે. અરબી સમુદ્રના કિનારે આવેલું આ મંદિર ભગવાન શિવના ૧૨ જ્યોતિર્લિંગોમાં સર્વપ્રથમ માનવામાં આવે છે. સરદાર વલ્લભભાઈ પટેલના નેતૃત્વમાં ૧૯૫૧ માં મારુ-ગુર્જર શૈલીમાં નિર્માણ પામેલું આ ભવ્ય મંદિર ૧૫૫ ફૂટ ઊંચું શિખર અને દક્ષિણ ધ્રુવ તરફ નિર્દેશ કરતો બાણસ્તંભ ધરાવે છે.",
+      "hi": "पवित्र सोमनाथ मंदिर में आपका स्वागत है। अरब सागर के तट पर स्थित यह मंदिर भगवान शिव के 12 ज्योतिर्लिंगों में प्रथम माना जाता है। 1951 में सरदार वल्लभभाई पटेल के प्रयासों से मारू-गुर्जर शैली में पुनर्निर्मित यह भव्य मंदिर 155 फीट ऊंचा शिखर और अंटार्कटिका की ओर इशारा करने वाला बाण स्तंभ रखता है।"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Somnath Kartik Purnima Fair",
+        "note": "5-day oceanfront fair with folk dance, ras-garba, and spiritual illumination.",
+        "months": [
+          11
+        ]
+      }
+    ],
+    "style": "Maru-Gurjara",
+    "builder": "Rebuilt by Sardar Patel (Ancient Origins)",
+    "material": "Sompura Sandstone",
+    "unesco": false
   },
   {
     "id": "lothal",
     "name": "Lothal Harappan Port City",
+    "name_gu": "લોથલ હડપ્પન બંદર",
+    "name_hi": "लोथल हड़प्पा बंदरगाह",
     "category": "Fort & Ruins",
-    "city": "Ahmedabad District, Gujarat",
+    "city": "Dholka, Ahmedabad",
+    "city_gu": "ધોળકા, અમદાવાદ",
+    "city_hi": "धोलका, अहमदाबाद",
     "lat": 22.5215,
     "lng": 72.2497,
+    "year": -2400,
+    "era": "Harappan",
+    "openHour": 10,
+    "closeHour": 17,
     "summary": "World's oldest known tidal dockyard dating back to 2400 BCE, connecting Harappan trade to Mesopotamia and Egypt.",
-    "description": "Lothal ('Mound of the Dead') was one of the southernmost cities of the ancient Indus Valley Civilization. Dates back to 2400 BCE, Lothal possessed the world's earliest known engineered dockyard connected to an ancient course of the Sabarmati River.",
+    "summary_gu": "ઈ.સ. પૂર્વે ૨૪૦૦નું વિશ્વનું સૌથી જૂનું ભરતી-ઓટ આધારિત ગોદી (ડોકયાર્ડ).",
+    "summary_hi": "ईसा पूर्व 2400 का दुनिया का सबसे पुराना गोदी (डॉक्यार्ड)।",
+    "description": "Lothal ('Mound of the Dead') was one of the southernmost cities of the ancient Indus Valley Civilization.",
     "period": "c. 2400 – 1900 BCE (Bronze Age)",
     "timings": "10:00 AM – 5:00 PM (Closed Fridays)",
     "entryFee": "₹5 (Indian citizens) / ₹100 (Foreign nationals)",
     "bestTime": "October – March",
-    "cover": "images/lothal/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Archaeological Survey of India (ASI)",
+    "officialUrl": "https://en.wikipedia.org/wiki/Lothal",
+    "cover": "images/lothal/1.webp",
     "images": [
       {
-        "src": "images/lothal/1.jpg",
-        "alt": "Excavated stone dockyard basin at Lothal Harappan site"
+        "src": "images/lothal/1.webp",
+        "alt": "Excavated stone dockyard basin at Lothal Harappan site",
+        "credit": "Wikimedia Commons / ASI",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/lothal/2.jpg",
-        "alt": "Ancient steatite seals and terracotta artifacts from Lothal"
+        "src": "images/lothal/2.webp",
+        "alt": "Ancient steatite seals and terracotta artifacts from Lothal",
+        "credit": "Wikimedia Commons / ASI Museum",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Lothal, the ancient Harappan port city dating back to 2400 BCE. Lothal contained the world's earliest known tidal dockyard, expertly engineered to connect the Sabarmati river basin with the Gulf of Khambhat for maritime trade with Mesopotamia and Egypt. Explore its bead-making workshops, seal pressings, and brick drainage systems.",
+      "gu": "લોથલ હડપ્પન બંદરમાં આપનું સ્વાગત છે. ઈ.સ. પૂર્વે ૨૪૦૦ ના સમયનું આ શહેર વિશ્વની સૌથી જૂની ભરતી-ઓટ આધારિત ગોદી (ડોકયાર્ડ) ધરાવે છે. સાબરમતી નદી મારફતે ખંભાતના અખાત સાથે જોડાઈને મોસોપોટેમિયા અને ઇજિપ્ત સાથે દરિયાઈ વેપાર થતો હતો. અહીં મોતી બનાવવાની વર્કશોપ અને પ્રાચીન સીલ મળેલા છે.",
+      "hi": "लोथल हड़प्पा बंदरगाह शहर में आपका स्वागत है। ईसा पूर्व 2400 का यह शहर दुनिया के सबसे पुराने ज्वारीय गोदी (डॉक्यार्ड) के लिए प्रसिद्ध है। साबरमती नदी के माध्यम से खंभात की खाड़ी से जुड़कर मेसोपोटामिया और मिस्र के साथ समुद्री व्यापार होता था। यहां मनके बनाने की कार्यशालाएं और प्राचीन मुहरें मिली हैं।"
+    },
+    "living": [
+      {
+        "type": "Craft",
+        "name": "Terracotta Pottery & Bead Crafting",
+        "note": "Local pottery demonstrations inspired by ancient Harappan clay bead-making techniques.",
+        "months": [
+          1,
+          2,
+          3,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Harappan Mud-Brick Port",
+    "builder": "Indus Valley Maritime Traders",
+    "material": "Kiln-burnt Bricks",
+    "unesco": false
   },
   {
     "id": "uparkot-fort",
     "name": "Uparkot Fort",
+    "name_gu": "ઉપરકોટ નો કિલ્લો",
+    "name_hi": "ऊपरकोट किला",
     "category": "Fort & Ruins",
-    "city": "Junagadh, Gujarat",
+    "city": "Junagadh",
+    "city_gu": "જૂનાગઢ",
+    "city_hi": "जूनागढ़",
     "lat": 21.5167,
     "lng": 70.4667,
+    "year": -319,
+    "era": "Mauryan",
+    "openHour": 8,
+    "closeHour": 18,
     "summary": "Ancient Mauryan citadel originally established in 319 BCE with 20m high fort walls, stepwells, and rock-cut Buddhist caves.",
-    "description": "Uparkot Fort is an ancient citadel standing on a high plateau in Junagadh, built during the Mauryan Empire by Chandragupta Maurya in 319 BCE. Besieged 16 times throughout history, it contains 20-meter high walls, twin bronze cannons, and 2nd-century AD rock-cut Buddhist caves.",
+    "summary_gu": "ઈ.સ. પૂર્વે ૩૧૯માં મૌર્ય સામ્રાજ્ય દ્વારા બનેલો જૂનાગઢનો પ્રાચીન કિલ્લો.",
+    "summary_hi": "ईसा पूर्व 319 में मौर्य साम्राज्य द्वारा निर्मित जूनागढ़ का प्राचीन किला।",
+    "description": "Uparkot Fort is an ancient citadel standing on a high plateau in Junagadh.",
     "period": "319 BCE (Mauryan Dynasty)",
     "timings": "8:00 AM – 6:00 PM (Daily)",
     "entryFee": "₹25 (Indian citizens) / ₹300 (Foreign nationals)",
     "bestTime": "October – March",
-    "cover": "images/uparkot-fort/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Gujarat Tourism & Junagadh ASI",
+    "officialUrl": "https://en.wikipedia.org/wiki/Uparkot_Fort",
+    "cover": "images/uparkot-fort/1.webp",
     "images": [
       {
-        "src": "images/uparkot-fort/1.jpg",
-        "alt": "Massive stone bastions and gateway of Uparkot Fort Junagadh"
+        "src": "images/uparkot-fort/1.webp",
+        "alt": "Massive stone bastions and gateway of Uparkot Fort Junagadh",
+        "credit": "Wikimedia Commons / Gujarat Tourism",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/uparkot-fort/2.jpg",
-        "alt": "Panorama of Uparkot fort ramparts with Girnar hills in background"
+        "src": "images/uparkot-fort/2.webp",
+        "alt": "Panorama of Uparkot fort ramparts with Girnar hills in background",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Uparkot Fort in Junagadh, an ancient Mauryan citadel founded in 319 BCE by Chandragupta Maurya. Standing on a high plateau, its 20-meter high walls survived sixteen historical sieges. Explore the 2nd-century rock-cut Buddhist caves, the deep Adi Kadi Vav stepwell, and the massive brass cannons Neelam and Manek cast in Diu.",
+      "gu": "જૂનાગઢના ઉપરકોટ કિલ્લામાં આપનું સ્વાગત છે. ઈ.સ. પૂર્વે ૩૧૯ માં ચંદ્રગુપ્ત મૌર્ય દ્વારા સ્થાપિત આ પ્રાચીન કિલ્લો ૨૦ મીટર ઊંચી પથ્થરની દીવાલો ધરાવે છે. કિલ્લામાં બીજી સદીની બૌદ્ધ ગુફાઓ, અડી કડી વાવ, નવઘણ કુવો અને ૧૫૩૧ માં દીવમાં ઢાળવામાં આવેલી નીલમ અને માણેક નામની તોપો આવેલી છે.",
+      "hi": "जूनागढ़ के ऊपरकोट किले में आपका स्वागत है। ईसा पूर्व 319 में चंद्रगुप्त मौर्य द्वारा स्थापित यह प्राचीन किला 20 मीटर ऊंची पत्थर की दीवारों से घिरा है। किले के भीतर दूसरी सदी की बौद्ध गुफाएं, अड़ी कड़ी वाव, नवघन कुआं और दीव में ढाली गई ऐतिहासिक नीलम और माणिक तोपें स्थित हैं।"
+    },
+    "living": [
+      {
+        "type": "Festival",
+        "name": "Bhavnath Mahadev Fair & Girnar Parikrama",
+        "note": "Massive night fair celebrating Maha Shivratri with Naga Sadhus at the base of Mount Girnar.",
+        "months": [
+          2,
+          3
+        ]
+      }
+    ],
+    "style": "Mauryan Citadel",
+    "builder": "Chandragupta Maurya & Chudasama Rulers",
+    "material": "Cut Sandstone & Plateau Bedrock",
+    "unesco": false
   },
   {
     "id": "prag-mahal",
     "name": "Prag Mahal & Aina Mahal",
+    "name_gu": "પ્રાગ મહેલ અને આયના મહેલ",
+    "name_hi": "प्राग महल और आइना महल",
     "category": "Palace",
-    "city": "Bhuj, Gujarat",
+    "city": "Bhuj, Kutch",
+    "city_gu": "ભુજ, કચ્છ",
+    "city_hi": "भुज, कच्छ",
     "lat": 23.2542,
-    "lng": 69.6690,
+    "lng": 69.669,
+    "year": 1865,
+    "era": "Colonial",
+    "openHour": 9,
+    "closeHour": 18,
     "summary": "19th-century Italian Gothic palace featuring a 45-meter clock tower, Venetian arches, and the legendary Palace of Mirrors.",
-    "description": "Prag Mahal is a grand 19th-century palace in Bhuj, commissioned by Maharao Pragmalji II in 1865 and designed by Colonel Henry Saint Clair Wilkins in Italian Gothic style. Adjacent lies Aina Mahal (Palace of Mirrors), built in 1752.",
+    "summary_gu": "૪૫ મીટર ઊંચા ક્લોક ટાવરવાળો ૧૯મી સદીનો ઇટાલિયન ગોથિક શૈલીનો મહેલ.",
+    "summary_hi": "45 मीटर ऊंचे क्लॉक टॉवर वाला 19वीं सदी का इतालवी गोथिक शैली का महल।",
+    "description": "Prag Mahal is a grand 19th-century palace in Bhuj, commissioned by Maharao Pragmalji II in 1865.",
     "period": "19th Century AD (1865 AD)",
     "timings": "9:00 AM – 12:00 PM, 3:00 PM – 6:00 PM (Daily)",
     "entryFee": "₹20 (Indian citizens)",
     "bestTime": "October – March",
-    "cover": "images/prag-mahal/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Kutch Tourism & Royal Trust",
+    "officialUrl": "https://en.wikipedia.org/wiki/Prag_Mahal",
+    "cover": "images/prag-mahal/1.webp",
     "images": [
       {
-        "src": "images/prag-mahal/1.jpg",
-        "alt": "Italian Gothic Prag Mahal clock tower and palace balcony in Bhuj"
+        "src": "images/prag-mahal/1.webp",
+        "alt": "Italian Gothic Prag Mahal clock tower and palace balcony in Bhuj",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/prag-mahal/2.jpg",
-        "alt": "Panoramic view of Bhuj city from the Prag Mahal tower"
+        "src": "images/prag-mahal/2.webp",
+        "alt": "Panoramic view of Bhuj city from the Prag Mahal tower",
+        "credit": "Wikimedia Commons / Panoramio",
+        "license": "CC BY-SA 3.0"
       }
-    ]
+    ],
+    "story": {
+      "en": "Welcome to Prag Mahal and Aina Mahal in Bhuj, Kutch. Commissioned in 1865 by Maharao Pragmalji II, Prag Mahal was designed by British architect Colonel Henry Saint Clair Wilkins in Italian Gothic style. It features a 45-meter high clock tower offering panoramic views of Bhuj, alongside the 18th-century Aina Mahal Palace of Mirrors crafted by Ramsinh Malam.",
+      "gu": "ભુજના પ્રાગ મહેલ અને આયના મહેલમાં આપનું સ્વાગત છે. ૧૮૬૫ માં મહારાવ પ્રાગમલજી બીજા દ્વારા ઇટાલિયન ગોથિક શૈલીમાં આ મહેલ બંધાવાયો હતો. તેમાં ૪૫ મીટર ઊંચો ક્લોક ટાવર આવેલો છે જ્યાંથી સમગ્ર ભુજ શહેર જોઈ શકાય છે. બાજુમાં રામસંગ માલમ દ્વારા નિર્મિત અરીસાઓથી સજ્જ ૧૮મી સદીનો આયના મહેલ છે.",
+      "hi": "भुज के प्राग महल और आइना महल में आपका स्वागत है। 1865 में महाराव प्रागमलजी द्वितीय द्वारा इतालवी गोथिक शैली में निर्मित इस महल में 45 मीटर ऊंचा क्लॉक टॉवर है जिससे पूरे भुज शहर का मनोरम दृश्य दिखाई देता है। इसके पास ही रामसिंह मालम द्वारा बनाया गया 18वीं सदी का दर्पणों से सजा आइना महल स्थित है।"
+    },
+    "historic": {
+      "src": "TODO add image",
+      "year": "c. 1875",
+      "credit": "Royal Kutch Archives / Henry Saint Clair Wilkins (TODO verify)",
+      "license": "Public Domain (Pre-1923)"
+    },
+    "living": [
+      {
+        "type": "Craft",
+        "name": "Ajrakh Block Print & Leathercraft",
+        "note": "Famous natural dye woodblock printing and embroidered Kutchi leather artisan villages near Bhuj.",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "style": "Italian Gothic & Venetian",
+    "builder": "Maharao Pragmalji II (Col. Wilkins)",
+    "material": "Italian Marble & Red Sandstone",
+    "unesco": false
   },
   {
-    "id": "taj-mahal",
-    "name": "Taj Mahal",
-    "category": "Mausoleum",
-    "city": "Agra, Uttar Pradesh",
-    "lat": 27.1751,
-    "lng": 78.0421,
-    "summary": "UNESCO World Heritage ivory-white marble mausoleum on the Yamuna River, commissioned by Mughal Emperor Shah Jahan in 1631.",
-    "description": "The Taj Mahal is an immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor Shah Jahan in memory of his favorite wife Mumtaz Mahal. A jewel of Muslim art in India and one of the universally admired masterpieces of the world's heritage, it combines Persian, Ottoman, Indian, and Islamic architectural styles.",
-    "period": "17th Century AD (1631–1648 AD)",
-    "timings": "Sunrise to Sunset (Closed Fridays)",
-    "entryFee": "₹50 (Indian citizens) / ₹1100 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/taj-mahal/1.jpg",
-    "images": [
-      {
-        "src": "images/taj-mahal/1.jpg",
-        "alt": "Iconic front view of the Taj Mahal reflecting pool"
-      },
-      {
-        "src": "images/taj-mahal/2.jpg",
-        "alt": "Sunset view of the Taj Mahal marble dome and minarets"
-      }
-    ]
-  },
-  {
-    "id": "red-fort-delhi",
-    "name": "Red Fort (Lal Qila)",
-    "category": "Fort & Ruins",
-    "city": "New Delhi, Delhi",
-    "lat": 28.6562,
-    "lng": 77.2410,
-    "summary": "UNESCO World Heritage 17th-century red sandstone fortress served as the main residence of Mughal emperors for nearly 200 years.",
-    "description": "The Red Fort was constructed in 1639 by Emperor Shah Jahan when he decided to shift his capital from Agra to Delhi. Made of massive red sandstone walls, it represents the zenith of Mughal architecture under Shah Jahan, integrating Persian palace structures with Indian traditions.",
-    "period": "17th Century AD (1639 AD)",
-    "timings": "9:30 AM – 4:30 PM (Closed Mondays)",
-    "entryFee": "₹35 (Indian citizens) / ₹500 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/red-fort-delhi/1.jpg",
-    "images": [
-      {
-        "src": "images/red-fort-delhi/1.jpg",
-        "alt": "Red sandstone bastions and Lahori Gate entrance of Red Fort Delhi"
-      },
-      {
-        "src": "images/red-fort-delhi/2.jpg",
-        "alt": "Inner Naubat Khana pavilion hall of Red Fort"
-      }
-    ]
-  },
-  {
-    "id": "qutub-minar",
-    "name": "Qutub Minar Complex",
-    "category": "Mausoleum",
-    "city": "New Delhi, Delhi",
-    "lat": 28.5245,
-    "lng": 77.1855,
-    "summary": "UNESCO site featuring the 72.5-meter tall red sandstone minaret built in 1192 AD and the rust-resistant 4th-century Iron Pillar.",
-    "description": "Qutub Minar is a 72.5-meter high minaret built by Qutb-ud-din Aibak in 1192 AD following the defeat of Delhi's last Hindu kingdom. The complex also houses the Quwwat-ul-Islam Mosque and the mysterious 4th-century Iron Pillar of Chandragupta II, which has stood for 1600 years without rusting.",
-    "period": "12th Century AD (1192 AD)",
-    "timings": "7:00 AM – 5:00 PM (Daily)",
-    "entryFee": "₹35 (Indian citizens) / ₹550 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/qutub-minar/1.jpg",
-    "images": [
-      {
-        "src": "images/qutub-minar/1.jpg",
-        "alt": "Fluted red sandstone tower of Qutub Minar against the blue sky"
-      },
-      {
-        "src": "images/qutub-minar/2.jpg",
-        "alt": "Ruined arched galleries of Quwwat-ul-Islam mosque"
-      }
-    ]
-  },
-  {
-    "id": "amer-fort",
-    "name": "Amer Fort (Amber Fort)",
-    "category": "Fort & Ruins",
-    "city": "Jaipur, Rajasthan",
-    "lat": 26.9855,
-    "lng": 75.8513,
-    "summary": "UNESCO World Heritage Rajput hill fort overlooking Maota Lake, famous for Sheesh Mahal mirror palace and marble courtyards.",
-    "description": "Amer Fort is located in Amer, 11 kilometres from Jaipur. Built by Raja Man Singh I in 1592, the fort is known for its artistic Hindu style elements. With its large ramparts, series of gates and cobbled paths, the fort overlooks Maota Lake and features the exquisite Sheesh Mahal (Palace of Mirrors).",
-    "period": "16th Century AD (1592 AD)",
-    "timings": "8:00 AM – 5:30 PM (Daily)",
-    "entryFee": "₹100 (Indian citizens) / ₹500 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/amer-fort/1.jpg",
-    "images": [
-      {
-        "src": "images/amer-fort/1.jpg",
-        "alt": "Majestic Amer Fort palatial ramparts above Maota Lake"
-      },
-      {
-        "src": "images/amer-fort/2.jpg",
-        "alt": "Marble courtyards and carved archways inside Amer Fort"
-      }
-    ]
-  },
-  {
-    "id": "hawa-mahal",
-    "name": "Hawa Mahal (Palace of Winds)",
-    "category": "Palace",
-    "city": "Jaipur, Rajasthan",
-    "lat": 26.9239,
-    "lng": 75.8267,
-    "summary": "Five-storey pink sandstone palace built in 1799 with 953 honeycomb windows (jharokhas) designed for royal ladies.",
-    "description": "Hawa Mahal (The Palace of Winds) was constructed in 1799 by Maharaja Sawai Pratap Singh, designed by Lal Chand Ustad. Its unique five-storey exterior resembles a honeycomb with its 953 small windows called Jharokhas, decorated with intricate latticework allowing royal women to observe street festivals unobserved.",
-    "period": "18th Century AD (1799 AD)",
-    "timings": "9:00 AM – 5:00 PM (Daily)",
-    "entryFee": "₹50 (Indian citizens) / ₹200 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/hawa-mahal/1.jpg",
-    "images": [
-      {
-        "src": "images/hawa-mahal/1.jpg",
-        "alt": "Pink sandstone facade and 953 jharokha windows of Hawa Mahal"
-      },
-      {
-        "src": "images/hawa-mahal/2.jpg",
-        "alt": "Detailed view of latticed windows and domes of Hawa Mahal"
-      }
-    ]
-  },
-  {
-    "id": "konark-sun-temple",
-    "name": "Konark Sun Temple",
+    "id": "dwarkadhish-temple",
+    "name": "Dwarkadhish Temple (Jagat Mandir)",
+    "name_gu": "દ્વારકાધીશ મંદિર (જગત મંદિર)",
+    "name_hi": "द्वारकाधीश मंदिर (जगत मंदिर)",
     "category": "Temple",
-    "city": "Konark, Odisha",
-    "lat": 19.8876,
-    "lng": 86.0945,
-    "summary": "UNESCO 13th-century stone temple shaped as a giant 24-wheeled chariot pulled by 7 horses, dedicated to Sun God Surya.",
-    "description": "Konark Sun Temple is a 13th-century CE Sun temple at Konark about 35 kilometres northeast from Puri on the coastline of Odisha. Built by King Narasimhadeva I of the Eastern Ganga dynasty in 1250 CE, the temple is attributed to be shaped like a colossal chariot with 24 elaborately carved stone wheels drawn by 7 horses.",
-    "period": "13th Century AD (1250 AD)",
-    "timings": "6:00 AM – 8:00 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March (Konark Dance Festival in Dec)",
-    "cover": "images/konark-sun-temple/1.jpg",
-    "images": [
-      {
-        "src": "images/konark-sun-temple/1.jpg",
-        "alt": "Carved stone chariot wheels of Konark Sun Temple"
-      },
-      {
-        "src": "images/konark-sun-temple/2.jpg",
-        "alt": "High relief stone relief sculptures of dancers and musicians"
-      }
-    ]
-  },
-  {
-    "id": "brihadisvara-temple",
-    "name": "Brihadisvara Temple",
-    "category": "Temple",
-    "city": "Thanjavur, Tamil Nadu",
-    "lat": 10.7828,
-    "lng": 79.1318,
-    "summary": "UNESCO Great Living Chola Temple built in 1010 AD by Raja Raja Chola I, boasting a 66m granite Vimana tower.",
-    "description": "Brihadisvara Temple (Peruvudaiyar Kovil) is a Dravidian architecture Hindu temple dedicated to Shiva located in Thanjavur, Tamil Nadu. Built by Chola emperor Raja Raja I between 1003 and 1010 AD, it features a 66-meter tall granite tower (Vimana) topped by a single 80-tonne carved granite capstone (Kumbam).",
-    "period": "11th Century AD (1010 AD - Chola Dynasty)",
-    "timings": "6:00 AM – 12:30 PM, 4:00 PM – 8:30 PM (Daily)",
-    "entryFee": "Free entry",
-    "bestTime": "November – February",
-    "cover": "images/brihadisvara-temple/1.jpg",
-    "images": [
-      {
-        "src": "images/brihadisvara-temple/1.jpg",
-        "alt": "Towering granite Vimana of Brihadisvara Temple in Thanjavur"
-      },
-      {
-        "src": "images/brihadisvara-temple/2.jpg",
-        "alt": "Stone elephant reliefs and Gopuram carvings"
-      }
-    ]
-  },
-  {
-    "id": "ajanta-caves",
-    "name": "Ajanta Caves",
-    "category": "Caves & Temple",
-    "city": "Sambhaji Nagar, Maharashtra",
-    "lat": 20.5519,
-    "lng": 75.7033,
-    "summary": "UNESCO 30 rock-cut Buddhist cave monuments (2nd century BCE) featuring masterpiece mural paintings and carved Chaityas.",
-    "description": "The Ajanta Caves are 30 rock-cut Buddhist cave monuments dating from the 2nd century BCE to about 480 CE in Sambhaji Nagar (Aurangabad) district of Maharashtra. The caves include masterpieces of ancient Indian art, particularly tempera mural paintings depicting Jataka tales, Bodhisattvas, and finely carved monolithic stupa halls.",
-    "period": "2nd Century BCE – 5th Century AD",
-    "timings": "9:00 AM – 5:00 PM (Closed Mondays)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "November – March",
-    "cover": "images/ajanta-caves/1.jpg",
-    "images": [
-      {
-        "src": "images/ajanta-caves/1.jpg",
-        "alt": "Rock-cut arched vaulted entrance of Cave 26 at Ajanta"
-      },
-      {
-        "src": "images/ajanta-caves/2.jpg",
-        "alt": "Panoramic view of the horseshoe-shaped river ravine and caves"
-      }
-    ]
-  },
-  {
-    "id": "ellora-caves",
-    "name": "Ellora Caves & Kailash Temple",
-    "category": "Caves & Temple",
-    "city": "Sambhaji Nagar, Maharashtra",
-    "lat": 20.0268,
-    "lng": 75.1779,
-    "summary": "UNESCO site with 34 rock-cut caves, including Cave 16 (Kailash Temple) — the world's largest monolithic rock excavation.",
-    "description": "Ellora is a UNESCO World Heritage site featuring 34 major rock-cut cave monuments carved out of Charanandri Hills basalt cliffs between the 6th and 10th century CE. It houses Hindu, Buddhist, and Jain monuments. Its crown jewel is Cave 16, the Kailash Temple, carved top-down out of a single monolithic rock face, excavating over 200,000 tonnes of basalt rock.",
-    "period": "6th – 10th Century AD (Rashtrakuta Dynasty)",
-    "timings": "6:00 AM – 6:00 PM (Closed Tuesdays)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/ellora-caves/1.jpg",
-    "images": [
-      {
-        "src": "images/ellora-caves/1.jpg",
-        "alt": "Monolithic Kailash Temple excavated out of solid basalt rock"
-      },
-      {
-        "src": "images/ellora-caves/2.jpg",
-        "alt": "External courtyard pillars and elephant carvings of Cave 16"
-      }
-    ]
-  },
-  {
-    "id": "hampi-monuments",
-    "name": "Hampi Group of Monuments",
-    "category": "Fort & Ruins",
-    "city": "Hampi, Karnataka",
-    "lat": 15.3350,
-    "lng": 76.4600,
-    "summary": "UNESCO World Heritage ruins of Vijayanagara Empire capital, featuring the stone chariot at Vittala Temple and Virupaksha shrine.",
-    "description": "Hampi was the capital of the prosperous Vijayanagara Empire in the 14th century. Located in Karnataka near Hospet, the site is a UNESCO World Heritage site covering 4,100 hectares of boulders, royal palaces, pillared halls, giant monolith statues (Narasimha), and the iconic monolithic Stone Chariot at the Vittala Temple complex.",
-    "period": "14th Century AD (Vijayanagara Empire)",
-    "timings": "6:00 AM – 6:00 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – February",
-    "cover": "images/hampi-monuments/1.jpg",
-    "images": [
-      {
-        "src": "images/hampi-monuments/1.jpg",
-        "alt": "Monolithic Stone Chariot inside Vittala Temple complex at Hampi"
-      },
-      {
-        "src": "images/hampi-monuments/2.jpg",
-        "alt": "Carved stone wheels and Garuda shrine at Hampi"
-      }
-    ]
-  },
-  {
-    "id": "khajuraho-temples",
-    "name": "Khajuraho Group of Monuments",
-    "category": "Temple",
-    "city": "Khajuraho, Madhya Pradesh",
-    "lat": 24.8318,
-    "lng": 79.9199,
-    "summary": "UNESCO site renowned for Nagara-style sandstone temples built by Chandela dynasty, famed for exquisite erotic sculptured friezes.",
-    "description": "The Khajuraho Group of Monuments is a group of Hindu and Jain temples in Chhatarpur district, Madhya Pradesh. Built between 950 and 1050 AD by the Chandela dynasty, the temples are famous for their Nagara-style architectural symbolism and intricate erotic sculptures depicting celebration of life and spirituality.",
-    "period": "10th – 11th Century AD (Chandela Dynasty)",
-    "timings": "6:00 AM – 6:00 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March (Khajuraho Dance Festival in Feb)",
-    "cover": "images/khajuraho-temples/1.jpg",
-    "images": [
-      {
-        "src": "images/khajuraho-temples/1.jpg",
-        "alt": "Sandstone Nagara-style temple towers of Khajuraho"
-      },
-      {
-        "src": "images/khajuraho-temples/2.jpg",
-        "alt": "Intricately carved erotic and mythological sculptures on temple walls"
-      }
-    ]
-  },
-  {
-    "id": "mahabalipuram-shore-temple",
-    "name": "Group of Monuments at Mahabalipuram",
-    "category": "Temple",
-    "city": "Mahabalipuram, Tamil Nadu",
-    "lat": 12.6169,
-    "lng": 80.1993,
-    "summary": "UNESCO World Heritage 7th-century coastal Pallava granite shrines including Shore Temple and Pancha Rathas.",
-    "description": "Mahabalipuram (Mamallapuram) is a historic town in Chengalpattu district, Tamil Nadu. Built by the Pallava dynasty in the 7th and 8th centuries, the group of monuments includes the Shore Temple overlooking the Bay of Bengal, five monolithic cave temples (Pancha Rathas), and Arjuna's Penance giant open-air rock relief.",
-    "period": "7th – 8th Century AD (Pallava Dynasty)",
-    "timings": "6:00 AM – 6:00 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/mahabalipuram-shore-temple/1.jpg",
-    "images": [
-      {
-        "src": "images/mahabalipuram-shore-temple/1.jpg",
-        "alt": "Shore Temple granite towers overlooking the ocean waves"
-      },
-      {
-        "src": "images/mahabalipuram-shore-temple/2.jpg",
-        "alt": "Detail view of Pallava stone structural carvings"
-      }
-    ]
-  },
-  {
-    "id": "sanchi-stupa",
-    "name": "Buddhist Monuments at Sanchi",
-    "category": "Stupa & Sanctuary",
-    "city": "Sanchi, Madhya Pradesh",
-    "lat": 23.4793,
-    "lng": 77.7397,
-    "summary": "UNESCO World Heritage Great Stupa commissioned by Emperor Ashoka in 3rd century BCE, famed for ornamental Torana gateways.",
-    "description": "Sanchi is a Buddhist complex located on a hilltop at Sanchi Town in Raisen District, Madhya Pradesh. Its Great Stupa was originally commissioned by Mauryan Emperor Ashoka in the 3rd century BCE. It is famous for its hemispherical dome housing relics of the Buddha and four intricately carved Torana gateways depicting Jataka stories.",
-    "period": "3rd Century BCE – 12th Century AD",
-    "timings": "6:30 AM – 6:30 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/sanchi-stupa/1.jpg",
-    "images": [
-      {
-        "src": "images/sanchi-stupa/1.jpg",
-        "alt": "Great Stupa at Sanchi with carved stone Torana gateway"
-      },
-      {
-        "src": "images/sanchi-stupa/2.jpg",
-        "alt": "Detailed view of Buddhist relief carvings on Torana pillar"
-      }
-    ]
-  },
-  {
-    "id": "gateway-of-india",
-    "name": "Gateway of India",
-    "category": "Fort & Ruins",
-    "city": "Mumbai, Maharashtra",
-    "lat": 18.9220,
-    "lng": 72.8347,
-    "summary": "26-meter arch monument built in Indo-Saracenic style in 1924 to commemorate King George V's landing in India.",
-    "description": "The Gateway of India is an arch-monument built in the early 20th century in Mumbai, Maharashtra. Constructed in the Indo-Saracenic style blending Roman arch geometry with Gujarati Hindu and Muslim architectural elements, it commemorates the landing of King George V and Queen Mary at Apollo Bunder in 1911.",
-    "period": "20th Century AD (1924 AD)",
-    "timings": "Open 24 Hours (Daily)",
+    "city": "Dwarka",
+    "city_gu": "દ્વારકા",
+    "city_hi": "द्वारका",
+    "lat": 22.2376,
+    "lng": 68.9674,
+    "year": 1500,
+    "era": "Solanki",
+    "openHour": 6.5,
+    "closeHour": 21.5,
+    "summary": "Ancient sacred Char Dham temple dedicated to Lord Krishna, boasting a 72-meter 5-storey spire supported by 60 pillars.",
+    "summary_gu": "ભગવાન કૃષ્ણને સમર્પિત ૭૨ મીટર ઊંચા શિખરવાળું પવિત્ર ચાર ધામ મંદિર.",
+    "summary_hi": "भगवान कृष्ण को समर्पित 72 मीटर ऊंचे शिखर वाला पवित्र चार धाम मंदिर।",
+    "description": "Dwarkadhish Temple (Jagat Mandir) is a 2,200-year-old sacred shrine located in Dwarka on the western tip of Saurashtra.",
+    "period": "16th Century AD (Ancient Origins)",
+    "timings": "6:30 AM – 1:00 PM, 5:00 PM – 9:30 PM (Daily)",
     "entryFee": "Free entry",
     "bestTime": "October – March",
-    "cover": "images/gateway-of-india/1.jpg",
+    "lastVerified": "2026-09",
+    "source": "Dwarkadhish Temple Trust & ASI",
+    "officialUrl": "https://dwarkadhish.org/",
+    "cover": "images/dwarkadhish-temple/1.webp",
     "images": [
       {
-        "src": "images/gateway-of-india/1.jpg",
-        "alt": "Gateway of India basalt arch overlooking Mumbai harbour"
+        "src": "images/dwarkadhish-temple/1.webp",
+        "alt": "Towering 72-meter spire of Dwarkadhish Temple in Dwarka",
+        "credit": "Wikimedia Commons / Temple Trust",
+        "license": "CC BY-SA 4.0"
       },
       {
-        "src": "images/gateway-of-india/2.jpg",
-        "alt": "Front view of Gateway of India with Taj Mahal Palace hotel background"
+        "src": "images/dwarkadhish-temple/2.webp",
+        "alt": "Gomti Ghat and temple spire overlooking the Arabian Sea",
+        "credit": "Wikimedia Commons / Photographer",
+        "license": "CC BY-SA 4.0"
       }
-    ]
-  },
-  {
-    "id": "meenakshi-temple",
-    "name": "Meenakshi Amman Temple",
-    "category": "Temple",
-    "city": "Madurai, Tamil Nadu",
-    "lat": 9.9195,
-    "lng": 78.1193,
-    "summary": "Historic Dravidian temple complex featuring 14 vibrant towering Gopuram towers covered in thousands of colorful statues.",
-    "description": "Meenakshi Sundareshwarar Temple is a historic Hindu temple located on the southern bank of the Vaigai River in Madurai, Tamil Nadu. Rebuilt by the Nayak dynasty between 1560 and 1660 AD, it boasts 14 magnificent Gopuram gateway towers ranging up to 52 meters high, encrusted with thousands of painted mythological figures.",
-    "period": "16th – 17th Century AD (Nayak Dynasty)",
-    "timings": "5:00 AM – 12:30 PM, 4:00 PM – 10:00 PM (Daily)",
-    "entryFee": "Free entry",
-    "bestTime": "October – March (Chithirai Festival in April)",
-    "cover": "images/meenakshi-temple/1.jpg",
-    "images": [
+    ],
+    "story": {
+      "en": "Welcome to Dwarkadhish Temple, also known as Jagat Mandir, located in the holy city of Dwarka. Dedicated to Lord Krishna as the King of Dwarka, this sacred Char Dham site boasts a 72-meter high 5-storey spire supported by 60 carved limestone pillars. Standing at the confluence of the Gomti River and Arabian Sea, it flies a massive 52-yard flag changed five times daily.",
+      "gu": "દ્વારકાધીશ જગત મંદિરમાં આપનું સ્વાગત છે. પવિત્ર દ્વારકા નગરીમાં ગોમતી નદી અને અરબી સમુદ્રના સંગમ પર આવેલું ભગવાન કૃષ્ણનું આ પવિત્ર ચાર ધામ મંદિર ૭૨ મીટર ઊંચું શિખર અને ૬૦ સ્તંભો ધરાવે છે. આ મંદિર પર દરરોજ ૫ વખત ૫૨ ગજની ધજા ચડાવવામાં આવે છે.",
+      "hi": "द्वारकाधीश मंदिर (जगत मंदिर) में आपका स्वागत है। पवित्र द्वारका में गोमती नदी और अरब सागर के संगम पर स्थित भगवान कृष्ण का यह पवित्र चार धाम मंदिर 72 मीटर ऊंचा शिखर और 60 स्तंभ रखता है। मंदिर के शिखर पर प्रतिदिन 5 बार 52 गज की ध्वजा फहराई जाती है।"
+    },
+    "living": [
       {
-        "src": "images/meenakshi-temple/1.jpg",
-        "alt": "Vibrant polychrome statues covering the Gopuram towers of Meenakshi Temple"
-      },
-      {
-        "src": "images/meenakshi-temple/2.jpg",
-        "alt": "Golden Lotus Tank courtyard inside Meenakshi shrine"
+        "type": "Festival",
+        "name": "Dwarka Krishna Janmashtami Mahotsav",
+        "note": "Grand celebration of Lord Krishna's birth with midnight darshan, devotional bhajans, and temple illumination.",
+        "months": [
+          8,
+          9
+        ]
       }
-    ]
-  },
-  {
-    "id": "victoria-memorial",
-    "name": "Victoria Memorial",
-    "category": "Palace",
-    "city": "Kolkata, West Bengal",
-    "lat": 22.5448,
-    "lng": 88.3426,
-    "summary": "Grand Indo-Saracenic white Makrana marble monument built between 1906 and 1921, set in 64 acres of landscaped gardens.",
-    "description": "The Victoria Memorial is a large marble building in Central Kolkata, built between 1906 and 1921. Designed by Sir William Emerson in Indo-Saracenic revivalist style using white Makrana marble (the same marble used in Taj Mahal), it houses a museum showcasing British Indian empire history, paintings, and royal artifacts.",
-    "period": "20th Century AD (1921 AD)",
-    "timings": "10:00 AM – 5:00 PM (Closed Mondays)",
-    "entryFee": "₹30 (Indian citizens) / ₹500 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/victoria-memorial/1.jpg",
-    "images": [
-      {
-        "src": "images/victoria-memorial/1.jpg",
-        "alt": "Illuminated white marble dome of Victoria Memorial at night"
-      },
-      {
-        "src": "images/victoria-memorial/2.jpg",
-        "alt": "Gardens and reflecting pool surrounding Victoria Memorial hall"
-      }
-    ]
-  },
-  {
-    "id": "golden-temple",
-    "name": "Golden Temple (Sri Harmandir Sahib)",
-    "category": "Sacred Shrine",
-    "city": "Amritsar, Punjab",
-    "lat": 31.6200,
-    "lng": 74.8765,
-    "summary": "Sacred central gurdwara of Sikhism surrounded by the Amrit Sarovar holy tank, gold-plated by Maharaja Ranjit Singh in 1830.",
-    "description": "Sri Harmandir Sahib (The Golden Temple) is the preeminent spiritual site of Sikhism, located in Amritsar, Punjab. Designed by Guru Arjan Dev in the 16th century, the sanctum is built on a lower level with four entrances welcoming people of all faiths. In 1830, Maharaja Ranjit Singh covered the upper storeys with 750 kg of pure gold foil.",
-    "period": "16th Century Origins (Gold overlay 1830 AD)",
-    "timings": "Open 24 Hours (Daily)",
-    "entryFee": "Free entry (Free community meal at Guru ka Langar)",
-    "bestTime": "October – March (Gurpurab & Vaisakhi festivals)",
-    "cover": "images/golden-temple/1.jpg",
-    "images": [
-      {
-        "src": "images/golden-temple/1.jpg",
-        "alt": "Golden sanctum reflecting on the Amrit Sarovar sacred pool"
-      },
-      {
-        "src": "images/golden-temple/2.jpg",
-        "alt": "Night view of Sri Harmandir Sahib golden dome and causeway"
-      }
-    ]
-  },
-  {
-    "id": "varanasi-ghats",
-    "name": "Varanasi Ghats & Ganges Riverfront",
-    "category": "Sacred Shrine",
-    "city": "Varanasi, Uttar Pradesh",
-    "lat": 25.3176,
-    "lng": 83.0100,
-    "summary": "One of the world's oldest living cities featuring 88 ancient stone riverfront ghats along the sacred Ganges river.",
-    "description": "Varanasi (Kashi) is one of the world's oldest continually inhabited cities. Its iconic riverfront features 88 stone stepped ghats stretching along the Ganges, where pilgrims perform rituals, prayers, and morning dips. Famous ghats include Dashashwamedh Ghat (famed for evening Ganga Aarti rituals) and Manikarnika Ghat.",
-    "period": "3rd Millennium BCE Origins",
-    "timings": "Open 24 Hours (Ganga Aarti at 6:30 PM)",
-    "entryFee": "Free entry",
-    "bestTime": "October – March (Dev Deepawali in Nov)",
-    "cover": "images/varanasi-ghats/1.jpg",
-    "images": [
-      {
-        "src": "images/varanasi-ghats/1.jpg",
-        "alt": "Sunrise view of riverboats along Munshi Ghat on the Ganges"
-      },
-      {
-        "src": "images/varanasi-ghats/2.jpg",
-        "alt": "Morning light over Scindia Ghat palatial stone steps"
-      }
-    ]
-  },
-  {
-    "id": "nalanda-university",
-    "name": "Nalanda Mahavihara Ancient University",
-    "category": "Fort & Ruins",
-    "city": "Nalanda, Bihar",
-    "lat": 25.1357,
-    "lng": 85.4439,
-    "summary": "UNESCO World Heritage ruins of the ancient 5th-century Buddhist monastic university that educated scholars across Asia.",
-    "description": "Nalanda was an ancient Mahavihara, a revered Buddhist monastery and center of learning in the ancient kingdom of Magadha (modern-day Bihar), operating from the 5th century CE to 1200 CE. A UNESCO World Heritage site, it attracted scholars from China, Korea, Japan, Tibet, and Central Asia.",
-    "period": "5th – 12th Century AD (Gupta & Pala Empires)",
-    "timings": "9:00 AM – 5:00 PM (Daily)",
-    "entryFee": "₹40 (Indian citizens) / ₹600 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/nalanda-university/1.jpg",
-    "images": [
-      {
-        "src": "images/nalanda-university/1.jpg",
-        "alt": "Stupa 3 corner towers and brick monastic cells at Nalanda"
-      },
-      {
-        "src": "images/nalanda-university/2.jpg",
-        "alt": "Excavated red brick monastery corridors and votive stupas"
-      }
-    ]
-  },
-  {
-    "id": "golconda-fort",
-    "name": "Golconda Fort",
-    "category": "Fort & Ruins",
-    "city": "Hyderabad, Telangana",
-    "lat": 17.3833,
-    "lng": 78.4011,
-    "summary": "16th-century fortress capital of Qutb Shahi dynasty, famed for acoustic echo engineering and the Koh-i-Noor diamond vault.",
-    "description": "Golconda Fort is a fortified citadel located in Hyderabad, Telangana. Originally built by the Kakatiya dynasty and expanded by the Qutb Shahi kings in the 16th century, it is famous for its acoustic architecture (a clap at Fateh Darwaza can be heard 1 km away at Bala Hissar pavilion) and as the trading center for world-renowned diamonds like the Koh-i-Noor and Hope Diamond.",
-    "period": "16th Century AD (Qutb Shahi Dynasty)",
-    "timings": "9:00 AM – 5:30 PM (Daily)",
-    "entryFee": "₹25 (Indian citizens) / ₹300 (Foreign nationals)",
-    "bestTime": "October – March",
-    "cover": "images/golconda-fort/1.jpg",
-    "images": [
-      {
-        "src": "images/golconda-fort/1.jpg",
-        "alt": "Panoramic view of Golconda Fort ramparts and citadel walls"
-      },
-      {
-        "src": "images/golconda-fort/2.jpg",
-        "alt": "Acoustic ceiling dome inside Golconda Fort"
-      }
-    ]
+    ],
+    "style": "Solanki-Chaulukya",
+    "builder": "Vajranabha & Historical Monarchs",
+    "material": "Limestone & Sandstone",
+    "unesco": false
   }
 ]

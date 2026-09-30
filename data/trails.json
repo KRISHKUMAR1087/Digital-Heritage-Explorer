@@ -1,0 +1,46 @@
+[
+  {
+    "id": "solanki-trail",
+    "name": "Solanki Dynasty Architecture Trail",
+    "tagline": "11th-Century Solanki Temple & Stepwell Circuit",
+    "description": "Journey through the golden age of Solanki architecture, visiting the Sun Temple at Modhera, the UNESCO Queen's Stepwell at Patan, and Adalaj Stepwell.",
+    "sites": ["modhera-sun-temple", "rani-ki-vav", "adalaj-stepwell"],
+    "totalDistance": "145 km",
+    "driveTime": "3.5 hours",
+    "feasibility": "Doable in 1 day from Ahmedabad/Gandhinagar",
+    "coordinates": [
+      [23.5835, 72.1331],
+      [23.8593, 72.1017],
+      [23.1667, 72.5801]
+    ]
+  },
+  {
+    "id": "harappan-trail",
+    "name": "5,000-Year Harappan Trade Trail",
+    "tagline": "Indus Valley Civilization Circuit",
+    "description": "Trace the footsteps of Bronze Age traders from the ancient stone reservoirs of Dholavira in Kutch to the world's oldest engineered dockyard at Lothal.",
+    "sites": ["dholavira", "lothal"],
+    "totalDistance": "310 km",
+    "driveTime": "6 hours",
+    "feasibility": "2-day itinerary from Ahmedabad",
+    "coordinates": [
+      [23.8863, 70.2106],
+      [22.5215, 72.2497]
+    ]
+  },
+  {
+    "id": "saurashtra-coast-trail",
+    "name": "Saurashtra Coast & Royal Citadel Trail",
+    "tagline": "Fortresses, Pilgrimage & Coastal Shrines",
+    "description": "Explore the ancient Mauryan citadel of Uparkot in Junagadh, the seashore Somnath Jyotirlinga, and the sacred 5-storey spire at Dwarka.",
+    "sites": ["uparkot-fort", "somnath-temple", "dwarkadhish-temple"],
+    "totalDistance": "380 km",
+    "driveTime": "7 hours",
+    "feasibility": "3-day Saurashtra coastal circuit",
+    "coordinates": [
+      [21.5167, 70.4667],
+      [20.8880, 70.4012],
+      [22.2376, 68.9674]
+    ]
+  }
+]
