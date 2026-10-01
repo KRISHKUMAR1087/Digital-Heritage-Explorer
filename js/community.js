@@ -156,3 +156,5 @@ const CommunityComponent = (() => {
     getSubmissions
   };
 })();
+
+window.CommunityComponent = CommunityComponent;

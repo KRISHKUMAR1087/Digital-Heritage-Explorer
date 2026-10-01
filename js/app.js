@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggleListBtn = document.getElementById('btn-view-list');
   const mobileToggleMapBtn = document.getElementById('btn-view-map');
   const btnThisMonth = document.getElementById('btn-this-month');
+  const btnToggleFilters = document.getElementById('btn-toggle-filters');
+  const filterBar = document.querySelector('.filter-bar');
 
   // Register Offline Service Worker
   if ('serviceWorker' in navigator) {
@@ -33,24 +35,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize Modules
-  GalleryComponent.init();
-  PassportComponent.init();
+  if (window.A11yComponent && typeof A11yComponent.init === 'function') {
+    A11yComponent.init();
+  }
+  if (window.GalleryComponent) GalleryComponent.init();
+  if (window.PassportComponent) PassportComponent.init();
 
-  I18nComponent.init((lang) => {
-    renderCategoryChips(allSites);
-    renderEraChips();
-    applyFilters();
-    if (window.PassportComponent && PassportComponent.updateCounterUI) PassportComponent.updateCounterUI();
-    if (window.SiteCompareComponent && SiteCompareComponent.updateStickyBar) SiteCompareComponent.updateStickyBar();
-    if (window.PlannerComponent && PlannerComponent.updateUI) PlannerComponent.updateUI();
-    if (window.TrailsComponent && TrailsComponent.renderTrailChips) TrailsComponent.renderTrailChips();
-    if (window.GalleryComponent && GalleryComponent.refreshModal) GalleryComponent.refreshModal();
-  });
+  if (window.I18nComponent) {
+    I18nComponent.init((lang) => {
+      renderCategoryChips(allSites);
+      renderEraChips();
+      applyFilters();
+      if (window.PassportComponent && PassportComponent.updateCounterUI) PassportComponent.updateCounterUI();
+      if (window.SiteCompareComponent && SiteCompareComponent.updateStickyBar) SiteCompareComponent.updateStickyBar();
+      if (window.PlannerComponent && PlannerComponent.updateUI) PlannerComponent.updateUI();
+      if (window.TrailsComponent && TrailsComponent.renderTrailChips) TrailsComponent.renderTrailChips();
+      if (window.GalleryComponent && GalleryComponent.refreshModal) GalleryComponent.refreshModal();
+    });
+  }
 
   // Set initial mobile view mode
   document.body.classList.add('mobile-view-list');
 
-  // Fetch Site Data with resilient path fallbacks (works on Cloudflare Pages, GitHub Pages subpaths, and local dev)
+  // Mobile Filters & Trails Toggle Handler
+  if (btnToggleFilters && filterBar) {
+    if (window.innerWidth <= 768) {
+      filterBar.classList.add('collapsed');
+      btnToggleFilters.setAttribute('aria-expanded', 'false');
+    }
+    btnToggleFilters.addEventListener('click', () => {
+      const isExpanded = btnToggleFilters.getAttribute('aria-expanded') === 'true';
+      btnToggleFilters.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+      filterBar.classList.toggle('collapsed', isExpanded);
+    });
+  }
+
+  // Fetch Site Data with resilient path fallbacks
   const siteDataPaths = [
     './data/sites.json',
     'data/sites.json',
@@ -63,145 +83,160 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const response = await fetch(path);
         if (response.ok) {
-          return await response.json();
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) return data;
         }
       } catch (err) {
         lastErr = err;
       }
     }
-    throw lastErr || new Error('All data fetch paths failed');
+    if (window.EMBEDDED_SITES_DATA && Array.isArray(window.EMBEDDED_SITES_DATA) && window.EMBEDDED_SITES_DATA.length > 0) {
+      return window.EMBEDDED_SITES_DATA;
+    }
+    throw lastErr || new Error('All data fetch paths failed and no embedded fallback found');
   }
 
-  loadSitesData()
-    .then(sites => {
-      allSites = sites;
+  function initAppData(sites) {
+    allSites = sites;
 
-      // Render Category Chips & Era Chips
-      renderCategoryChips(allSites);
-      renderEraChips();
+    // Render Category Chips & Era Chips
+    renderCategoryChips(allSites);
+    renderEraChips();
 
-      // Initialize Site Comparison Module
-      if (window.SiteCompareComponent) {
-        SiteCompareComponent.init(allSites);
-      }
+    // Initialize Site Comparison Module
+    if (window.SiteCompareComponent) {
+      SiteCompareComponent.init(allSites);
+    }
 
-      // Initialize Leaflet Map
+    // Initialize Leaflet Map
+    if (window.MapComponent) {
       MapComponent.init(
         allSites,
         handleMarkerClick,
         handleDetailsClick
       );
+    }
 
-      // Initialize Image Recognition Module
+    // Initialize Image Recognition Module
+    if (window.RecognitionComponent) {
       RecognitionComponent.init(
         allSites,
         handleRecognizedSiteSelect
       );
+    }
 
-      // Initialize Heritage Trails Module
+    // Initialize Heritage Trails Module
+    if (window.TrailsComponent) {
       TrailsComponent.init((trailSiteIds) => {
         activeTrailSiteIds = trailSiteIds;
         applyFilters();
       });
+    }
 
-      // Initialize Tourist Tools (Near Me & Hidden Gems)
+    // Initialize Tourist Tools (Near Me & Hidden Gems)
+    if (window.TouristToolsComponent) {
       TouristToolsComponent.init((userLocation) => {
-        // Location updated, re-apply filters & sort cards by GPS distance
         applyFilters();
       });
+    }
 
-      const simLocSelect = document.getElementById('simulated-location-select');
-      if (simLocSelect) {
-        simLocSelect.addEventListener('change', (e) => {
-          const val = e.target.value;
-          if (val) {
-            TouristToolsComponent.setSimulatedLocation(val, () => {
-              applyFilters();
-            });
-          }
-        });
-      }
-
-      // Initialize Trip Planner UI & Listeners
-      const btnOpenTrip = document.getElementById('btn-open-trip-planner');
-      if (btnOpenTrip) {
-        btnOpenTrip.addEventListener('click', () => {
-          if (window.PlannerComponent) PlannerComponent.openModal();
-        });
-      }
-      if (window.PlannerComponent) {
-        PlannerComponent.updateUI();
-      }
-
-      // Timeline Slider Listener
-      if (timelineSlider) {
-        timelineSlider.addEventListener('input', (e) => {
-          maxTimelineYear = parseInt(e.target.value, 10);
-          if (timelineYearLabel) {
-            timelineYearLabel.textContent = maxTimelineYear < 0 
-              ? `${Math.abs(maxTimelineYear)} BCE` 
-              : `${maxTimelineYear} AD`;
-          }
-          applyFilters();
-        });
-      }
-
-      // Initialize Smart Search & Advanced Filters Module
-      if (window.SearchComponent) {
-        SearchComponent.init(allSites, () => {
-          applyFilters();
-        });
-      }
-
-      // Smart Filter Dropdowns Listeners (UNESCO, Entry Fee, Open Now)
-      const selectUnesco = document.getElementById('filter-unesco');
-      if (selectUnesco) {
-        selectUnesco.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ unesco: e.target.value });
-        });
-      }
-
-      const selectEntry = document.getElementById('filter-entry');
-      if (selectEntry) {
-        selectEntry.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ entry: e.target.value });
-        });
-      }
-
-      const selectOpen = document.getElementById('filter-open');
-      if (selectOpen) {
-        selectOpen.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ open: e.target.value });
-        });
-      }
-
-      // Happening This Month Filter Button Listener
-      if (btnThisMonth) {
-        btnThisMonth.addEventListener('click', () => {
-          filterThisMonthOnly = !filterThisMonthOnly;
-          btnThisMonth.classList.toggle('active', filterThisMonthOnly);
-          applyFilters();
-        });
-      }
-
-      // Initial Render & Hash Routing
-      applyFilters();
-
-      window.addEventListener('hashchange', handleHashRouting);
-      handleHashRouting();
-
-      // Setup Search Listener with Debounce
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => {
-            searchQuery = e.target.value.trim().toLowerCase();
+    const simLocSelect = document.getElementById('simulated-location-select');
+    if (simLocSelect) {
+      simLocSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val && window.TouristToolsComponent) {
+          TouristToolsComponent.setSimulatedLocation(val, () => {
             applyFilters();
-          }, 250);
-        });
-      }
+          });
+        }
+      });
+    }
 
-      setupMobileToggle();
+    // Initialize Trip Planner UI & Listeners
+    const btnOpenTrip = document.getElementById('btn-open-trip-planner');
+    if (btnOpenTrip) {
+      btnOpenTrip.addEventListener('click', () => {
+        if (window.PlannerComponent) PlannerComponent.openModal();
+      });
+    }
+    if (window.PlannerComponent) {
+      PlannerComponent.updateUI();
+    }
+
+    // Timeline Slider Listener
+    if (timelineSlider) {
+      timelineSlider.addEventListener('input', (e) => {
+        maxTimelineYear = parseInt(e.target.value, 10);
+        if (timelineYearLabel) {
+          timelineYearLabel.textContent = maxTimelineYear < 0 
+            ? `${Math.abs(maxTimelineYear)} BCE` 
+            : `${maxTimelineYear} AD`;
+        }
+        applyFilters();
+      });
+    }
+
+    // Initialize Smart Search & Advanced Filters Module
+    if (window.SearchComponent) {
+      SearchComponent.init(allSites, () => {
+        applyFilters();
+      });
+    }
+
+    // Smart Filter Dropdowns Listeners (UNESCO, Entry Fee, Open Now)
+    const selectUnesco = document.getElementById('filter-unesco');
+    if (selectUnesco) {
+      selectUnesco.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ unesco: e.target.value });
+      });
+    }
+
+    const selectEntry = document.getElementById('filter-entry');
+    if (selectEntry) {
+      selectEntry.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ entry: e.target.value });
+      });
+    }
+
+    const selectOpen = document.getElementById('filter-open');
+    if (selectOpen) {
+      selectOpen.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ open: e.target.value });
+      });
+    }
+
+    // Happening This Month Filter Button Listener
+    if (btnThisMonth) {
+      btnThisMonth.addEventListener('click', () => {
+        filterThisMonthOnly = !filterThisMonthOnly;
+        btnThisMonth.classList.toggle('active', filterThisMonthOnly);
+        applyFilters();
+      });
+    }
+
+    // Initial Render & Hash Routing
+    applyFilters();
+
+    window.addEventListener('hashchange', handleHashRouting);
+    handleHashRouting();
+
+    // Setup Search Listener with Debounce
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          searchQuery = e.target.value.trim().toLowerCase();
+          applyFilters();
+        }, 250);
+      });
+    }
+
+    setupMobileToggle();
+  }
+
+  loadSitesData()
+    .then(sites => {
+      initAppData(sites);
     })
     .catch(error => {
       console.error('Failed to load heritage sites JSON:', error);
@@ -222,42 +257,34 @@ document.addEventListener('DOMContentLoaded', () => {
    * Unified Filtering & Sorting Function
    */
   function applyFilters() {
-    // If SearchComponent is active, retrieve active params
     const activeParams = window.SearchComponent ? SearchComponent.getActiveParams() : {};
 
     let filteredSites = allSites.filter(site => {
-      // Trail Filter
       if (activeTrailSiteIds && !activeTrailSiteIds.includes(site.id)) {
         return false;
       }
 
-      // Category Match
       const categoryToMatch = activeParams.category !== undefined && activeParams.category !== 'All' ? activeParams.category : currentCategory;
       const matchesCategory = categoryToMatch === 'All' || site.category === categoryToMatch;
 
-      // Era Match
       const eraToMatch = activeParams.era !== undefined && activeParams.era !== 'All' ? activeParams.era : currentEra;
       const matchesEra = eraToMatch === 'All' || site.era === eraToMatch;
 
-      // Timeline Year Match (site year <= slider year)
       const matchesTimeline = site.year === undefined || site.year <= maxTimelineYear;
 
-      // Happening This Month Match
       const matchesThisMonth = !filterThisMonthOnly || (window.LivingComponent && LivingComponent.isHappeningThisMonth(site));
 
       return matchesCategory && matchesEra && matchesTimeline && matchesThisMonth;
     });
 
-    // Delegate smart search, unesco, entry, open & multilingual fuzzy search to SearchComponent
     if (window.SearchComponent) {
       const qToUse = searchQuery || activeParams.q || '';
       const paramsToPass = { ...activeParams, q: qToUse };
       filteredSites = SearchComponent.filterSites(filteredSites, paramsToPass);
     }
 
-    // If User GPS Location is active, sort by nearest distance
-    const userLoc = TouristToolsComponent.getUserLocation();
-    if (userLoc) {
+    const userLoc = window.TouristToolsComponent ? TouristToolsComponent.getUserLocation() : null;
+    if (userLoc && window.TouristToolsComponent) {
       filteredSites.sort((a, b) => {
         const distA = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, a.lat, a.lng);
         const distB = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, b.lat, b.lng);
@@ -265,15 +292,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Update Cards Grid
-    CardsComponent.render(
-      filteredSites,
-      handleCardClick,
-      handleDetailsClick
-    );
+    if (window.CardsComponent) {
+      CardsComponent.render(
+        filteredSites,
+        handleCardClick,
+        handleDetailsClick
+      );
+    }
 
-    // Update Map Markers
-    MapComponent.updateMarkers(filteredSites);
+    if (window.MapComponent) {
+      MapComponent.updateMarkers(filteredSites);
+    }
   }
 
   function handleHashRouting() {
@@ -292,9 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateChipsActiveUI('All');
         applyFilters();
 
-        CardsComponent.highlightCard(targetSite.id);
-        MapComponent.flyToSite(targetSite.id, true);
-        GalleryComponent.openDetailModal(targetSite);
+        if (window.CardsComponent) CardsComponent.highlightCard(targetSite.id);
+        if (window.MapComponent) MapComponent.flyToSite(targetSite.id, true);
+        if (window.GalleryComponent) GalleryComponent.openDetailModal(targetSite);
       }
     } else if (hash.startsWith('#/trip')) {
       if (window.PlannerComponent) {
@@ -395,23 +424,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleCardClick(site) {
     window.location.hash = `#/site/${site.id}`;
-    CardsComponent.highlightCard(site.id);
-    MapComponent.flyToSite(site.id, true);
+    if (window.CardsComponent) CardsComponent.highlightCard(site.id);
+    if (window.MapComponent) MapComponent.flyToSite(site.id, true);
 
     if (window.innerWidth <= 768 && document.body.classList.contains('mobile-view-list')) {
       switchToMobileView('map');
-      MapComponent.flyToSite(site.id, true);
+      if (window.MapComponent) MapComponent.flyToSite(site.id, true);
     }
   }
 
   function handleMarkerClick(siteId) {
     window.location.hash = `#/site/${siteId}`;
-    CardsComponent.highlightCard(siteId);
+    if (window.CardsComponent) CardsComponent.highlightCard(siteId);
   }
 
   function handleDetailsClick(site) {
     window.location.hash = `#/site/${site.id}`;
-    GalleryComponent.openDetailModal(site);
+    if (window.GalleryComponent) GalleryComponent.openDetailModal(site);
   }
 
   function handleRecognizedSiteSelect(site) {
@@ -434,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('mobile-view-map');
       if (mobileToggleMapBtn) mobileToggleMapBtn.classList.add('active');
       if (mobileToggleListBtn) mobileToggleListBtn.classList.remove('active');
-      MapComponent.invalidateSize();
+      if (window.MapComponent) MapComponent.invalidateSize();
     }
   }
 });

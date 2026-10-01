@@ -407,3 +407,5 @@ const RecognitionComponent = (() => {
     closeModal
   };
 })();
+
+window.RecognitionComponent = RecognitionComponent;

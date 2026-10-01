@@ -8,12 +8,6 @@ const CardsComponent = (() => {
   const cardsContainer = document.getElementById('cards-grid');
   const countIndicator = document.getElementById('results-count');
 
-  /**
-   * Render the list of site cards into the container.
-   * @param {Array} sites - Array of site objects.
-   * @param {Function} onCardClick - Callback when card is clicked (syncs to map).
-   * @param {Function} onDetailsClick - Callback when "View Details" button is clicked.
-   */
   function render(sites, onCardClick, onDetailsClick) {
     if (!cardsContainer) return;
     cardsContainer.innerHTML = '';
@@ -21,7 +15,6 @@ const CardsComponent = (() => {
     const t = (key) => window.I18nComponent ? I18nComponent.t(key) : key;
     const getSiteText = (site, field) => window.I18nComponent ? I18nComponent.getSiteText(site, field) : site[field];
 
-    // Update results counter
     if (countIndicator) {
       countIndicator.textContent = `${sites.length} ${t('resultsCount')}`;
     }
@@ -45,18 +38,16 @@ const CardsComponent = (() => {
       const statusText = openStatus.isOpen ? t('openNow') : t('closedNow');
       const isVisited = PassportComponent.isVisited(site.id);
 
-      // Distance calculation if user location active
       let distanceHtml = '';
-      if (userLoc) {
+      if (userLoc && window.TouristToolsComponent) {
         const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
         const formattedDist = TouristToolsComponent.formatDistance(distKm);
-        distanceHtml = `<div class="card-distance-badge">📍 <strong>${formattedDist}</strong> from your location</div>`;
-        distanceHtml = `<span class="card-distance">📍 ${distKm} ${t('kmAway')}</span>`;
+        distanceHtml = `<div class="card-distance-badge">📍 <strong>${formattedDist}</strong> (${distKm.toFixed(1)} ${t('kmAway')})</div>`;
       }
 
       card.innerHTML = `
         <div class="card-media">
-          <img src="${site.cover}" alt="${getSiteText(site, 'name')} cover photo" loading="lazy" width="400" height="225" />
+          <img src="${site.cover}" alt="${escapeHTML(getSiteText(site, 'name'))} cover photo" loading="lazy" width="400" height="225" />
           <span class="card-badge">${escapeHTML(site.category)}</span>
           ${isVisited ? `<span class="stamp-badge">${t('stampedBadge')}</span>` : ''}
         </div>
@@ -92,7 +83,6 @@ const CardsComponent = (() => {
         </div>
       `;
 
-      // Event listener for Trip toggle button
       const tripBtn = card.querySelector('.btn-trip-toggle');
       if (tripBtn) {
         tripBtn.addEventListener('click', (e) => {
@@ -103,7 +93,6 @@ const CardsComponent = (() => {
         });
       }
 
-      // Event listener for Compare checkbox
       const compareCheckbox = card.querySelector('.card-compare-checkbox');
       if (compareCheckbox) {
         compareCheckbox.addEventListener('click', (e) => {
@@ -115,34 +104,31 @@ const CardsComponent = (() => {
         });
       }
 
-      // Event listener for Passport Stamp button
       const stampBtn = card.querySelector('.btn-stamp');
       if (stampBtn) {
         stampBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          PassportComponent.toggleVisited(site.id);
-          render(sites, onCardClick, onDetailsClick); // refresh card state
+          if (window.PassportComponent) {
+            PassportComponent.toggleVisited(site.id);
+            render(sites, onCardClick, onDetailsClick);
+          }
         });
       }
 
-      // Event listener for main card click
       card.addEventListener('click', (e) => {
         if (e.target.closest('.btn-details')) {
           e.stopPropagation();
           if (typeof onDetailsClick === 'function') onDetailsClick(site);
-        } else if (!e.target.closest('.btn-stamp')) {
+        } else if (!e.target.closest('.btn-stamp') && !e.target.closest('.btn-trip-toggle') && !e.target.closest('.card-compare-checkbox')) {
           if (typeof onCardClick === 'function') onCardClick(site);
         }
       });
 
       card.addEventListener('keydown', (e) => {
+        if (e.target !== card) return; // Ignore keydown unless e.target === card
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          if (e.target.classList.contains('btn-details')) {
-            if (typeof onDetailsClick === 'function') onDetailsClick(site);
-          } else {
-            if (typeof onCardClick === 'function') onCardClick(site);
-          }
+          if (typeof onCardClick === 'function') onCardClick(site);
         }
       });
 
@@ -151,11 +137,14 @@ const CardsComponent = (() => {
   }
 
   function renderEmptyState() {
+    if (!cardsContainer) return;
+    const t = (key) => window.I18nComponent ? I18nComponent.t(key) : key;
+
     cardsContainer.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon" aria-hidden="true">🏛️</div>
-        <h3 class="empty-title">No Heritage Sites Found</h3>
-        <p class="empty-desc">We couldn't find any sites matching your search criteria. Try adjusting your search query, selecting a different era, or clearing filters.</p>
+        <div class="empty-icon">🔍</div>
+        <h3 class="empty-title">${t('noSitesFound')}</h3>
+        <p class="empty-desc">${t('noSitesDesc')}</p>
       </div>
     `;
   }
@@ -163,13 +152,13 @@ const CardsComponent = (() => {
   function highlightCard(siteId) {
     if (!cardsContainer) return;
     const allCards = cardsContainer.querySelectorAll('.site-card');
-    allCards.forEach(card => card.classList.remove('highlighted'));
-
-    const targetCard = cardsContainer.querySelector(`.site-card[data-site-id="${siteId}"]`);
-    if (targetCard) {
-      targetCard.classList.add('highlighted');
-      targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    allCards.forEach(c => {
+      const isTarget = c.dataset.siteId === siteId;
+      c.classList.toggle('highlighted', isTarget);
+      if (isTarget) {
+        c.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
   }
 
   function escapeHTML(str) {
@@ -187,3 +176,5 @@ const CardsComponent = (() => {
     highlightCard
   };
 })();
+
+window.CardsComponent = CardsComponent;

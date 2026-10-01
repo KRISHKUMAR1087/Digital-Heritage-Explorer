@@ -12,6 +12,12 @@ const I18nComponent = (() => {
     en: {
       brandTitle: 'Digital Heritage Explorer',
       brandSubtitle: 'Gujarat Historical Monuments & Architectural Treasures',
+      heroTitle: 'Uncover 4,500 Years of Gujarat Architectural Heritage',
+      heroSubtitle: 'Discover subterranean stepwells, equinox sun alignment simulators, Harappan Indus Valley cities, and Indo-Islamic fortresses with interactive 3D tours, audio guides, trip itineraries, and 100% offline access.',
+      heroExplore: '🗺️ Explore Monuments & Map',
+      heroTrails: '🛣️ Curated Heritage Trails',
+      heroPlanner: '🎒 Plan Your Trip',
+      heroIdentify: '📷 AI Photo Finder',
       searchPlaceholder: 'Search by site name, city, or keyword...',
       identifyBtn: '📷 Identify Monument',
       passportLabel: 'Passport:',
@@ -135,6 +141,12 @@ const I18nComponent = (() => {
     gu: {
       brandTitle: 'ડિજિટલ હેરિટેજ એક્સપ્લોરર',
       brandSubtitle: 'ગુજરાતના ઐતિહાસિક સ્મારકો અને સ્થાપત્ય વારસો',
+      heroTitle: 'ગુજરાતના ૪,૫૦૦ વર્ષના સ્થાપત્ય વારસાની શોધ કરો',
+      heroSubtitle: 'ભૂગર્ભ વાવ, સૂર્ય મંદિર વિષુવવૃત્તીય સિમ્યુલેટર, હડપ્પન સંસ્કૃતિના સ્થળો અને કિલ્લાઓ ૩D ટૂર, ઓડિયો ગાઇડ અને ઓફલાઇન મેપ સાથે જુઓ.',
+      heroExplore: '🗺️ સ્મારકો અને નકશો જુઓ',
+      heroTrails: '🛣️ હેરિટેજ ટ્રેલ્સ',
+      heroPlanner: '🎒 પ્રવાસ આયોજન',
+      heroIdentify: '📷 AI ફોટો ઓળખ',
       searchPlaceholder: 'નામ, શહેર અથવા કીવર્ડ દ્વારા શોધો...',
       identifyBtn: '📷 સ્મારક ઓળખો',
       passportLabel: 'પાસપોર્ટ:',
@@ -258,6 +270,12 @@ const I18nComponent = (() => {
     hi: {
       brandTitle: 'डिजिटल हेरिटेज एक्सप्लोरर',
       brandSubtitle: 'गुजरात के ऐतिहासिक स्मारक और स्थापत्य विरासत',
+      heroTitle: 'गुजरात की 4,500 वर्षों की वास्तुकला विरासत की खोज करें',
+      heroSubtitle: 'भूमिगत बावड़ियों, सूर्य मंदिर विषुव संक्रांति सिम्युलेटर, हड़प्पा सभ्यता के स्थलों और किलों को 3D टूर, ऑडियो गाइड और 100% ऑफ़लाइन मानचित्र के साथ देखें।',
+      heroExplore: '🗺️ स्मारक और मानचित्र देखें',
+      heroTrails: '🛣️ हेरिटेज ट्रेल्स',
+      heroPlanner: '🎒 यात्रा की योजना बनाएं',
+      heroIdentify: '📷 AI फोटो पहचान',
       searchPlaceholder: 'नाम, शहर या कीवर्ड से खोजें...',
       identifyBtn: '📷 स्मारक पहचानें',
       passportLabel: 'पासपोर्ट:',
@@ -490,6 +508,7 @@ const I18nComponent = (() => {
   return {
     init,
     getLang,
+    getCurrentLang: getLang,
     setLang,
     t,
     getSiteText

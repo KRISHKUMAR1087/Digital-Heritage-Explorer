@@ -63,3 +63,5 @@ const PassportComponent = (() => {
     getVisitedCount: () => visitedSet.size
   };
 })();
+
+window.PassportComponent = PassportComponent;

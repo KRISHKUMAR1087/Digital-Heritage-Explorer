@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Digital Heritage Explorer — Discover local historical monuments, stepwells, temples, and ancient ruins in Gujarat with interactive maps, trails, time travel timeline, and offline support.">
   <title>Digital Heritage Explorer — Gujarat Heritage Tourism</title>
 
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
 
   <!-- App Custom Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=5">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -65,8 +65,105 @@
     </div>
   </header>
 
+  <!-- Hero Landing Page Section -->
+  <section class="landing-hero" id="landing-hero" aria-label="Gujarat Heritage Portal Landing Page">
+    <div class="landing-hero-overlay"></div>
+    <div class="landing-hero-container">
+      
+      <!-- Top Hero Badge & Controls -->
+      <div class="landing-top-bar">
+        <span class="landing-badge">🏛️ Official Digital Heritage Tourism Portal • Gujarat</span>
+        <button type="button" id="btn-toggle-hero" class="btn-toggle-hero" aria-expanded="true">
+          🔼 Compact Hero
+        </button>
+      </div>
+
+      <!-- Main Hero Headline & Subtitle -->
+      <div class="landing-hero-content">
+        <h2 class="landing-title" data-i18n="heroTitle">Uncover 4,500 Years of Gujarat Architectural Heritage</h2>
+        <p class="landing-subtitle" data-i18n="heroSubtitle">
+          Discover subterranean stepwells, equinox sun alignment simulators, Harappan Indus Valley cities, and Indo-Islamic fortresses with interactive 3D tours, audio guides, trip itineraries, and 100% offline access.
+        </p>
+
+        <!-- Call To Action Buttons -->
+        <div class="landing-cta-group">
+          <a href="#explorer-section" class="btn-hero-primary" id="btn-hero-explore" data-i18n="heroExplore">
+            🗺️ Explore Monuments &amp; Map
+          </a>
+          <button type="button" class="btn-hero-secondary" id="btn-hero-trails" data-i18n="heroTrails">
+            🛣️ Curated Heritage Trails
+          </button>
+          <button type="button" class="btn-hero-accent" id="btn-hero-planner" data-i18n="heroPlanner">
+            🎒 Plan Your Trip
+          </button>
+          <button type="button" class="btn-hero-outline" id="btn-hero-identify" data-i18n="heroIdentify">
+            📷 AI Photo Finder
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Metric Stats Banner -->
+      <div class="landing-stats-grid">
+        <div class="landing-stat-card">
+          <span class="stat-number">11+</span>
+          <span class="stat-text">UNESCO &amp; State Monuments</span>
+        </div>
+        <div class="landing-stat-card">
+          <span class="stat-number">4,500+</span>
+          <span class="stat-text">Years of Living History</span>
+        </div>
+        <div class="landing-stat-card">
+          <span class="stat-number">7 Storeys</span>
+          <span class="stat-text">Subterranean Stepwell Cut-Away</span>
+        </div>
+        <div class="landing-stat-card">
+          <span class="stat-number">100%</span>
+          <span class="stat-text">Offline PWA Capable</span>
+        </div>
+      </div>
+
+      <!-- Interactive Feature Highlights Cards -->
+      <div class="landing-features-preview">
+        <h3 class="preview-section-title">✨ Key Interactive Experiences</h3>
+        <div class="preview-cards-grid">
+          <div class="preview-feature-card">
+            <span class="preview-card-icon">🏛️</span>
+            <h4>Subterranean Stepwells</h4>
+            <p>Explore 7-level vertical SVG cut-away diagrams for Rani ki Vav &amp; Adalaj with storey-by-storey architectural friezes.</p>
+          </div>
+          <div class="preview-feature-card">
+            <span class="preview-card-icon">☀️</span>
+            <h4>Solar Alignment Simulator</h4>
+            <p>Simulate equinox sunlight beams illuminating the sanctum garbhagriha at Modhera Sun Temple.</p>
+          </div>
+          <div class="preview-feature-card">
+            <span class="preview-card-icon">🎧</span>
+            <h4>Multilingual Audio Guide</h4>
+            <p>Immersive storytelling in English, Gujarati (ગુજરાતી), and Hindi (हिंदी) with playback speed controls &amp; transcripts.</p>
+          </div>
+          <div class="preview-feature-card">
+            <span class="preview-card-icon">🗺️</span>
+            <h4>Trip Planner &amp; OSRM Routes</h4>
+            <p>Organize custom itineraries, compute driving durations, plot road polylines, and export printable PDFs.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Explorer Section Anchor -->
+  <div id="explorer-section"></div>
+
+  <!-- Mobile Filters & Trails Toggle -->
+  <div class="mobile-filter-toggle-wrapper">
+    <button type="button" id="btn-toggle-filters" class="btn-toggle-filters" aria-expanded="true" aria-controls="filter-bar">
+      ⚡ Filters &amp; Trails ▾
+    </button>
+  </div>
+
   <!-- Navigation Control Bar -->
-  <nav class="filter-bar" aria-label="Heritage Filters &amp; Trails">
+  <nav class="filter-bar" id="filter-bar" aria-label="Heritage Filters &amp; Trails">
     <div class="filter-container main-filter-container">
       
       <!-- Category Filter Chips -->
@@ -419,6 +516,9 @@
   <script src="vendor/leaflet/leaflet.js"></script>
 
   <!-- Modular JavaScript Files -->
+  <script src="js/a11y.js"></script>
+  <script src="js/imageFallback.js"></script>
+  <script src="js/sitesData.js"></script>
   <script src="js/cards.js"></script>
   <script src="js/map.js"></script>
   <script src="js/gallery.js"></script>
@@ -445,6 +545,7 @@
   <script src="js/quiz.js"></script>
   <script src="js/timeline.js"></script>
   <script src="js/community.js"></script>
+  <script src="js/landing.js"></script>
   <script src="js/app.js"></script>
 
 </body>

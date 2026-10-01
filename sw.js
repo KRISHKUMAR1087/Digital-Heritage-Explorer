@@ -1,11 +1,11 @@
 /**
  * Offline Service Worker
  * Caches HTML, CSS, JavaScript, vendor libraries, site JSON datasets, and map tiles.
- * Implements Cache-First strategy for app shell and Dynamic Cache for tile requests.
+ * Implements Cache-First strategy for app shell and Dynamic Cache for tile & image requests.
  */
 
-// Increment Cache Name to v4 to purge all stale v2/v3 caches immediately
-const CACHE_NAME = 'digital-heritage-explorer-v4';
+// Bump Cache Name to v5 to force cache invalidation & update precached modules
+const CACHE_NAME = 'digital-heritage-explorer-v5';
 const TILE_CACHE_NAME = 'digital-heritage-map-tiles-v1';
 
 const STATIC_ASSETS = [
@@ -21,6 +21,7 @@ const STATIC_ASSETS = [
   './js/search.js',
   './js/seo.js',
   './js/a11y.js',
+  './js/imageFallback.js',
   './js/pwa.js',
   './js/stepwell.js',
   './js/sun.js',
@@ -34,12 +35,21 @@ const STATIC_ASSETS = [
   './js/i18n.js',
   './js/trails.js',
   './js/touristTools.js',
+  './js/planner.js',
+  './js/routing.js',
+  './js/weather.js',
+  './js/panorama.js',
+  './js/quiz.js',
+  './js/timeline.js',
+  './js/community.js',
+  './js/sitesData.js',
   './vendor/leaflet/leaflet.css',
   './vendor/leaflet/leaflet.js',
   './data/sites.json',
   './data/trails.json',
   './images/icon-192.png',
-  './images/icon-512.png'
+  './images/icon-512.png',
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e2d8c3"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18" fill="%235c4033">🏛️ Image Unavailable</text></svg>'
 ];
 
 // Install Event — Cache static shell and assets resiliently
@@ -98,7 +108,26 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First strategy for JSON Datasets and JS files (ensures immediate updates on deploy)
+  // Remote & Local Images (Runtime Caching)
+  if (url.hostname.includes('upload.wikimedia.org') || url.pathname.match(/\.(jpg|jpeg|png|webp|gif|svg)$/i)) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) return cachedResponse;
+        return fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+          }
+          return networkResponse;
+        }).catch(() => {
+          return caches.match('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e2d8c3"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18" fill="%235c4033">🏛️ Image Unavailable</text></svg>');
+        });
+      })
+    );
+    return;
+  }
+
+  // Network-First strategy for JSON Datasets and JS files
   if (url.pathname.endsWith('.json') || url.pathname.endsWith('.js')) {
     event.respondWith(
       fetch(event.request)
@@ -110,14 +139,13 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         })
         .catch(() => {
-          // Offline fallback from cache
           return caches.match(event.request);
         })
     );
     return;
   }
 
-  // Cache-First strategy for static assets (images, CSS, HTML shell)
+  // Cache-First strategy for remaining static assets (CSS, HTML shell)
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {

@@ -205,3 +205,5 @@ const QuizComponent = (() => {
     getCompletedQuizzes
   };
 })();
+
+window.QuizComponent = QuizComponent;

@@ -526,3 +526,5 @@ const PlannerComponent = (() => {
     updateUI
   };
 })();
+
+window.PlannerComponent = PlannerComponent;

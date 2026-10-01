@@ -156,3 +156,5 @@ const WeatherComponent = (() => {
     render
   };
 })();
+
+window.WeatherComponent = WeatherComponent;

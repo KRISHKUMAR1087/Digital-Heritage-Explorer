@@ -359,9 +359,16 @@ const MapComponent = (() => {
         drawLiveDistanceLine(targetSite);
       }
 
-      map.flyTo(marker.getLatLng(), 13, {
-        duration: 1.2
-      });
+      const container = map.getContainer();
+      const is0x0 = !container || container.offsetWidth === 0 || container.offsetHeight === 0;
+
+      if (is0x0) {
+        map.setView(marker.getLatLng(), 13, { animate: false });
+      } else {
+        map.flyTo(marker.getLatLng(), 13, {
+          duration: 1.2
+        });
+      }
 
       if (openPopup) {
         setTimeout(() => {
@@ -411,3 +418,4 @@ const MapComponent = (() => {
   };
 })();
 
+window.MapComponent = MapComponent;

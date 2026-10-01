@@ -160,3 +160,5 @@ const TrailsComponent = (() => {
     getCurrentTrail
   };
 })();
+
+window.TrailsComponent = TrailsComponent;

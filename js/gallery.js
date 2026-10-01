@@ -364,3 +364,5 @@ const GalleryComponent = (() => {
     refreshModal
   };
 })();
+
+window.GalleryComponent = GalleryComponent;

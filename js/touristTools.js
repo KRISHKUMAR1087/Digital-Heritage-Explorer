@@ -286,3 +286,4 @@ const TouristToolsComponent = (() => {
   };
 })();
 
+window.TouristToolsComponent = TouristToolsComponent;

@@ -72,3 +72,5 @@ const TimelineComponent = (() => {
     getSelectedEra: () => selectedEraId
   };
 })();
+
+window.TimelineComponent = TimelineComponent;

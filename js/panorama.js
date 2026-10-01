@@ -85,3 +85,5 @@ const PanoramaComponent = (() => {
     isGyroActive: () => isGyroEnabled
   };
 })();
+
+window.PanoramaComponent = PanoramaComponent;

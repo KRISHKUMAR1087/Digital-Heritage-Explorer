@@ -208,3 +208,5 @@ const StepwellComponent = (() => {
     render
   };
 })();
+
+window.StepwellComponent = StepwellComponent;

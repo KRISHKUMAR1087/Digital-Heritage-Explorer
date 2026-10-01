@@ -118,3 +118,5 @@ const RoutingComponent = (() => {
     updateDirectionsButtonInModal
   };
 })();
+
+window.RoutingComponent = RoutingComponent;

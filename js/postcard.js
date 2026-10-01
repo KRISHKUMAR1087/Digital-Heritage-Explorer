@@ -1,6 +1,6 @@
 /**
  * Shareable Postcard Generator Module (HTML5 Canvas 1200x800)
- * Upgraded with template choices, custom message field, and Web Share API support.
+ * Upgraded with template choices, custom message field, image chain fallbacks, and Web Share API support.
  */
 const PostcardComponent = (() => {
 
@@ -10,13 +10,48 @@ const PostcardComponent = (() => {
     royal: { bg: '#FFF8E7', border: '#B5502F', accent: '#856404', text: '#3B2A1A' }
   };
 
+  let previousBodyOverflow = '';
+
+  /**
+   * Loads candidate images sequentially until one succeeds or all fail.
+   * Prevents out-of-order load races.
+   */
+  async function loadFirstValidImage(candidates) {
+    for (const url of candidates) {
+      if (!url) continue;
+      try {
+        const loadedImg = await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error(`Failed to load ${url}`));
+          img.src = url;
+        });
+        return loadedImg;
+      } catch (err) {
+        // try next candidate
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Helper to draw text with dynamic font size so long titles shrink to fit width.
+   */
+  function drawTitleShrinkToFit(ctx, text, x, y, maxWidth, initialFontSize = 38, fontStyle = 'bold Georgia, serif') {
+    let fontSize = initialFontSize;
+    ctx.font = `${fontSize}px ${fontStyle}`;
+    while (ctx.measureText(text).width > maxWidth && fontSize > 18) {
+      fontSize -= 2;
+      ctx.font = `${fontSize}px ${fontStyle}`;
+    }
+    ctx.fillText(text, x, y);
+  }
+
   /**
    * Generate and download / share a 1200x800 PNG Digital Heritage Postcard for a site.
-   * @param {Object} site - Heritage site object.
-   * @param {string} [templateKey='sandstone']
-   * @param {string} [customMessage='']
    */
-  function generatePostcard(site, templateKey = 'sandstone', customMessage = '') {
+  async function generatePostcard(site, templateKey = 'sandstone', customMessage = '') {
     if (!site) return;
 
     const theme = TEMPLATES[templateKey] || TEMPLATES.sandstone;
@@ -38,15 +73,26 @@ const PostcardComponent = (() => {
     ctx.lineWidth = 3;
     ctx.strokeRect(32, 32, 1136, 736);
 
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
+    // 2. Candidate images chain: cover then every images[].src
+    const imageCandidates = [];
+    if (site.cover) imageCandidates.push(site.cover);
+    if (Array.isArray(site.images)) {
+      site.images.forEach(i => {
+        const src = typeof i === 'string' ? i : i.src;
+        if (src && !imageCandidates.includes(src)) {
+          imageCandidates.push(src);
+        }
+      });
+    }
 
-    img.onload = () => {
-      const imgX = 50;
-      const imgY = 50;
-      const imgW = 1100;
-      const imgH = 430;
+    const loadedImg = await loadFirstValidImage(imageCandidates);
 
+    const imgX = 50;
+    const imgY = 50;
+    const imgW = 1100;
+    const imgH = 430;
+
+    if (loadedImg) {
       ctx.save();
       ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
       ctx.shadowBlur = 15;
@@ -55,105 +101,122 @@ const PostcardComponent = (() => {
       ctx.fillRect(imgX, imgY, imgW, imgH);
       ctx.restore();
 
-      ctx.drawImage(img, imgX, imgY, imgW, imgH);
+      ctx.drawImage(loadedImg, imgX, imgY, imgW, imgH);
+    } else {
+      // Gradient / Fallback box
+      const grad = ctx.createLinearGradient(imgX, imgY, imgX + imgW, imgY + imgH);
+      grad.addColorStop(0, theme.accent);
+      grad.addColorStop(1, theme.border);
+      ctx.fillStyle = grad;
+      ctx.fillRect(imgX, imgY, imgW, imgH);
 
-      // Category Badge
-      ctx.fillStyle = theme.accent;
-      ctx.fillRect(70, 70, 180, 38);
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText((site.category || 'HERITAGE').toUpperCase(), 90, 95);
+      ctx.font = 'bold 32px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(site.name || 'Gujarat Heritage Site', imgX + imgW / 2, imgY + imgH / 2);
+      ctx.textAlign = 'left';
+    }
 
-      const textYStart = 520;
+    // Category Badge
+    ctx.fillStyle = theme.accent;
+    ctx.fillRect(70, 70, 180, 38);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText((site.category || 'HERITAGE').toUpperCase(), 90, 95);
 
-      // Site Title
-      ctx.fillStyle = theme.text;
-      ctx.font = 'bold 38px Georgia, serif';
-      const title = site.name || 'Heritage Site';
-      ctx.fillText(title, 60, textYStart);
+    const textYStart = 520;
 
-      // Location Subtitle
-      ctx.fillStyle = '#B5502F';
-      ctx.font = 'bold 20px sans-serif';
-      const subtitle = `📍 ${site.city}, Gujarat, India  •  ${site.period || 'Historical Era'}`;
-      ctx.fillText(subtitle, 60, textYStart + 36);
+    // Site Title (shrinks long titles to fit)
+    ctx.fillStyle = theme.text;
+    const title = site.name || 'Heritage Site';
+    drawTitleShrinkToFit(ctx, title, 60, textYStart, 760, 38, 'Georgia, serif');
 
-      // Divider Line
-      ctx.strokeStyle = theme.accent;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(60, textYStart + 55);
-      ctx.lineTo(820, textYStart + 55);
-      ctx.stroke();
+    // Location Subtitle
+    ctx.fillStyle = '#B5502F';
+    ctx.font = 'bold 20px sans-serif';
+    const subtitle = `📍 ${site.city || 'Gujarat'}, India  •  ${site.period || 'Historical Era'}`;
+    ctx.fillText(subtitle, 60, textYStart + 36);
 
-      // Summary or Custom Message
-      ctx.fillStyle = theme.text;
-      ctx.font = '20px sans-serif';
-      const displayText = customMessage ? `"${customMessage}"` : (site.summary || site.description || '');
-      wrapText(ctx, displayText, 60, textYStart + 90, 760, 28);
+    // Divider Line
+    ctx.strokeStyle = theme.accent;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(60, textYStart + 55);
+    ctx.lineTo(820, textYStart + 55);
+    ctx.stroke();
 
-      // Heritage Stamp Emblem
-      drawStampEmblem(ctx, 980, 620, theme);
+    // Summary or Custom Message
+    ctx.fillStyle = theme.text;
+    ctx.font = '20px sans-serif';
+    const displayText = customMessage ? `"${customMessage}"` : (site.summary || site.description || '');
+    wrapText(ctx, displayText, 60, textYStart + 90, 760, 28);
 
-      // Watermark
-      ctx.fillStyle = theme.text;
-      ctx.globalAlpha = 0.7;
-      ctx.font = '15px sans-serif';
-      ctx.fillText('Digital Heritage Explorer  •  Preserving Gujarat Cultural Treasures', 60, 755);
-      ctx.globalAlpha = 1.0;
+    // Heritage Stamp Emblem
+    drawStampEmblem(ctx, 980, 620, theme);
 
-      // Trigger Web Share API or PNG Download
-      canvas.toBlob((blob) => {
-        if (!blob) return;
+    // Watermark
+    ctx.fillStyle = theme.text;
+    ctx.globalAlpha = 0.7;
+    ctx.font = '15px sans-serif';
+    ctx.fillText('Digital Heritage Explorer  •  Preserving Gujarat Cultural Treasures', 60, 755);
+    ctx.globalAlpha = 1.0;
 
-        if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'postcard.png', { type: 'image/png' })] })) {
-          const file = new File([blob], `${site.id}-postcard.png`, { type: 'image/png' });
-          navigator.share({
-            title: `Postcard from ${site.name}`,
-            text: `Exploring ${site.name} in ${site.city}, Gujarat!`,
-            files: [file]
-          }).catch(() => downloadPDF(canvas, site.id));
-        } else {
-          downloadPDF(canvas, site.id);
+    // Trigger Web Share API or PNG Download with iOS open-image fallback
+    return new Promise((resolve) => {
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          resolve(false);
+          return;
         }
+
+        const filename = `${site.id || 'heritage'}-postcard.png`;
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+        let shared = false;
+        if (navigator.share && navigator.canShare) {
+          try {
+            const file = new File([blob], filename, { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                title: `Postcard from ${site.name}`,
+                text: `Exploring ${site.name} in ${site.city}, Gujarat!`,
+                files: [file]
+              });
+              shared = true;
+            }
+          } catch (e) {
+            // Share cancelled or unhandled, proceed to download fallback
+          }
+        }
+
+        if (!shared) {
+          downloadOrOpenImage(blob, filename, isIOS);
+        }
+        resolve(true);
       }, 'image/png');
-    };
-
-    img.onerror = () => {
-      ctx.fillStyle = theme.accent;
-      ctx.fillRect(50, 50, 1100, 430);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 28px sans-serif';
-      ctx.fillText(site.name, 100, 250);
-    };
-
-    img.src = site.cover;
+    });
   }
 
-  function downloadPDF(canvas, siteId) {
-    if (window.jspdf && window.jspdf.jsPDF) {
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'px',
-        format: [1200, 800]
-      });
-      const imgData = canvas.toDataURL('image/png', 1.0);
-      pdf.addImage(imgData, 'PNG', 0, 0, 1200, 800);
-      pdf.save(`heritage-postcard-${siteId}.pdf`);
+  function downloadOrOpenImage(blob, filename, isIOS) {
+    const url = URL.createObjectURL(blob);
+    if (isIOS) {
+      // iOS open-image fallback
+      const imgWindow = window.open(url, '_blank');
+      if (!imgWindow) {
+        window.location.href = url;
+      }
     } else {
-      canvas.toBlob((blob) => {
-        const link = document.createElement('a');
-        link.download = `heritage-postcard-${siteId}.png`;
-        link.href = URL.createObjectURL(blob);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   }
 
   function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    if (!text) return;
     const words = text.split(' ');
     let line = '';
     let currentY = y;
@@ -204,8 +267,20 @@ const PostcardComponent = (() => {
     ctx.restore();
   }
 
+  function openModal(site) {
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    generatePostcard(site);
+  }
+
+  function closeModal() {
+    document.body.style.overflow = previousBodyOverflow || '';
+  }
+
   return {
-    generatePostcard
+    generatePostcard,
+    openModal,
+    closeModal
   };
 })();
 
