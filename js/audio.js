@@ -281,11 +281,29 @@ const AudioGuideComponent = (() => {
       .replace(/'/g, '&#039;');
   }
 
+  /**
+   * Auto-play speech after a short delay when modal opens.
+   * Uses a small timeout so the modal can finish rendering first.
+   * Only auto-plays if speechSynthesis is available and the site has a story.
+   */
+  function autoPlay() {
+    if (!currentSite || !currentSite.story) return;
+    if (!('speechSynthesis' in window)) return;
+
+    // Small delay to let the modal fully render before speaking
+    setTimeout(() => {
+      if (!isSpeaking) {
+        playSpeech();
+      }
+    }, 600);
+  }
+
   init();
 
   return {
     render,
-    stopSpeech
+    stopSpeech,
+    autoPlay
   };
 })();
 
