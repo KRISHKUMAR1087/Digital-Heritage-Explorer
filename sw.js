@@ -4,8 +4,8 @@
  * Implements Cache-First strategy for app shell and Dynamic Cache for tile & image requests.
  */
 
-// Bump Cache Name to v5 to force cache invalidation & update precached modules
-const CACHE_NAME = 'digital-heritage-explorer-v5';
+// Bump Cache Name to v6 to force cache invalidation & update precached modules
+const CACHE_NAME = 'digital-heritage-explorer-v6';
 const TILE_CACHE_NAME = 'digital-heritage-map-tiles-v1';
 
 const STATIC_ASSETS = [
@@ -127,8 +127,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First strategy for JSON Datasets and JS files
-  if (url.pathname.endsWith('.json') || url.pathname.endsWith('.js')) {
+  // Network-First strategy for HTML, CSS, JS, JSON (fresh updates when online, cached when offline)
+  if (
+    url.pathname.endsWith('.html') || 
+    url.pathname.endsWith('/') || 
+    url.pathname.endsWith('.css') || 
+    url.pathname.endsWith('.js') || 
+    url.pathname.endsWith('.json') ||
+    url.search.includes('v=')
+  ) {
     event.respondWith(
       fetch(event.request)
         .then((networkResponse) => {
@@ -139,31 +146,23 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         })
         .catch(() => {
-          return caches.match(event.request);
+          return caches.match(event.request).then(cached => {
+            if (cached) return cached;
+            if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
+              return caches.match('./index.html');
+            }
+          });
         })
     );
     return;
   }
 
-  // Cache-First strategy for remaining static assets (CSS, HTML shell)
+  // Fallback for remaining requests
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
         if (cachedResponse) return cachedResponse;
-
-        return fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-              const responseToCache = networkResponse.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
-            }
-            return networkResponse;
-          })
-          .catch(() => {
-            if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
-              return caches.match('./index.html');
-            }
-          });
+        return fetch(event.request);
       })
   );
 });
