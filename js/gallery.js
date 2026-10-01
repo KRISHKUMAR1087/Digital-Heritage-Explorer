@@ -148,6 +148,8 @@ const GalleryComponent = (() => {
     // Audio Guide (Web Speech API)
     if (audioContainer && window.AudioGuideComponent) {
       AudioGuideComponent.render(site, audioContainer);
+      // Auto-play speech narration when modal opens
+      AudioGuideComponent.autoPlay();
     }
 
     // Then & Now Image Comparison Slider
