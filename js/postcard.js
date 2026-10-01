@@ -112,9 +112,9 @@ const PostcardComponent = (() => {
             title: `Postcard from ${site.name}`,
             text: `Exploring ${site.name} in ${site.city}, Gujarat!`,
             files: [file]
-          }).catch(() => downloadBlob(blob, site.id));
+          }).catch(() => downloadPDF(canvas, site.id));
         } else {
-          downloadBlob(blob, site.id);
+          downloadPDF(canvas, site.id);
         }
       }, 'image/png');
     };
@@ -130,13 +130,27 @@ const PostcardComponent = (() => {
     img.src = site.cover;
   }
 
-  function downloadBlob(blob, siteId) {
-    const link = document.createElement('a');
-    link.download = `heritage-postcard-${siteId}.png`;
-    link.href = URL.createObjectURL(blob);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  function downloadPDF(canvas, siteId) {
+    if (window.jspdf && window.jspdf.jsPDF) {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [1200, 800]
+      });
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      pdf.addImage(imgData, 'PNG', 0, 0, 1200, 800);
+      pdf.save(`heritage-postcard-${siteId}.pdf`);
+    } else {
+      canvas.toBlob((blob) => {
+        const link = document.createElement('a');
+        link.download = `heritage-postcard-${siteId}.png`;
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
   }
 
   function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -194,3 +208,5 @@ const PostcardComponent = (() => {
     generatePostcard
   };
 })();
+
+window.PostcardComponent = PostcardComponent;
