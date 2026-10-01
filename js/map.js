@@ -1,6 +1,7 @@
 /**
  * Leaflet Map Component Module
- * Handles Leaflet initialization, marker rendering, card-map synchronization, and bounds fitting across India.
+ * Handles Leaflet initialization, site marker rendering, card-map synchronization,
+ * live user location marker with accuracy circle, distance polylines, and bounds fitting across India.
  */
 
 const MapComponent = (() => {
@@ -8,8 +9,14 @@ const MapComponent = (() => {
   const markersMap = new Map(); // Map<siteId, L.Marker>
   let activeFeatureGroup = null;
 
+  // Live User Location elements
+  let userMarker = null;
+  let userAccuracyCircle = null;
+  let activeRoutePolyline = null;
+  let allSitesReference = [];
+
   /**
-   * Create custom Leaflet SVG pin icon.
+   * Create custom Leaflet SVG pin icon for site markers.
    * @param {boolean} isSelected - Whether the marker is currently selected.
    */
   function createCustomPin(isSelected = false) {
@@ -34,20 +41,39 @@ const MapComponent = (() => {
   }
 
   /**
+   * Create custom SVG icon for Person's Live Location.
+   */
+  function createUserPinIcon() {
+    const html = `
+      <div class="user-live-pin">
+        <div class="user-live-pulse"></div>
+        <div class="user-live-dot">📍</div>
+      </div>
+    `;
+
+    return L.divIcon({
+      html: html,
+      className: 'user-leaflet-marker',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -18]
+    });
+  }
+
+  /**
    * Initialize Leaflet map and render initial site markers.
-   * @param {Array} sites - All site objects.
-   * @param {Function} onMarkerClick - Callback when a marker is clicked (sync to card).
-   * @param {Function} onDetailsClick - Callback when popup "View Details" is clicked.
    */
   function init(sites, onMarkerClick, onDetailsClick) {
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
 
-    // Default center set to All India View
+    allSitesReference = sites;
+
+    // Default center set to Gujarat / All India View
     map = L.map('map', {
       zoomControl: true,
       scrollWheelZoom: true
-    }).setView([20.5937, 78.9629], 5);
+    }).setView([22.2587, 71.1924], 7);
 
     // OpenStreetMap Tile Layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -57,8 +83,12 @@ const MapComponent = (() => {
 
     activeFeatureGroup = L.featureGroup().addTo(map);
 
+    // Add Live GPS Custom Control Button on top-right of Leaflet Map
+    addLiveGpsControl();
+
     // Create markers for each site
     sites.forEach(site => {
+      const marker = createSiteMarker(site, onMarkerClick, onDetailsClick);
       const marker = L.marker([site.lat, site.lng], {
         icon: createCustomPin(false),
         alt: site.name
@@ -116,9 +146,217 @@ const MapComponent = (() => {
     }, 200);
   }
 
+  function createSiteMarker(site, onMarkerClick, onDetailsClick) {
+    const marker = L.marker([site.lat, site.lng], {
+      icon: createCustomPin(false),
+      alt: site.name
+    });
+
+    // Bind initial popup content
+    marker.bindPopup(() => generatePopupContent(site), { maxWidth: 280 });
+
+    // Marker Click Event
+    marker.on('click', () => {
+      highlightMarkerPin(site.id);
+      drawLiveDistanceLine(site);
+      if (typeof onMarkerClick === 'function') {
+        onMarkerClick(site.id);
+      }
+    });
+
+    // Handle popup "View Details" button click
+    marker.on('popupopen', (e) => {
+      const popupNode = e.popup.getElement();
+      const btn = popupNode ? popupNode.querySelector('.popup-btn') : null;
+      if (btn) {
+        btn.addEventListener('click', (evt) => {
+          evt.preventDefault();
+          if (typeof onDetailsClick === 'function') {
+            onDetailsClick(site);
+          }
+        });
+      }
+    });
+
+    return marker;
+  }
+
+  function generatePopupContent(site) {
+    const userLoc = window.TouristToolsComponent ? TouristToolsComponent.getUserLocation() : null;
+    let distanceSnippet = '';
+
+    if (userLoc) {
+      const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
+      const formattedDist = TouristToolsComponent.formatDistance(distKm);
+      const estMinutes = Math.round((distKm / 45) * 60); // approx driving time
+      distanceSnippet = `
+        <div class="popup-live-distance">
+          <span>📍 <strong>${formattedDist}</strong> from your live location</span>
+          <span class="popup-drive-time">🚗 ~${estMinutes} min drive</span>
+        </div>
+      `;
+    }
+
+    return `
+      <div>
+        <img class="popup-media" src="${site.cover}" alt="${escapeHTML(site.name)}" />
+        <div class="popup-body">
+          <h4 class="popup-title">${escapeHTML(site.name)}</h4>
+          <div class="popup-city">${escapeHTML(site.city)}</div>
+          ${distanceSnippet}
+          <button class="popup-btn" data-site-id="${site.id}">View Details</button>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Add custom "Live GPS" control button directly onto Leaflet Map UI
+   */
+  function addLiveGpsControl() {
+    if (!map) return;
+
+    const GpsControl = L.Control.extend({
+      options: { position: 'topright' },
+      onAdd: function() {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom-gps');
+        container.innerHTML = `<button type="button" title="Track My Live Location" class="map-gps-btn">🎯</button>`;
+        container.style.backgroundColor = '#FFFFFF';
+        container.style.width = '34px';
+        container.style.height = '34px';
+        container.style.display = 'flex';
+        container.style.alignItems = 'center';
+        container.style.justifyContent = 'center';
+        container.style.cursor = 'pointer';
+        container.style.fontSize = '1.1rem';
+
+        L.DomEvent.disableClickPropagation(container);
+        container.onclick = function() {
+          if (window.TouristToolsComponent) {
+            TouristToolsComponent.toggleLiveTracking();
+          }
+        };
+        return container;
+      }
+    });
+
+    map.addControl(new GpsControl());
+  }
+
+  /**
+   * Update or create Live Location marker for the user ("The Person")
+   */
+  function updateUserLocationMarker(userLocation) {
+    if (!map || !userLocation) return;
+
+    const latLng = [userLocation.lat, userLocation.lng];
+    const accuracy = userLocation.accuracy || 20;
+
+    // 1. Create or update user marker
+    if (!userMarker) {
+      userMarker = L.marker(latLng, {
+        icon: createUserPinIcon(),
+        zIndexOffset: 1000,
+        alt: 'Your Live Location'
+      }).addTo(map);
+
+      userMarker.bindPopup(`
+        <div class="user-popup-content">
+          <h4>📍 Your Live Location</h4>
+          <p>Accuracy: ±${accuracy} meters</p>
+          <p class="user-coords">Lat: ${userLocation.lat.toFixed(4)}, Lng: ${userLocation.lng.toFixed(4)}</p>
+        </div>
+      `);
+    } else {
+      userMarker.setLatLng(latLng);
+      userMarker.setPopupContent(`
+        <div class="user-popup-content">
+          <h4>📍 Your Live Location</h4>
+          <p>Accuracy: ±${accuracy} meters</p>
+          <p class="user-coords">Lat: ${userLocation.lat.toFixed(4)}, Lng: ${userLocation.lng.toFixed(4)}</p>
+        </div>
+      `);
+    }
+
+    // 2. Create or update user accuracy circle
+    if (!userAccuracyCircle) {
+      userAccuracyCircle = L.circle(latLng, {
+        radius: accuracy,
+        color: '#1A73E8',
+        fillColor: '#1A73E8',
+        fillOpacity: 0.15,
+        weight: 1.5
+      }).addTo(map);
+    } else {
+      userAccuracyCircle.setLatLng(latLng);
+      userAccuracyCircle.setRadius(accuracy);
+    }
+
+    // 3. Update existing site marker popups to reflect live distance
+    markersMap.forEach((marker, siteId) => {
+      const site = allSitesReference.find(s => s.id === siteId);
+      if (site) {
+        marker.setPopupContent(generatePopupContent(site));
+      }
+    });
+  }
+
+  /**
+   * Remove User Location Marker & Circle from map
+   */
+  function removeUserLocationMarker() {
+    if (userMarker && map) {
+      map.removeLayer(userMarker);
+      userMarker = null;
+    }
+    if (userAccuracyCircle && map) {
+      map.removeLayer(userAccuracyCircle);
+      userAccuracyCircle = null;
+    }
+    if (activeRoutePolyline && map) {
+      map.removeLayer(activeRoutePolyline);
+      activeRoutePolyline = null;
+    }
+  }
+
+  /**
+   * Draw dynamic live distance polyline between person's live location and target site
+   */
+  function drawLiveDistanceLine(site) {
+    if (!map || !site) return;
+    const userLoc = window.TouristToolsComponent ? TouristToolsComponent.getUserLocation() : null;
+    if (!userLoc) return;
+
+    if (activeRoutePolyline) {
+      map.removeLayer(activeRoutePolyline);
+      activeRoutePolyline = null;
+    }
+
+    const latLngs = [
+      [userLoc.lat, userLoc.lng],
+      [site.lat, site.lng]
+    ];
+
+    activeRoutePolyline = L.polyline(latLngs, {
+      color: '#B5502F',
+      weight: 4,
+      opacity: 0.85,
+      dashArray: '8, 8',
+      lineCap: 'round'
+    }).addTo(map);
+
+    const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
+    const formattedDist = TouristToolsComponent.formatDistance(distKm);
+
+    activeRoutePolyline.bindTooltip(`📍 Live Distance: ${formattedDist}`, {
+      permanent: true,
+      direction: 'center',
+      className: 'live-distance-tooltip'
+    }).openTooltip();
+  }
+
   /**
    * Update active map markers based on filtered sites array.
-   * @param {Array} activeSites - Array of filtered site objects.
    */
   function updateMarkers(activeSites) {
     if (!map || !activeFeatureGroup) return;
@@ -136,21 +374,22 @@ const MapComponent = (() => {
   }
 
   /**
-   * Fit map viewport bounds to current active markers.
+   * Fit map viewport bounds to current active markers + user marker.
    */
   function fitMapBounds() {
     if (!map || !activeFeatureGroup) return;
     const layers = activeFeatureGroup.getLayers();
     if (layers.length > 0) {
       const bounds = activeFeatureGroup.getBounds();
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+      if (userMarker) {
+        bounds.extend(userMarker.getLatLng());
+      }
+      map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
     }
   }
 
   /**
-   * Fly to site location on map, highlight pin, and open popup.
-   * @param {string} siteId - Target site ID.
-   * @param {boolean} openPopup - Whether to open the marker popup.
+   * Fly to site location on map, highlight pin, open popup, and draw distance line.
    */
   function flyToSite(siteId, openPopup = true) {
     if (!map) return;
@@ -158,6 +397,12 @@ const MapComponent = (() => {
 
     if (marker && activeFeatureGroup.hasLayer(marker)) {
       highlightMarkerPin(siteId);
+
+      const targetSite = allSitesReference.find(s => s.id === siteId);
+      if (targetSite) {
+        drawLiveDistanceLine(targetSite);
+      }
+
       map.flyTo(marker.getLatLng(), 13, {
         duration: 1.2
       });
@@ -203,6 +448,10 @@ const MapComponent = (() => {
     init,
     updateMarkers,
     flyToSite,
-    invalidateSize
+    invalidateSize,
+    updateUserLocationMarker,
+    removeUserLocationMarker,
+    drawLiveDistanceLine
   };
 })();
+

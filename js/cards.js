@@ -49,6 +49,8 @@ const CardsComponent = (() => {
       let distanceHtml = '';
       if (userLoc) {
         const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
+        const formattedDist = TouristToolsComponent.formatDistance(distKm);
+        distanceHtml = `<div class="card-distance-badge">📍 <strong>${formattedDist}</strong> from your location</div>`;
         distanceHtml = `<span class="card-distance">📍 ${distKm} ${t('kmAway')}</span>`;
       }
 

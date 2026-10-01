@@ -123,7 +123,16 @@
 
       <!-- Extra Plan-a-Visit Tools: Near Me GPS, Happening This Month & Community Hidden Gem Suggestion -->
       <div class="filter-row tools-row">
-        <button type="button" class="tool-btn" id="btn-near-me" data-i18n="nearMe">📍 Near Me (GPS)</button>
+        <button type="button" class="tool-btn" id="btn-near-me" data-i18n="nearMe">📍 Live Location</button>
+        <select id="simulated-location-select" class="smart-filter-select" aria-label="Select test location if GPS offline" title="Simulate person's live location for testing distance">
+          <option value="">🎯 Set Person's Location</option>
+          <option value="ahmedabad">📍 Ahmedabad City</option>
+          <option value="gandhinagar">📍 Gandhinagar</option>
+          <option value="vadodara">📍 Vadodara</option>
+          <option value="surat">📍 Surat</option>
+          <option value="rajkot">📍 Rajkot</option>
+          <option value="bhuj">📍 Bhuj</option>
+        </select>
         <button type="button" class="tool-btn festival-btn" id="btn-this-month" data-i18n="happeningThisMonth">🎉 Happening This Month</button>
         <button type="button" class="tool-btn gem-btn" id="btn-suggest-gem" data-i18n="suggestGem">💎 Suggest Hidden Gem</button>
       </div>
@@ -278,6 +287,20 @@
           <span class="modal-city" id="modal-city">City</span>
           <h2 class="modal-title" id="modal-title">Site Name</h2>
           <span class="modal-provenance" id="fact-verified">Verified 2026-09 (ASI / UNESCO)</span>
+        </div>
+
+        <!-- Live Distance from Person Widget -->
+        <div id="modal-live-distance-widget" class="modal-live-distance-card" style="display: none;">
+          <div class="live-dist-header">
+            <span class="live-dist-icon">📍</span>
+            <div>
+              <div class="live-dist-title">Live Distance from Person</div>
+              <div class="live-dist-value" id="modal-live-dist-text">Calculating...</div>
+            </div>
+          </div>
+          <div class="live-dist-meta">
+            <span class="live-dist-drive" id="modal-live-dist-drive">🚗 ~0 min drive</span>
+          </div>
         </div>
 
         <!-- Facts Grid -->

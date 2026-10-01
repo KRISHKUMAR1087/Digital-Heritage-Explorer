@@ -2872,6 +2872,171 @@ body {
   background-color: #3367D6;
 }
 
+/* ==========================================================================
+   Live Location & Person Distance Styles
+   ========================================================================== */
+
+/* User Live Pin on Leaflet Map */
+.user-leaflet-marker {
+  background: transparent;
+  border: none;
+}
+
+.user-live-pin {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-live-dot {
+  width: 24px;
+  height: 24px;
+  background-color: #1A73E8;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.user-live-pulse {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(26, 115, 232, 0.35);
+  border-radius: 50%;
+  animation: pulse-live 2s infinite ease-out;
+  z-index: 1;
+}
+
+@keyframes pulse-live {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Map Distance Polyline Tooltip */
+.live-distance-tooltip {
+  background-color: var(--color-brown);
+  color: var(--color-sandstone);
+  font-weight: 700;
+  font-size: 0.825rem;
+  border: 1px solid var(--color-sandstone);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.65rem;
+  box-shadow: var(--shadow-md);
+}
+
+.live-distance-tooltip::before {
+  border-top-color: var(--color-brown) !important;
+}
+
+/* Popup Live Distance Snippet */
+.popup-live-distance {
+  background-color: var(--color-amber-bg);
+  border: 1px solid var(--color-amber-border);
+  color: var(--color-brown);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.775rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.popup-drive-time {
+  font-size: 0.725rem;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+/* Card Distance Badge */
+.card-distance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--color-sandstone-light);
+  color: var(--color-brown-dark);
+  border: 1px solid var(--color-sandstone);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.775rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  width: fit-content;
+}
+
+/* Modal Live Distance Widget */
+.modal-live-distance-card {
+  background: linear-gradient(135deg, var(--color-brown-dark) 0%, var(--color-brown) 100%);
+  color: var(--color-cream);
+  border: 1px solid var(--color-sandstone);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  gap: 1rem;
+}
+
+.live-dist-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.live-dist-icon {
+  font-size: 1.5rem;
+  background-color: rgba(201, 163, 107, 0.2);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-sandstone);
+}
+
+.live-dist-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-sandstone-light);
+  opacity: 0.85;
+}
+
+.live-dist-value {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-sandstone);
+}
+
+.live-dist-drive {
+  background-color: var(--color-terracotta);
+  color: var(--color-cream);
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+
 
 
 
