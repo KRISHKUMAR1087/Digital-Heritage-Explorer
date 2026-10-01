@@ -4,7 +4,8 @@
  * Implements Cache-First strategy for app shell and Dynamic Cache for tile requests.
  */
 
-const CACHE_NAME = 'digital-heritage-explorer-v2';
+// Increment Cache Name to v4 to purge all stale v2/v3 caches immediately
+const CACHE_NAME = 'digital-heritage-explorer-v4';
 const TILE_CACHE_NAME = 'digital-heritage-map-tiles-v1';
 
 const STATIC_ASSETS = [
@@ -41,26 +42,30 @@ const STATIC_ASSETS = [
   './images/icon-512.png'
 ];
 
-// Install Event — Cache static shell and assets
+// Install Event — Cache static shell and assets resiliently
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
+      .then(async (cache) => {
         console.log('[SW] Pre-caching offline static assets...');
-        return cache.addAll(STATIC_ASSETS);
+        await Promise.all(
+          STATIC_ASSETS.map(url => 
+            cache.add(url).catch(err => console.warn('[SW] Could not precache asset:', url, err))
+          )
+        );
       })
       .then(() => self.skipWaiting())
   );
 });
 
-// Activate Event — Clean up old caches
+// Activate Event — Delete ALL old caches immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME && cache !== TILE_CACHE_NAME) {
-            console.log('[SW] Deleting old cache:', cache);
+            console.log('[SW] Purging old cache:', cache);
             return caches.delete(cache);
           }
         })
@@ -69,50 +74,60 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event — Handle requests
+// Fetch Event — Network-First for Data & JS, Cache-First for Tiles/Images
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // Handle map tile requests (OpenStreetMap or external tile providers)
+  // Map Tiles (Cache-First)
   if (url.hostname.includes('tile.openstreetmap.org') || url.pathname.includes('/tile/')) {
     event.respondWith(
       caches.open(TILE_CACHE_NAME).then((cache) => {
         return cache.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
+          if (cachedResponse) return cachedResponse;
           return fetch(event.request).then((networkResponse) => {
             if (networkResponse && networkResponse.status === 200) {
               cache.put(event.request, networkResponse.clone());
             }
             return networkResponse;
-          }).catch(() => {
-            // Return empty transparent tile pixel or null if offline and not cached
-            return new Response('', { status: 404, statusText: 'Offline tile missing' });
-          });
+          }).catch(() => new Response('', { status: 404, statusText: 'Offline tile missing' }));
         });
       })
     );
     return;
   }
 
-  // Handle static app shell & local assets (Cache-First)
+  // Network-First strategy for JSON Datasets and JS files (ensures immediate updates on deploy)
+  if (url.pathname.endsWith('.json') || url.pathname.endsWith('.js')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // Offline fallback from cache
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // Cache-First strategy for static assets (images, CSS, HTML shell)
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
+        if (cachedResponse) return cachedResponse;
 
         return fetch(event.request)
           .then((networkResponse) => {
             if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
               const responseToCache = networkResponse.clone();
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
             }
             return networkResponse;
           })
