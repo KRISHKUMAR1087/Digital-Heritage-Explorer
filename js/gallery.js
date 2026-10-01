@@ -94,6 +94,24 @@ const GalleryComponent = (() => {
     factBestTime.textContent = site.bestTime || 'October – March';
     modalDescription.textContent = site.description;
 
+    // Live Distance Widget
+    const liveWidget = document.getElementById('modal-live-distance-widget');
+    const liveDistText = document.getElementById('modal-live-dist-text');
+    const liveDistDrive = document.getElementById('modal-live-dist-drive');
+    const userLoc = window.TouristToolsComponent ? TouristToolsComponent.getUserLocation() : null;
+
+    if (liveWidget && userLoc) {
+      const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
+      const formattedDist = TouristToolsComponent.formatDistance(distKm);
+      const estMinutes = Math.round((distKm / 45) * 60);
+
+      if (liveDistText) liveDistText.textContent = `${formattedDist} from your live location (${userLoc.name || 'GPS Active'})`;
+      if (liveDistDrive) liveDistDrive.textContent = `🚗 ~${estMinutes} min drive from live position`;
+      liveWidget.style.display = 'flex';
+    } else if (liveWidget) {
+      liveWidget.style.display = 'none';
+    }
+
     // Verified Source & Provenance
     if (factVerified) {
       factVerified.textContent = `Verified ${site.lastVerified || '2026-09'} (${site.source || 'ASI / UNESCO'})`;

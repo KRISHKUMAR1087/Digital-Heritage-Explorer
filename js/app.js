@@ -88,6 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
         applyFilters();
       });
 
+      const simLocSelect = document.getElementById('simulated-location-select');
+      if (simLocSelect) {
+        simLocSelect.addEventListener('change', (e) => {
+          const val = e.target.value;
+          if (val) {
+            TouristToolsComponent.setSimulatedLocation(val, () => {
+              applyFilters();
+            });
+          }
+        });
+      }
+
       // Initialize Trip Planner UI & Listeners
       const btnOpenTrip = document.getElementById('btn-open-trip-planner');
       if (btnOpenTrip) {
