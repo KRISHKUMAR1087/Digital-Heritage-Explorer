@@ -60,6 +60,11 @@
         <button type="button" class="btn-identify" id="btn-identify-site" aria-label="Identify heritage site from photo" data-i18n="identifyBtn">
           📷 Identify Monument
         </button>
+
+        <!-- Spot the Heritage Detail Game Button -->
+        <button type="button" class="btn-identify btn-spot-detail-nav" id="btn-open-spot-detail" aria-label="Play Spot the Heritage Detail Game">
+          🔥 Spot the Detail
+        </button>
       </div>
     </div>
   </header>
@@ -156,6 +161,11 @@
       </button>
     </div>
   </div>
+
+  <!-- 🔥 Spot the Heritage Detail Teaser Section -->
+  <section id="homepage-spot-detail-teaser" class="spot-detail-teaser-card-container" aria-label="Spot the Heritage Detail Game Teaser">
+    <!-- Rendered by js/spotDetail.js -->
+  </section>
 
   <!-- Main Split Layout -->
   <main class="main-layout">
@@ -409,6 +419,13 @@
     </div>
   </div>
 
+  <!-- Spot the Heritage Detail Game Modal Dialog -->
+  <div id="spot-detail-modal" class="modal-overlay spot-detail-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="spot-detail-modal-title">
+    <div class="modal-container spot-detail-modal-container">
+      <!-- Rendered dynamically by js/spotDetail.js -->
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <p data-i18n="footerText">&copy; Digital Heritage Explorer — Preserving and exploring Gujarat cultural heritage. Built with Leaflet.js &amp; OpenStreetMap. Works offline.</p>
@@ -444,6 +461,7 @@
   <script src="js/quiz.js"></script>
   <script src="js/timeline.js"></script>
   <script src="js/community.js"></script>
+  <script src="js/spotDetail.js"></script>
   <script src="js/app.js"></script>
 
 </body>
