@@ -1,6 +1,7 @@
 /**
  * Audio Guide Module (Web Speech API)
- * Multilingual speech synthesis audio guide (EN / GU / HI) with voice detection, fallback handling, and play/pause/stop controls.
+ * Multilingual speech synthesis audio guide (EN / GU / HI) with voice detection,
+ * speed control (0.75x - 1.5x), sleep timer, transcript view, and play/pause/stop controls.
  */
 const AudioGuideComponent = (() => {
   let container = null;
@@ -10,6 +11,9 @@ const AudioGuideComponent = (() => {
   let isSpeaking = false;
   let isPaused = false;
   let availableVoices = [];
+  let playbackRate = 1.0;
+  let sleepTimerMinutes = 0;
+  let sleepTimerTimeout = null;
 
   const langMap = {
     en: { code: 'en-IN', name: 'English', fallbackCode: 'en-US' },
@@ -51,7 +55,7 @@ const AudioGuideComponent = (() => {
   function checkVoiceAvailable(langKey) {
     loadVoices();
     const config = langMap[langKey];
-    if (!config || availableVoices.length === 0) return true; // Assume true if voice list empty initially
+    if (!config || availableVoices.length === 0) return true;
 
     return availableVoices.some(v => 
       v.lang.toLowerCase().startsWith(config.code.toLowerCase()) || 
@@ -67,13 +71,13 @@ const AudioGuideComponent = (() => {
     const hasVoice = checkVoiceAvailable(currentLang);
 
     container.innerHTML = `
-      <div class="audio-guide-card" tabindex="0" aria-label="Audio Guide Player">
+      <div class="audio-guide-card" tabindex="0" aria-label="Audio Guide Player with Speed Control and Sleep Timer">
         <div class="audio-guide-header">
           <div class="audio-title-group">
             <span class="audio-icon">🎧</span>
             <div>
               <h3 class="audio-guide-title">Audio Guide Story</h3>
-              <p class="audio-guide-subtitle">Listen to historical narration in your preferred language</p>
+              <p class="audio-guide-subtitle">Listen to historical narration with custom speed and sleep timer</p>
             </div>
           </div>
 
@@ -85,16 +89,40 @@ const AudioGuideComponent = (() => {
           </div>
         </div>
 
-        <!-- Player Controls -->
+        <!-- Player Controls & Speed / Sleep Timer -->
         <div class="audio-controls-row">
-          <button type="button" class="btn-audio-control btn-play" id="btn-audio-play" aria-label="Play audio narration">
+          <button type="button" class="btn-audio-control btn-play" id="btn-audio-play" aria-label="Play or pause audio narration">
             ${isSpeaking && !isPaused ? '⏸️ Pause' : (isPaused ? '▶️ Resume' : '▶️ Listen')}
           </button>
+
           <button type="button" class="btn-audio-control btn-stop" id="btn-audio-stop" ${!isSpeaking && !isPaused ? 'disabled' : ''} aria-label="Stop audio narration">
             ⏹️ Stop
           </button>
+
+          <!-- Speed Controls -->
+          <div class="audio-extra-control">
+            <label for="select-audio-speed" class="control-sublabel">⚡ Speed:</label>
+            <select id="select-audio-speed" class="audio-select-sm" aria-label="Audio playback speed">
+              <option value="0.75" ${playbackRate === 0.75 ? 'selected' : ''}>0.75x</option>
+              <option value="1.0" ${playbackRate === 1.0 ? 'selected' : ''}>1.0x (Normal)</option>
+              <option value="1.25" ${playbackRate === 1.25 ? 'selected' : ''}>1.25x</option>
+              <option value="1.5" ${playbackRate === 1.5 ? 'selected' : ''}>1.5x</option>
+            </select>
+          </div>
+
+          <!-- Sleep Timer -->
+          <div class="audio-extra-control">
+            <label for="select-sleep-timer" class="control-sublabel">🌙 Sleep Timer:</label>
+            <select id="select-sleep-timer" class="audio-select-sm" aria-label="Audio sleep timer">
+              <option value="0" ${sleepTimerMinutes === 0 ? 'selected' : ''}>Off</option>
+              <option value="5" ${sleepTimerMinutes === 5 ? 'selected' : ''}>5 Mins</option>
+              <option value="15" ${sleepTimerMinutes === 15 ? 'selected' : ''}>15 Mins</option>
+              <option value="30" ${sleepTimerMinutes === 30 ? 'selected' : ''}>30 Mins</option>
+            </select>
+          </div>
+
           <span class="audio-status-badge ${isSpeaking ? 'speaking' : ''}">
-            ${isSpeaking ? (isPaused ? 'Paused ⏸️' : 'Playing 🔊...') : 'Ready 🎧'}
+            ${isSpeaking ? (isPaused ? 'Paused ⏸️' : `Playing ${playbackRate}x 🔊...`) : 'Ready 🎧'}
           </span>
         </div>
 
@@ -105,8 +133,9 @@ const AudioGuideComponent = (() => {
           </div>
         ` : ''}
 
-        <!-- Audio Story Transcript -->
+        <!-- Audio Story Transcript (Always Available) -->
         <div class="audio-transcript-box">
+          <span class="transcript-label">📜 Full Audio Transcript:</span>
           <p class="audio-transcript-text ${isSpeaking && !isPaused ? 'highlight' : ''}">${escapeHTML(storyText)}</p>
         </div>
       </div>
@@ -135,7 +164,7 @@ const AudioGuideComponent = (() => {
       return;
     }
 
-    window.speechSynthesis.cancel();
+    stopSpeech();
 
     const text = currentSite.story[currentLang] || currentSite.story.en || '';
     if (!text) return;
@@ -143,6 +172,7 @@ const AudioGuideComponent = (() => {
     currentUtterance = new SpeechSynthesisUtterance(text);
     const config = langMap[currentLang];
     currentUtterance.lang = config ? config.code : 'en-IN';
+    currentUtterance.rate = playbackRate;
 
     // Match voice if available
     loadVoices();
@@ -157,18 +187,30 @@ const AudioGuideComponent = (() => {
     currentUtterance.onstart = () => {
       isSpeaking = true;
       isPaused = false;
+
+      // Start Sleep Timer if configured
+      if (sleepTimerMinutes > 0) {
+        clearTimeout(sleepTimerTimeout);
+        sleepTimerTimeout = setTimeout(() => {
+          stopSpeech();
+          renderLayout();
+        }, sleepTimerMinutes * 60 * 1000);
+      }
+
       renderLayout();
     };
 
     currentUtterance.onend = () => {
       isSpeaking = false;
       isPaused = false;
+      clearTimeout(sleepTimerTimeout);
       renderLayout();
     };
 
     currentUtterance.onerror = () => {
       isSpeaking = false;
       isPaused = false;
+      clearTimeout(sleepTimerTimeout);
       renderLayout();
     };
 
@@ -179,6 +221,7 @@ const AudioGuideComponent = (() => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
+    clearTimeout(sleepTimerTimeout);
     isSpeaking = false;
     isPaused = false;
     currentUtterance = null;
@@ -188,15 +231,30 @@ const AudioGuideComponent = (() => {
     if (!container) return;
 
     const playBtn = container.querySelector('#btn-audio-play');
-    if (playBtn) {
-      playBtn.addEventListener('click', playSpeech);
-    }
+    if (playBtn) playBtn.addEventListener('click', playSpeech);
 
     const stopBtn = container.querySelector('#btn-audio-stop');
     if (stopBtn) {
       stopBtn.addEventListener('click', () => {
         stopSpeech();
         renderLayout();
+      });
+    }
+
+    const selectSpeed = container.querySelector('#select-audio-speed');
+    if (selectSpeed) {
+      selectSpeed.addEventListener('change', (e) => {
+        playbackRate = parseFloat(e.target.value);
+        if (isSpeaking) {
+          playSpeech(); // Restart with new speed rate
+        }
+      });
+    }
+
+    const selectSleep = container.querySelector('#select-sleep-timer');
+    if (selectSleep) {
+      selectSleep.addEventListener('change', (e) => {
+        sleepTimerMinutes = parseInt(e.target.value, 10);
       });
     }
 
@@ -223,7 +281,6 @@ const AudioGuideComponent = (() => {
       .replace(/'/g, '&#039;');
   }
 
-  // Initialize voice loading
   init();
 
   return {

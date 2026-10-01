@@ -88,6 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
         applyFilters();
       });
 
+      // Initialize Trip Planner UI & Listeners
+      const btnOpenTrip = document.getElementById('btn-open-trip-planner');
+      if (btnOpenTrip) {
+        btnOpenTrip.addEventListener('click', () => {
+          if (window.PlannerComponent) PlannerComponent.openModal();
+        });
+      }
+      if (window.PlannerComponent) {
+        PlannerComponent.updateUI();
+      }
+
       // Timeline Slider Listener
       if (timelineSlider) {
         timelineSlider.addEventListener('input', (e) => {
@@ -98,6 +109,35 @@ document.addEventListener('DOMContentLoaded', () => {
               : `${maxTimelineYear} AD`;
           }
           applyFilters();
+        });
+      }
+
+      // Initialize Smart Search & Advanced Filters Module
+      if (window.SearchComponent) {
+        SearchComponent.init(allSites, () => {
+          applyFilters();
+        });
+      }
+
+      // Smart Filter Dropdowns Listeners (UNESCO, Entry Fee, Open Now)
+      const selectUnesco = document.getElementById('filter-unesco');
+      if (selectUnesco) {
+        selectUnesco.addEventListener('change', (e) => {
+          if (window.SearchComponent) SearchComponent.updateParams({ unesco: e.target.value });
+        });
+      }
+
+      const selectEntry = document.getElementById('filter-entry');
+      if (selectEntry) {
+        selectEntry.addEventListener('change', (e) => {
+          if (window.SearchComponent) SearchComponent.updateParams({ entry: e.target.value });
+        });
+      }
+
+      const selectOpen = document.getElementById('filter-open');
+      if (selectOpen) {
+        selectOpen.addEventListener('change', (e) => {
+          if (window.SearchComponent) SearchComponent.updateParams({ open: e.target.value });
         });
       }
 
@@ -147,6 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
    * Unified Filtering & Sorting Function
    */
   function applyFilters() {
+    // If SearchComponent is active, retrieve active params
+    const activeParams = window.SearchComponent ? SearchComponent.getActiveParams() : {};
+
     let filteredSites = allSites.filter(site => {
       // Trail Filter
       if (activeTrailSiteIds && !activeTrailSiteIds.includes(site.id)) {
@@ -154,10 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Category Match
-      const matchesCategory = currentCategory === 'All' || site.category === currentCategory;
+      const categoryToMatch = activeParams.category !== undefined && activeParams.category !== 'All' ? activeParams.category : currentCategory;
+      const matchesCategory = categoryToMatch === 'All' || site.category === categoryToMatch;
 
       // Era Match
-      const matchesEra = currentEra === 'All' || site.era === currentEra;
+      const eraToMatch = activeParams.era !== undefined && activeParams.era !== 'All' ? activeParams.era : currentEra;
+      const matchesEra = eraToMatch === 'All' || site.era === eraToMatch;
 
       // Timeline Year Match (site year <= slider year)
       const matchesTimeline = site.year === undefined || site.year <= maxTimelineYear;
@@ -165,20 +210,15 @@ document.addEventListener('DOMContentLoaded', () => {
       // Happening This Month Match
       const matchesThisMonth = !filterThisMonthOnly || (window.LivingComponent && LivingComponent.isHappeningThisMonth(site));
 
-      // Search Query Match (Multilingual)
-      const q = searchQuery;
-      const nameStr = (I18nComponent.getSiteText(site, 'name') || '').toLowerCase();
-      const cityStr = (I18nComponent.getSiteText(site, 'city') || '').toLowerCase();
-      const summaryStr = (I18nComponent.getSiteText(site, 'summary') || '').toLowerCase();
-      
-      const matchesSearch = !q || (
-        nameStr.includes(q) ||
-        cityStr.includes(q) ||
-        summaryStr.includes(q)
-      );
-
-      return matchesCategory && matchesEra && matchesTimeline && matchesThisMonth && matchesSearch;
+      return matchesCategory && matchesEra && matchesTimeline && matchesThisMonth;
     });
+
+    // Delegate smart search, unesco, entry, open & multilingual fuzzy search to SearchComponent
+    if (window.SearchComponent) {
+      const qToUse = searchQuery || activeParams.q || '';
+      const paramsToPass = { ...activeParams, q: qToUse };
+      filteredSites = SearchComponent.filterSites(filteredSites, paramsToPass);
+    }
 
     // If User GPS Location is active, sort by nearest distance
     const userLoc = TouristToolsComponent.getUserLocation();
@@ -220,6 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
         CardsComponent.highlightCard(targetSite.id);
         MapComponent.flyToSite(targetSite.id, true);
         GalleryComponent.openDetailModal(targetSite);
+      }
+    } else if (hash.startsWith('#/trip')) {
+      if (window.PlannerComponent) {
+        const urlParams = new URLSearchParams(hash.includes('?') ? hash.split('?')[1] : '');
+        const sitesParam = urlParams.get('sites');
+        if (sitesParam) {
+          PlannerComponent.loadFromHashParams(sitesParam);
+        }
+        PlannerComponent.openModal();
       }
     } else if (hash.startsWith('#/category/')) {
       const catName = decodeURIComponent(hash.replace('#/category/', '').trim());

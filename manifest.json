@@ -1,0 +1,24 @@
+{
+  "name": "Digital Heritage Explorer",
+  "short_name": "Heritage Explorer",
+  "description": "Discover local historical monuments, stepwells, temples, and ancient ruins in Gujarat with interactive maps, trails, and offline support.",
+  "start_url": "./#/",
+  "display": "standalone",
+  "background_color": "#FAF5EC",
+  "theme_color": "#3B2A1A",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,157 +1,124 @@
 # Digital Heritage Explorer 🏛️
 
-**Digital Heritage Explorer** is an offline-capable, front-end web application built for local heritage tourism in **Gujarat, India**. It presents historical stepwells, sun temples, ancient Harappan cities, Sultanate mosques, and fortresses as an interactive virtual gallery linked with Leaflet maps, visual photo recognition, solar alignment simulation, subterranean storey exploration, audio narration, and full offline caching.
+**Digital Heritage Explorer** is a high-performance, offline-first front-end web application built for local heritage tourism in **Gujarat, India**. It presents historical stepwells, sun temples, ancient Harappan cities, Sultanate mosques, and fortresses as an interactive virtual gallery linked with Leaflet maps, visual photo recognition, solar alignment simulation, subterranean storey exploration, audio narration, PWA offline caching, trip itinerary planning, OSRM road routing, live Open-Meteo weather forecasts, 360 panoramas, heritage quizzes, dynasty timelines, and community reviews.
 
 ---
 
-## 🌟 Key Features & Interactive Tools
+## 🌟 Comprehensive Feature Suite & Architectural Modules
 
-1. **Stepwell Cross-Section Explorer (`js/stepwell.js`):**
-   - Interactive vertical SVG cut-away diagram for multi-storey subterranean stepwells (*Rani ki Vav: 7 storeys, Adalaj Stepwell: 5 storeys*).
-   - "Go Up / Go Deeper" controls, keyboard `ArrowUp`/`ArrowDown` navigation, and mouse wheel scrolling.
-   - Side panel displays storey descriptions and *"What to look for"* architectural friezes.
+1. **Performance & SEO (`js/seo.js`):**
+   - Dynamic document title and meta description updates on site navigation.
+   - Open Graph (`og:title`, `og:image`, `og:url`) tag synchronization for social sharing.
+   - Microdata JSON-LD injection (`Schema.org TouristAttraction`) per monument.
 
-2. **Sun Alignment Simulator (`js/sun.js`):**
-   - Dedicated interactive solar simulator for **Modhera Sun Temple**.
-   - Interactive SVG top-view plan (*Surya Kunda → Torana → Sabha Mandapa → Guda Mandapa → Garbhagriha facing 90° East*).
-   - Date slider (1 Jan – 31 Dec, Day 1..365), Equinox/Solstice preset buttons, and Sunrise/Noon/Sunset time buttons.
-   - Solar azimuth calculation for Lat 23.58° N; highlights Equinox dates (~20 Mar, 23 Sep) with direct sanctum beam alignment and golden Garbhagriha glow.
-   - Visible note: *"Simplified educational model, not an exact reconstruction."*
+2. **Smart Search & Filters (`js/search.js`):**
+   - Full-text debounced fuzzy search across monument names, descriptions, dynasties, and materials in 3 languages (**English, Gujarati, Hindi**).
+   - Smart dropdown filters: UNESCO World Heritage status, Free vs. Ticketed Entry, and Open Now status.
+   - Dynamic URL hash synchronization (`#/search?q=vav&unesco=true`).
 
-3. **Multilingual Audio Guide (`js/audio.js`):**
-   - Speech synthesis narration in **English, Gujarati (`gu-IN`), and Hindi (`hi-IN`)** for all monuments.
-   - Play ▶️, Pause ⏸️, Stop ⏹️ controls with missing voice detection and fallback transcript display.
-   - Automatically stops speech when the detail modal is closed.
+3. **Accessibility Upgrade (`js/a11y.js` & upgraded `js/audio.js`):**
+   - Text size scaler (100%–130%), high-contrast dark theme toggle, and reduced motion preference detector.
+   - Keyboard skip-to-main-content link (`#main-content`) and accessible focus trapping in modals (`trapFocus`/`untrapFocus`).
+   - Multilingual audio guide upgrades: playback speed controls (0.75x–1.5x), sleep timers (5m/15m/30m), and persistent audio transcript.
 
-4. **Then & Now Historical Comparison Slider (`js/compare.js`):**
-   - Draggable before/after image slider with mouse drag, touch support, range slider, and Left/Right keyboard arrow navigation.
-   - Displays archival era, photographer credits, and licensing terms.
-   - Supports `"TODO add image"` placeholders with sepia vintage filter fallback.
+4. **PWA & Offline Mode (`sw.js`, `manifest.json`, `js/pwa.js`):**
+   - Full Web App Manifest (`manifest.json`) and Service Worker (`sw.js`) pre-caching app shell, monument JSON datasets, icons, and dynamic runtime tile caching for OpenStreetMap.
+   - PWA install prompt button (`#btn-install-pwa`), `⚡ Offline Ready` status badge, and network drop alert banner.
 
-5. **Living Heritage Layer (`js/living.js`):**
-   - Section in detail modal showcasing intangible crafts (*Patan Patola weaving, Kutch embroidery, Ajrakh printing*), Sufi Qawwali, and regional festivals (*Modhera Dance Festival, Navratri Garba, Rann Utsav*).
-   - Header filter button **"🎉 Happening This Month"** filters monuments with active festivals in the current month (`new Date().getMonth() + 1`).
+5. **Trip Planner & Itinerary Builder (`js/planner.js`):**
+   - `"🗺️ Add to Trip"` button on cards with interactive reordering (Up/Down legs).
+   - Distance (km) & drive duration calculations (assuming 50 km/h average speed + site visit duration).
+   - Polyline route drawing on Leaflet map with numbered step markers.
+   - Export printable PDF view (`@media print`) and copyable deep link hash (`#/trip?sites=id1,id2`).
 
-6. **Side-by-Side Site Comparison (`js/siteCompare.js`):**
-   - Select up to 2 site cards via **"Compare"** checkboxes.
-   - Displays a sticky bottom comparison bar (`#compare-sticky-bar`) and side-by-side comparison modal table comparing architectural styles, patrons, materials, UNESCO status, fees, and visiting hours.
+6. **Real Route Navigation (`js/routing.js`):**
+   - Fetches real road paths, distances, and travel times from OSRM (Open Source Routing Machine) API with automatic Haversine straight-line fallback.
+   - `"📍 Get Directions"` button generates Google Maps navigation deep links with origin GPS parameters.
 
-7. **Shareable Digital Postcard Generator (`js/postcard.js`):**
-   - Renders site cover photo, category badge, site title, city, historical era, summary text, and official passport stamp seal onto a **1200x800 HTML5 Canvas**.
-   - Triggers direct PNG image download (`<site-id>-digital-postcard.png`).
+7. **Live Weather & Best Time (`js/weather.js`):**
+   - Live telemetry integration via Open-Meteo free API (no API key required).
+   - Displays current temperature, wind speed, WMO weather condition icons, 3-day max/min forecast grid, and seasonal advice tips.
 
-8. **Visual Photo Recognition (`js/recognition.js`):**
-   - Identify monuments from image upload or live camera stream using color histogram & luminance analysis with top 3 confidence matches and low-confidence alerts (< 50%).
+8. **Virtual 360 Tour & Panorama (`js/panorama.js` & `js/threeDExplorer.js`):**
+   - Interactive 360° street view equirectangular canvas with hotspot pin details.
+   - Fullscreen stage toggle and mobile orientation/gyroscope control (`DeviceOrientation` API).
+   - 3D WebGL architectural orbit model with wireframe mode and auto-rotation.
 
-9. **Offline Support & Self-Hosted Assets:**
-   - Self-hosted Leaflet library (`vendor/leaflet/`) and a registered Service Worker (`sw.js`) providing 100% offline capability.
+9. **Heritage Quiz & Passport Badges (`js/quiz.js`):**
+   - Multilingual 5-question historical quiz per monument with answer feedback and explanations.
+   - Awards Scholar Stamp badges and updates Heritage Passport counter in `localStorage`.
+
+10. **Timeline of Dynasties (`js/timeline.js`):**
+    - Horizontal scrollable timeline bar mapping **Maurya → Solanki → Sultanate → Gaekwad → Modern** historical eras.
+    - One-click filtering of monuments by era.
+
+11. **Community Layer (`js/community.js`):**
+    - Traveler review and photo story submission form with moderation queue (`pending_moderation`).
+    - Visited counter and star rating system stored safely in `localStorage`.
+
+12. **Postcard & Cultural Upgrades (`js/postcard.js` & `js/living.js`):**
+    - Postcard generator with template choices (Classic Sandstone, Terracotta Night, Royal Gold), custom message input, and Web Share API (`navigator.share`).
+    - Living heritage cultural calendar with `"📅 Add to Google Calendar"` direct links for regional festivals.
 
 ---
 
-## 📁 Project Structure
+## 📁 Modular File Structure
 
 ```
-digital-heritage-explorer/
-├── index.html           # Main HTML structure, modal containers & script tags
+Digital-Heritage-Explorer/
+├── index.html           # Main HTML shell, accessible header, filter bar, modals & script tags
+├── manifest.json        # Web App Manifest for PWA compliance
+├── sw.js                # Service Worker precaching app shell & dynamic map tiles
 ├── css/
-│   └── style.css        # Heritage theme system, badges, sliders, & responsive grids
+│   └── style.css        # Responsive stylesheet with high-contrast, PWA, trip, & weather styles
 ├── js/
-│   ├── cards.js         # Site cards grid, compare checkboxes, & distance calculation
-│   ├── map.js           # Leaflet map setup, custom markers, & fly-to bounds
+│   ├── app.js           # Main app bootstrap, filter pipeline, & hash routing
+│   ├── cards.js         # Site cards grid, trip toggles, & compare checkboxes
+│   ├── map.js           # Leaflet map, custom pins, & route polyline rendering
 │   ├── gallery.js       # Detail modal coordinator & lightbox gallery
 │   ├── stepwell.js      # Stepwell Cross-Section Explorer SVG cut-away diagram
 │   ├── sun.js           # Sun Alignment Simulator for Modhera Sun Temple
-│   ├── audio.js         # Multilingual Audio Guide (Web Speech API)
-│   ├── compare.js       # Then & Now Image Comparison Slider
-│   ├── living.js        # Living Heritage layer & "Happening this month" filter
-│   ├── siteCompare.js   # Side-by-side comparison modal & sticky bottom bar
-│   ├── postcard.js      # 1200x800 HTML5 Canvas digital postcard generator
-│   ├── recognition.js   # Landmark photo finder with confidence scores
+│   ├── audio.js         # Multilingual Audio Guide (Web Speech API with sleep timer & speed)
+│   ├── compare.js       # Then & Now Historical Image Comparison Slider
+│   ├── living.js        # Living Heritage layer & Google Calendar festival links
+│   ├── siteCompare.js   # Side-by-side site comparison modal & sticky bottom bar
+│   ├── postcard.js      # HTML5 Canvas postcard generator with template choices & Web Share
+│   ├── recognition.js   # Visual landmark photo finder with <50% confidence warning
 │   ├── passport.js      # Heritage Passport & localStorage stamp state
 │   ├── i18n.js          # Multilingual text provider (EN / GU / HI)
 │   ├── trails.js        # Curated Heritage Trails module
 │   ├── touristTools.js  # Live open status, GPS Near Me, & hidden gem form
-│   └── app.js           # Main bootstrap, filter pipeline, hash routing, & SW
+│   ├── search.js        # Smart search & URL hash sync
+│   ├── seo.js           # Dynamic SEO meta, Open Graph & JSON-LD TouristAttraction
+│   ├── a11y.js          # Accessibility font scaler, high contrast, focus trapping
+│   ├── pwa.js           # Service worker registration, install prompt & offline alert banner
+│   ├── planner.js       # Trip Planner, itinerary reordering, total distance & PDF print
+│   ├── routing.js       # OSRM road routing API integration with Haversine fallback
+│   ├── weather.js       # Open-Meteo live weather & 3-day forecast
+│   ├── panorama.js      # 360 panorama gyroscope & fullscreen stage controls
+│   ├── quiz.js          # Multilingual 5-question quiz & scholar badge rewards
+│   ├── timeline.js      # Dynasty chronology timeline bar
+│   └── community.js     # Moderated story submissions & star ratings
 ├── data/
-│   ├── sites.json       # Master JSON database (levels, story, historic, living, style, builder, material, unesco)
+│   ├── sites.json       # Master monument JSON dataset
 │   └── trails.json      # Curated heritage trail routes
-├── images/              # Optimized WebP image assets
-├── sw.js                # Offline Service Worker script
-└── README.md
+├── images/              # WebP photograph assets & PWA app icons
+└── README.md            # Comprehensive project documentation
 ```
 
 ---
 
-## 📋 Data Model Schema (`data/sites.json`)
+## 🧪 Manual Verification Checklist
 
-```json
-{
-  "id": "modhera-sun-temple",
-  "name": "Modhera Sun Temple",
-  "name_gu": "મોઢેરા સૂર્ય મંદિર",
-  "name_hi": "मोढेरा सूर्य मंदिर",
-  "category": "Temple",
-  "city": "Modhera",
-  "lat": 23.5835,
-  "lng": 72.1331,
-  "year": 1026,
-  "era": "Solanki",
-  "style": "Chaulukya (Solanki)",
-  "builder": "King Bhima I",
-  "material": "Golden Sandstone",
-  "unesco": false,
-  "summary": "Solanki architectural triumph dedicated to Sun God Surya...",
-  "description": "Constructed in 1026–27 AD...",
-  "period": "11th Century AD (1026 AD)",
-  "timings": "7:00 AM – 6:00 PM (Daily)",
-  "entryFee": "₹25 (Indian citizens)",
-  "bestTime": "October – March",
-  "cover": "images/modhera-sun-temple/1.webp",
-  "images": [
-    { "src": "images/modhera-sun-temple/1.webp", "alt": "Sabha Mandap", "credit": "ASI", "license": "CC BY-SA 4.0" }
-  ],
-  "levels": [ ... ],
-  "story": {
-    "en": "Welcome to the Sun Temple at Modhera...",
-    "gu": "મોઢેરા સૂર્ય મંદિરમાં આપનું સ્વાગત છે...",
-    "hi": "मोढेरा सूर्य मंदिर में आपका स्वागत है..."
-  },
-  "historic": {
-    "src": "TODO add image",
-    "year": "c. 1886",
-    "credit": "Henry Cousens / ASI Western Circle (TODO verify)",
-    "license": "Public Domain (Pre-1923)"
-  },
-  "living": [
-    {
-      "type": "Festival",
-      "name": "Uttarardh Mahotsav (Modhera Dance Festival)",
-      "note": "Annual classical dance festival held at the Sun Temple every January.",
-      "months": [1]
-    }
-  ]
-}
-```
+### Desktop Browsers (Chrome / Firefox / Edge):
+1. **PWA & Offline Mode:** Open DevTools → Network → Select "Offline". Reload page. App shell loads instantly and `⚡ Offline Ready` badge turns green. Offline alert banner appears if connection drops.
+2. **Search & Smart Filters:** Type `vav` into search box. Filter by `UNESCO Sites Only` and `Free Entry Only`. Observe URL hash updating to `#/search?...`.
+3. **Accessibility:** Click `♿ A11y` toggle to test Text Size Scaling (100% → 130%), High Contrast Mode, and keyboard `Tab` focus trapping in detail modal.
+4. **Trip Planner:** Click `"🗺️ Add to Trip"` on Rani ki Vav and Modhera Sun Temple. Open `"🗺️ My Trip"`. Reorder stops, check distance/time stats, click `"🗺️ Show Route on Map"`, and test `"🖨️ Export PDF / Print Itinerary"`.
+5. **Real Navigation & Weather:** Open detail modal for Modhera Sun Temple. Verify live temperature and 3-day forecast via Open-Meteo API. Click `"📍 Get Directions"` to test Google Maps deep link.
+6. **Quiz & Scholar Stamp:** Open detail modal → Scroll to `"🎯 Heritage Quiz & Scholar Badge"`. Answer questions, review explanation feedback, and verify passport stamp awarded.
 
----
-
-## 🚀 How to Run Locally
-
-Start a lightweight HTTP server:
-
-```bash
-# Navigate to project root
-cd c:\Users\ASUS\Documents\GitHub\Digital-Heritage-Explorer
-
-# Run Python local server
-python -m http.server 8000
-```
-Open **[http://localhost:8000](http://localhost:8000)** in your browser.
-
----
-
-## 🔗 Deep Link Examples
-
-- Rani ki Vav: `http://localhost:8000/#/site/rani-ki-vav`
-- Modhera Sun Temple: `http://localhost:8000/#/site/modhera-sun-temple`
-- Stepwell Category Filter: `http://localhost:8000/#/category/Stepwell`
+### Mobile Viewports (Down to 360px):
+1. Mobile navigation bar switches smoothly between Card List view and Map view using bottom toggle buttons.
+2. Filter bar chips horizontal scroll naturally on small screens.
+3. Postcard generator triggers native Web Share sheet on mobile devices (`navigator.share`).

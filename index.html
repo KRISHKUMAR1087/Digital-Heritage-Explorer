@@ -6,6 +6,10 @@
   <meta name="description" content="Digital Heritage Explorer — Discover local historical monuments, stepwells, temples, and ancient ruins in Gujarat with interactive maps, trails, time travel timeline, and offline support.">
   <title>Digital Heritage Explorer — Gujarat Heritage Tourism</title>
 
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3B2A1A">
+
   <!-- Self-Hosted Leaflet CSS -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
 
@@ -25,10 +29,23 @@
         </div>
       </a>
 
-      <!-- Header Actions: Passport Badge, Multilingual Selector, Search & Photo Identifier -->
+      <!-- Header Actions: Passport Badge, PWA Badge, Install Button, Multilingual Selector, Search & Photo Identifier -->
       <div class="header-actions">
+        <!-- Offline Ready Status Badge -->
+        <span id="offline-ready-badge" class="passport-badge badge-pwa">🌐 Checking...</span>
+
+        <!-- PWA Install Button (Shown on install prompt) -->
+        <button type="button" class="btn-identify btn-pwa-install" id="btn-install-pwa" style="display: none;" aria-label="Install Digital Heritage Explorer App">
+          📲 Install App
+        </button>
+
         <!-- Passport Counter Badge -->
         <span id="passport-counter" class="passport-badge">Passport: 0 Stamped 🏵️</span>
+
+        <!-- Trip Planner Button -->
+        <button type="button" class="btn-identify btn-trip-planner" id="btn-open-trip-planner" aria-label="Open Trip Itinerary Planner">
+          🗺️ My Trip (<span class="trip-count-badge">0</span>)
+        </button>
 
         <!-- Multilingual Language Selector (EN / GU / HI) -->
         <div id="lang-selector-container"></div>
@@ -78,6 +95,29 @@
             <input type="range" id="timeline-slider" min="-2600" max="2000" step="50" value="2000" aria-label="Historical Timeline Slider" />
             <span class="timeline-year" id="timeline-year-label">2000 AD</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Advanced Smart Filters Row (UNESCO, Entry Fee, Open Now) -->
+      <div class="filter-row smart-filters-row">
+        <span class="filter-label">⚙️ Smart Filters:</span>
+        <div class="smart-selects-group">
+          <select id="filter-unesco" class="smart-filter-select" aria-label="Filter by UNESCO World Heritage status">
+            <option value="All">UNESCO: All Sites</option>
+            <option value="true">🏛️ UNESCO Sites Only</option>
+            <option value="false">State / National Monuments</option>
+          </select>
+
+          <select id="filter-entry" class="smart-filter-select" aria-label="Filter by Entry Fee">
+            <option value="All">Entry Fee: All</option>
+            <option value="free">💚 Free Entry Only</option>
+            <option value="paid">🎟️ Ticketed Entry</option>
+          </select>
+
+          <select id="filter-open" class="smart-filter-select" aria-label="Filter by Open Now status">
+            <option value="All">Visiting Hours: All</option>
+            <option value="true">🟢 Open Now Only</option>
+          </select>
         </div>
       </div>
 
@@ -278,6 +318,18 @@
         <!-- Living Heritage & Cultural Traditions Container (Rendered dynamically if site has living) -->
         <div id="living-heritage-container" style="display: none; margin-bottom: 1.5rem;"></div>
 
+        <!-- 3D & 360 Street View Explorer Container (Rendered dynamically if site has threeD) -->
+        <div id="threeD-explorer-container" style="display: none; margin-bottom: 1.5rem;"></div>
+
+        <!-- Live Weather & Best Time Container -->
+        <div id="weather-widget-container" style="display: none; margin-bottom: 1.5rem;"></div>
+
+        <!-- Heritage Quiz & Scholar Badge Container -->
+        <div id="quiz-container" style="display: none; margin-bottom: 1.5rem;"></div>
+
+        <!-- Community Stories & Reviews Container -->
+        <div id="community-container" style="display: none; margin-bottom: 1.5rem;"></div>
+
         <!-- Gallery Thumbnails -->
         <h3 class="gallery-section-title" data-i18n="photoGallery">Photo Gallery</h3>
         <div class="thumbnail-strip" id="thumbnail-strip">
@@ -353,11 +405,22 @@
   <script src="js/living.js"></script>
   <script src="js/siteCompare.js"></script>
   <script src="js/postcard.js"></script>
+  <script src="js/threeDExplorer.js"></script>
   <script src="js/recognition.js"></script>
   <script src="js/passport.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/trails.js"></script>
   <script src="js/touristTools.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/seo.js"></script>
+  <script src="js/pwa.js"></script>
+  <script src="js/planner.js"></script>
+  <script src="js/routing.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/panorama.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/community.js"></script>
   <script src="js/app.js"></script>
 
 </body>

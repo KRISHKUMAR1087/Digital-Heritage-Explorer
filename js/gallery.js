@@ -28,6 +28,10 @@ const GalleryComponent = (() => {
   const audioContainer = document.getElementById('audio-guide-container');
   const compareContainer = document.getElementById('compare-slider-container');
   const livingContainer = document.getElementById('living-heritage-container');
+  const threeDContainer = document.getElementById('threeD-explorer-container');
+  const weatherContainer = document.getElementById('weather-widget-container');
+  const quizContainer = document.getElementById('quiz-container');
+  const communityContainer = document.getElementById('community-container');
 
   // Lightbox Elements
   const lightboxModal = document.getElementById('lightbox-modal');
@@ -101,8 +105,10 @@ const GalleryComponent = (() => {
       officialLink.style.display = 'none';
     }
 
-    // Directions Link
-    if (btnDirections) {
+    // Directions Link via RoutingComponent
+    if (window.RoutingComponent) {
+      RoutingComponent.updateDirectionsButtonInModal(site);
+    } else if (btnDirections) {
       btnDirections.href = `https://www.google.com/maps/dir/?api=1&destination=${site.lat},${site.lng}`;
       btnDirections.target = '_blank';
       btnDirections.rel = 'noopener noreferrer';
@@ -133,9 +139,34 @@ const GalleryComponent = (() => {
       LivingComponent.render(site, livingContainer);
     }
 
+    // 3D & 360 Street View Explorer
+    if (threeDContainer && window.ThreeDExplorerComponent) {
+      ThreeDExplorerComponent.render(site, threeDContainer);
+    }
+
+    // Live Weather & Best Time to Visit
+    if (weatherContainer && window.WeatherComponent) {
+      WeatherComponent.render(site, weatherContainer);
+    }
+
+    // Heritage Quiz & Scholar Badges
+    if (quizContainer && window.QuizComponent) {
+      QuizComponent.render(site, quizContainer);
+    }
+
+    // Community Layer & Submissions
+    if (communityContainer && window.CommunityComponent) {
+      CommunityComponent.render(site, communityContainer);
+    }
+
     // Thumbnail Gallery
     currentImages = site.images && site.images.length > 0 ? site.images : [{ src: site.cover, alt: site.name, credit: 'Public Domain', license: 'CC BY-SA 4.0' }];
     renderThumbnailStrip(currentImages);
+
+    // Update Dynamic SEO Metadata, Open Graph & JSON-LD
+    if (window.SeoComponent) {
+      SeoComponent.updateMetadata(site);
+    }
 
     detailModal.classList.add('active');
     detailModal.setAttribute('aria-hidden', 'false');
@@ -148,6 +179,11 @@ const GalleryComponent = (() => {
 
   function closeDetailModal() {
     if (!detailModal) return;
+
+    // Reset SEO Metadata to default homepage
+    if (window.SeoComponent) {
+      SeoComponent.updateMetadata(null);
+    }
 
     // Stop audio speech if playing
     if (window.AudioGuideComponent) {

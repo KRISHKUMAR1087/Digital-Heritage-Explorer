@@ -1,7 +1,7 @@
 /**
  * Living Heritage Layer Module
  * Renders living cultural traditions, crafts, and festivals in the detail modal,
- * and handles the "Happening this month" filter.
+ * handles "Happening this month" filter, and provides "Add to Google Calendar" links.
  */
 const LivingComponent = (() => {
   let container = null;
@@ -30,6 +30,8 @@ const LivingComponent = (() => {
       const monthsFormatted = item.months ? item.months.map(m => monthNames[m - 1]).join(', ') : 'All Year';
       const icon = item.type === 'Festival' ? '🎭' : (item.type === 'Craft' ? '🎨' : '🍲');
 
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(item.name + ' at ' + site.name)}&details=${encodeURIComponent(item.note)}&location=${encodeURIComponent(site.name + ', ' + site.city)}`;
+
       return `
         <div class="living-item-card ${isThisMonth ? 'active-this-month' : ''}">
           <div class="living-item-header">
@@ -38,7 +40,14 @@ const LivingComponent = (() => {
           </div>
           <h4 class="living-item-name">${escapeHTML(item.name)}</h4>
           <p class="living-item-note">${escapeHTML(item.note)}</p>
-          <span class="living-months-meta">📅 Active Months: ${escapeHTML(monthsFormatted)}</span>
+          <div class="living-meta-row">
+            <span class="living-months-meta">📅 Active Months: ${escapeHTML(monthsFormatted)}</span>
+            ${item.type === 'Festival' ? `
+              <a href="${gcalUrl}" target="_blank" rel="noopener noreferrer" class="btn-add-gcal">
+                📅 Add to Google Calendar
+              </a>
+            ` : ''}
+          </div>
         </div>
       `;
     }).join('');
@@ -46,8 +55,8 @@ const LivingComponent = (() => {
     container.innerHTML = `
       <div class="living-heritage-card" tabindex="0" aria-label="Living Cultural Heritage & Festivals">
         <div class="living-heritage-header">
-          <h3 class="living-heritage-title">🎨 Living Heritage &amp; Traditions</h3>
-          <p class="living-heritage-subtitle">Intangible crafts, festivals, and living cultural traditions connected to this monument.</p>
+          <h3 class="living-heritage-title">🎨 Living Heritage &amp; Cultural Calendar</h3>
+          <p class="living-heritage-subtitle">Intangible crafts, seasonal festivals, and living cultural traditions connected to this monument.</p>
         </div>
 
         <div class="living-items-grid">

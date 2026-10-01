@@ -74,6 +74,10 @@ const CardsComponent = (() => {
               <span>Compare</span>
             </label>
 
+            <button class="btn-trip-toggle ${window.PlannerComponent && PlannerComponent.isInTrip(site.id) ? 'in-trip' : ''}" data-site-id="${site.id}" aria-label="Toggle trip itinerary">
+              ${window.PlannerComponent && PlannerComponent.isInTrip(site.id) ? '✅ In Trip' : '🗺️ Add to Trip'}
+            </button>
+
             <button class="btn-stamp" aria-label="Stamp passport for ${escapeHTML(getSiteText(site, 'name'))}" title="Toggle passport stamp">
               ${isVisited ? '🏵️ Stamped' : '🏵️ Stamp'}
             </button>
@@ -84,6 +88,17 @@ const CardsComponent = (() => {
           </div>
         </div>
       `;
+
+      // Event listener for Trip toggle button
+      const tripBtn = card.querySelector('.btn-trip-toggle');
+      if (tripBtn) {
+        tripBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.PlannerComponent) {
+            PlannerComponent.toggleSite(site.id);
+          }
+        });
+      }
 
       // Event listener for Compare checkbox
       const compareCheckbox = card.querySelector('.card-compare-checkbox');

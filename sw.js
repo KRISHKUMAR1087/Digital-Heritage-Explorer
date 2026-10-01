@@ -1,45 +1,44 @@
 /**
  * Offline Service Worker
- * Caches HTML, CSS, JavaScript, vendor libraries, site JSON dataset, and WebP photographs.
- * Implements Cache-First strategy for instant offline access.
+ * Caches HTML, CSS, JavaScript, vendor libraries, site JSON datasets, and map tiles.
+ * Implements Cache-First strategy for app shell and Dynamic Cache for tile requests.
  */
 
-const CACHE_NAME = 'digital-heritage-explorer-v1';
+const CACHE_NAME = 'digital-heritage-explorer-v2';
+const TILE_CACHE_NAME = 'digital-heritage-map-tiles-v1';
 
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './manifest.json',
   './css/style.css',
   './js/app.js',
   './js/cards.js',
   './js/map.js',
   './js/gallery.js',
   './js/recognition.js',
+  './js/search.js',
+  './js/seo.js',
+  './js/a11y.js',
+  './js/pwa.js',
+  './js/stepwell.js',
+  './js/sun.js',
+  './js/audio.js',
+  './js/compare.js',
+  './js/living.js',
+  './js/siteCompare.js',
+  './js/postcard.js',
+  './js/threeDExplorer.js',
+  './js/passport.js',
+  './js/i18n.js',
+  './js/trails.js',
+  './js/touristTools.js',
   './vendor/leaflet/leaflet.css',
   './vendor/leaflet/leaflet.js',
   './data/sites.json',
-  './images/rani-ki-vav/1.webp',
-  './images/rani-ki-vav/2.webp',
-  './images/modhera-sun-temple/1.webp',
-  './images/modhera-sun-temple/2.webp',
-  './images/adalaj-stepwell/1.webp',
-  './images/adalaj-stepwell/2.webp',
-  './images/sarkhej-roza/1.webp',
-  './images/sarkhej-roza/2.webp',
-  './images/champaner-pavagadh/1.webp',
-  './images/champaner-pavagadh/2.webp',
-  './images/dholavira/1.webp',
-  './images/dholavira/2.webp',
-  './images/somnath-temple/1.webp',
-  './images/somnath-temple/2.webp',
-  './images/lothal/1.webp',
-  './images/lothal/2.webp',
-  './images/uparkot-fort/1.webp',
-  './images/uparkot-fort/2.webp',
-  './images/prag-mahal/1.webp',
-  './images/prag-mahal/2.webp',
-  './images/dwarkadhish-temple/1.webp',
-  './images/dwarkadhish-temple/2.webp'
+  './data/trails.json',
+  './images/icon-192.png',
+  './images/icon-512.png'
 ];
 
 // Install Event — Cache static shell and assets
@@ -60,7 +59,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
+          if (cache !== CACHE_NAME && cache !== TILE_CACHE_NAME) {
             console.log('[SW] Deleting old cache:', cache);
             return caches.delete(cache);
           }
@@ -70,11 +69,36 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event — Cache-First strategy with Network fallback
+// Fetch Event — Handle requests
 self.addEventListener('fetch', (event) => {
-  // Ignore non-GET requests or external tile servers like OSM tiles if needed
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // Handle map tile requests (OpenStreetMap or external tile providers)
+  if (url.hostname.includes('tile.openstreetmap.org') || url.pathname.includes('/tile/')) {
+    event.respondWith(
+      caches.open(TILE_CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          return fetch(event.request).then((networkResponse) => {
+            if (networkResponse && networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          }).catch(() => {
+            // Return empty transparent tile pixel or null if offline and not cached
+            return new Response('', { status: 404, statusText: 'Offline tile missing' });
+          });
+        });
+      })
+    );
+    return;
+  }
+
+  // Handle static app shell & local assets (Cache-First)
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
@@ -84,7 +108,6 @@ self.addEventListener('fetch', (event) => {
 
         return fetch(event.request)
           .then((networkResponse) => {
-            // Cache successful HTTP 200 responses
             if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
               const responseToCache = networkResponse.clone();
               caches.open(CACHE_NAME).then((cache) => {
@@ -94,8 +117,7 @@ self.addEventListener('fetch', (event) => {
             return networkResponse;
           })
           .catch(() => {
-            // Fallback for HTML navigation if offline
-            if (event.request.headers.get('accept').includes('text/html')) {
+            if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
               return caches.match('./index.html');
             }
           });

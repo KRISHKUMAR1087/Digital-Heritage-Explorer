@@ -1,0 +1,18 @@
+# Cloudflare Pages Custom Headers
+
+# Service Worker header allowing full root scope
+/sw.js
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache
+
+# Cache static assets (CSS, JS, WebP, JSON)
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+/data/*
+  Cache-Control: public, max-age=86400, revalidate
