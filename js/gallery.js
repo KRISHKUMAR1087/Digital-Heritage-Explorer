@@ -83,20 +83,23 @@ const GalleryComponent = (() => {
     previouslyFocusedElement = document.activeElement;
     activeSite = site;
 
+    const getSiteText = (s, f) => window.I18nComponent ? I18nComponent.getSiteText(s, f) : (s ? s[f] : '');
+    const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
+
     modalHeroImg.src = site.cover;
-    modalHeroImg.alt = `${site.name} cover image`;
+    modalHeroImg.alt = `${getSiteText(site, 'name')} cover image`;
     modalCategory.textContent = site.category;
-    modalCity.textContent = site.city;
-    modalTitle.textContent = site.name;
-    factPeriod.textContent = site.period || 'Historical';
-    factTimings.textContent = site.timings || 'Daylight Hours';
-    factEntryFee.textContent = site.entryFee || 'Free / Standard Ticket';
-    factBestTime.textContent = site.bestTime || 'October – March';
-    modalDescription.textContent = site.description;
+    modalCity.textContent = getSiteText(site, 'city');
+    modalTitle.textContent = getSiteText(site, 'name');
+    factPeriod.textContent = getSiteText(site, 'period') || 'Historical';
+    factTimings.textContent = getSiteText(site, 'timings') || 'Daylight Hours';
+    factEntryFee.textContent = getSiteText(site, 'entryFee') || 'Free / Standard Ticket';
+    factBestTime.textContent = getSiteText(site, 'bestTime') || 'October – March';
+    modalDescription.textContent = getSiteText(site, 'description') || getSiteText(site, 'summary');
 
     // Verified Source & Provenance
     if (factVerified) {
-      factVerified.textContent = `Verified ${site.lastVerified || '2026-09'} (${site.source || 'ASI / UNESCO'})`;
+      factVerified.textContent = `${t('verifiedText')} ${site.lastVerified || '2026-09'} (${site.source || 'ASI / UNESCO'})`;
     }
     if (officialLink && site.officialUrl) {
       officialLink.href = site.officialUrl;
@@ -330,9 +333,16 @@ const GalleryComponent = (() => {
       .replace(/'/g, '&#039;');
   }
 
+  function refreshModal() {
+    if (activeSite && detailModal && detailModal.classList.contains('active')) {
+      openDetailModal(activeSite);
+    }
+  }
+
   return {
     init,
     openDetailModal,
-    closeDetailModal
+    closeDetailModal,
+    refreshModal
   };
 })();

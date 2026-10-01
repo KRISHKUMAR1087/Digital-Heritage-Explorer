@@ -64,19 +64,22 @@ const MapComponent = (() => {
         alt: site.name
       });
 
-      // Custom Popup HTML
-      const popupContent = `
-        <div>
-          <img class="popup-media" src="${site.cover}" alt="${site.name}" />
-          <div class="popup-body">
-            <h4 class="popup-title">${escapeHTML(site.name)}</h4>
-            <div class="popup-city">${escapeHTML(site.city)}</div>
-            <button class="popup-btn" data-site-id="${site.id}">View Details</button>
+      function buildPopupContent() {
+        const getSiteText = (s, f) => window.I18nComponent ? I18nComponent.getSiteText(s, f) : s[f];
+        const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
+        return `
+          <div>
+            <img class="popup-media" src="${site.cover}" alt="${escapeHTML(getSiteText(site, 'name'))}" />
+            <div class="popup-body">
+              <h4 class="popup-title">${escapeHTML(getSiteText(site, 'name'))}</h4>
+              <div class="popup-city">${escapeHTML(getSiteText(site, 'city'))}</div>
+              <button class="popup-btn" data-site-id="${site.id}">${t('viewDetails')}</button>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      }
 
-      marker.bindPopup(popupContent, { maxWidth: 260 });
+      marker.bindPopup(() => buildPopupContent(), { maxWidth: 260 });
 
       // Marker Click Event
       marker.on('click', () => {

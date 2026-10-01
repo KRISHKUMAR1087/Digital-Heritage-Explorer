@@ -254,16 +254,17 @@ const PlannerComponent = (() => {
     });
 
     // Refresh card "Add to Trip" buttons
+    const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
     const tripBtns = document.querySelectorAll('.btn-trip-toggle');
     tripBtns.forEach(btn => {
       const siteId = btn.dataset.siteId;
       if (isInTrip(siteId)) {
         btn.classList.add('in-trip');
-        btn.innerHTML = '✅ In Trip';
+        btn.innerHTML = t('inTrip');
         btn.setAttribute('aria-label', 'Remove from trip');
       } else {
         btn.classList.remove('in-trip');
-        btn.innerHTML = '🗺️ Add to Trip';
+        btn.innerHTML = t('addToTrip');
         btn.setAttribute('aria-label', 'Add to trip itinerary');
       }
     });
@@ -310,6 +311,7 @@ const PlannerComponent = (() => {
    * Create Modal DOM element if not exists
    */
   function createModalDOM() {
+    const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
     const modal = document.createElement('div');
     modal.id = 'trip-planner-modal';
     modal.className = 'modal-overlay';
@@ -322,8 +324,8 @@ const PlannerComponent = (() => {
       <div class="modal-container trip-modal-container">
         <button type="button" class="modal-close-btn" id="trip-modal-close-btn" aria-label="Close itinerary planner">✕</button>
         <div class="trip-modal-header">
-          <h2 id="trip-modal-title" class="trip-modal-title">🗺️ Heritage Trip Planner &amp; Itinerary</h2>
-          <p class="trip-modal-subtitle">Organize your Gujarat heritage tour, compute driving distance &amp; time, and view on map.</p>
+          <h2 id="trip-modal-title" class="trip-modal-title" data-i18n="tripTitle">${t('tripTitle')}</h2>
+          <p class="trip-modal-subtitle" data-i18n="tripSubtitle">${t('tripSubtitle')}</p>
         </div>
         <div class="trip-modal-body" id="trip-modal-body"></div>
       </div>
@@ -346,6 +348,14 @@ const PlannerComponent = (() => {
     const container = document.getElementById('trip-modal-body');
     if (!container) return;
 
+    const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
+    const getSiteText = (s, f) => window.I18nComponent ? I18nComponent.getSiteText(s, f) : (s ? s[f] : '');
+
+    const titleEl = document.getElementById('trip-modal-title');
+    if (titleEl) titleEl.textContent = t('tripTitle');
+    const subTitleEl = document.querySelector('.trip-modal-subtitle');
+    if (subTitleEl) subTitleEl.textContent = t('tripSubtitle');
+
     const allSites = window.App ? App.getAllSites() : [];
     const stats = getItineraryStats(allSites);
 
@@ -353,8 +363,8 @@ const PlannerComponent = (() => {
       container.innerHTML = `
         <div class="trip-empty-state">
           <div class="empty-icon">📍</div>
-          <h3>Your Itinerary is Empty</h3>
-          <p>Click <strong>"🗺️ Add to Trip"</strong> on any monument card to start building your custom Gujarat tour.</p>
+          <h3>${t('emptyTripTitle')}</h3>
+          <p>${t('emptyTripDesc')}</p>
         </div>
       `;
       return;
@@ -362,7 +372,6 @@ const PlannerComponent = (() => {
 
     let itemsHtml = stats.sites.map((site, index) => {
       const legInfo = stats.legs[index - 1];
-      const getSiteText = (s, f) => window.I18nComponent ? I18nComponent.getSiteText(s, f) : s[f];
 
       return `
         ${legInfo ? `
@@ -374,7 +383,7 @@ const PlannerComponent = (() => {
         ` : ''}
         <div class="trip-item-card" data-site-id="${site.id}">
           <div class="trip-item-number">${index + 1}</div>
-          <img src="${site.cover}" alt="${getSiteText(site, 'name')}" class="trip-item-thumb" />
+          <img src="${site.cover}" alt="${escapeHTML(getSiteText(site, 'name'))}" class="trip-item-thumb" />
           <div class="trip-item-details">
             <h4 class="trip-item-title">${escapeHTML(getSiteText(site, 'name'))}</h4>
             <span class="trip-item-city">📍 ${escapeHTML(getSiteText(site, 'city'))} • ${escapeHTML(site.category)}</span>
@@ -393,16 +402,16 @@ const PlannerComponent = (() => {
     container.innerHTML = `
       <div class="trip-summary-bar">
         <div class="summary-stat">
-          <span class="stat-label">Total Stops</span>
-          <span class="stat-value">${stats.sites.length} Monuments</span>
+          <span class="stat-label">${t('totalStops')}</span>
+          <span class="stat-value">${stats.sites.length} ${t('monumentsCount')}</span>
         </div>
         <div class="summary-stat">
-          <span class="stat-label">Estimated Road Distance</span>
+          <span class="stat-label">${t('roadDistance')}</span>
           <span class="stat-value">${stats.totalDistanceKm} km</span>
         </div>
         <div class="summary-stat">
-          <span class="stat-label">Total Tour Time</span>
-          <span class="stat-value">~${stats.totalTripHours} Hours</span>
+          <span class="stat-label">${t('tourTime')}</span>
+          <span class="stat-value">~${stats.totalTripHours} ${t('hours')}</span>
         </div>
       </div>
 
@@ -412,16 +421,16 @@ const PlannerComponent = (() => {
 
       <div class="trip-modal-actions">
         <button type="button" id="btn-draw-trip-route" class="btn-primary-action">
-          🗺️ Show Route on Map
+          ${t('showRoute')}
         </button>
         <button type="button" id="btn-print-trip" class="btn-secondary-action">
-          🖨️ Export PDF / Print Itinerary
+          ${t('exportPdf')}
         </button>
         <button type="button" id="btn-share-trip" class="btn-secondary-action">
-          🔗 Copy Shareable Link
+          ${t('shareLink')}
         </button>
         <button type="button" id="btn-clear-trip" class="btn-danger-action">
-          🗑️ Clear Trip
+          ${t('clearTrip')}
         </button>
       </div>
 
