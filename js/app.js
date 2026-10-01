@@ -50,12 +50,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set initial mobile view mode
   document.body.classList.add('mobile-view-list');
 
-  // Fetch Site Data from data/sites.json
-  fetch('data/sites.json')
-    .then(response => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return response.json();
-    })
+  // Fetch Site Data with resilient path fallbacks (works on Cloudflare Pages, GitHub Pages subpaths, and local dev)
+  const siteDataPaths = [
+    './data/sites.json',
+    'data/sites.json',
+    `${window.location.pathname.replace(/\/[^\/]*$/, '')}/data/sites.json`.replace(/^\/\//, '/')
+  ];
+
+  async function loadSitesData() {
+    let lastErr = null;
+    for (const path of siteDataPaths) {
+      try {
+        const response = await fetch(path);
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch (err) {
+        lastErr = err;
+      }
+    }
+    throw lastErr || new Error('All data fetch paths failed');
+  }
+
+  loadSitesData()
     .then(sites => {
       allSites = sites;
 
@@ -194,7 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="empty-state">
             <div class="empty-icon">⚠️</div>
             <h3 class="empty-title">Error Loading Data</h3>
-            <p class="empty-desc">Could not load heritage site data. Please serve via local HTTP server (<code>python -m http.server</code>).</p>
+            <p class="empty-desc">Could not load heritage site data. If opening locally, please run a local HTTP server or view on your deployed web URL.</p>
+            <button onclick="window.location.reload()" class="btn-primary" style="margin-top: 12px; padding: 8px 16px; cursor: pointer; background: var(--color-terracotta, #B5502F); color: #fff; border: none; border-radius: 6px;">🔄 Retry Loading</button>
           </div>
         `;
       }

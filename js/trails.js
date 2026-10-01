@@ -16,8 +16,23 @@ const TrailsComponent = (() => {
   function init(onFilterByTrail) {
     onTrailFilterCallback = onFilterByTrail;
 
-    fetch('data/trails.json')
-      .then(res => res.json())
+    const trailDataPaths = [
+      './data/trails.json',
+      'data/trails.json',
+      `${window.location.pathname.replace(/\/[^\/]*$/, '')}/data/trails.json`.replace(/^\/\//, '/')
+    ];
+
+    async function loadTrailsData() {
+      for (const path of trailDataPaths) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) return await res.json();
+        } catch (e) {}
+      }
+      return [];
+    }
+
+    loadTrailsData()
       .then(data => {
         trailsData = data;
         renderTrailChips();

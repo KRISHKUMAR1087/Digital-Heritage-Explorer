@@ -4,7 +4,7 @@
  * Implements Cache-First strategy for app shell and Dynamic Cache for tile requests.
  */
 
-const CACHE_NAME = 'digital-heritage-explorer-v2';
+const CACHE_NAME = 'digital-heritage-explorer-v3';
 const TILE_CACHE_NAME = 'digital-heritage-map-tiles-v1';
 
 const STATIC_ASSETS = [
@@ -41,13 +41,17 @@ const STATIC_ASSETS = [
   './images/icon-512.png'
 ];
 
-// Install Event — Cache static shell and assets
+// Install Event — Cache static shell and assets resiliently
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
+      .then(async (cache) => {
         console.log('[SW] Pre-caching offline static assets...');
-        return cache.addAll(STATIC_ASSETS);
+        await Promise.all(
+          STATIC_ASSETS.map(url => 
+            cache.add(url).catch(err => console.warn('[SW] Could not precache asset:', url, err))
+          )
+        );
       })
       .then(() => self.skipWaiting())
   );
