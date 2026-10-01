@@ -21,7 +21,6 @@ const A11yComponent = (() => {
     loadPreferences();
     applyPreferences();
     injectAccessibilityWidget();
-    setupSkipToContent();
   }
 
   function loadPreferences() {
@@ -168,17 +167,6 @@ const A11yComponent = (() => {
         motionBtn.classList.toggle('active', isReducedMotion);
       });
     }
-  }
-
-  function setupSkipToContent() {
-    if (document.querySelector('.skip-to-content')) return;
-
-    const skipLink = document.createElement('a');
-    skipLink.href = '#cards-grid';
-    skipLink.className = 'skip-to-content';
-    skipLink.textContent = 'Skip to main content';
-
-    document.body.insertBefore(skipLink, document.body.firstChild);
   }
 
   /**

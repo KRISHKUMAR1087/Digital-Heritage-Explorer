@@ -3480,3 +3480,278 @@ body {
   }
 }
 
+/* ==========================================================================
+   Identify Monument (AI Photo Finder) Styles
+   ========================================================================== */
+.identify-container {
+  max-width: 680px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.5rem;
+}
+.identify-header {
+  margin-bottom: 1rem;
+}
+.identify-title {
+  font-size: 1.4rem;
+  color: var(--color-earth-dark, #3B2A1A);
+  margin-bottom: 0.25rem;
+}
+.identify-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted, #666);
+}
+.identify-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--color-border, #E2D8C3);
+  margin-bottom: 1.25rem;
+}
+.identify-tab {
+  padding: 10px 18px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-muted, #666);
+  cursor: pointer;
+}
+.identify-tab.active {
+  border-bottom-color: var(--color-terracotta, #B5502F);
+  color: var(--color-terracotta, #B5502F);
+}
+
+.drop-zone {
+  border: 2px dashed var(--color-border, #E2D8C3);
+  border-radius: var(--radius-md, 8px);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: var(--color-sandstone-light, #FAF5EC);
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.drop-zone.drag-over {
+  border-color: var(--color-terracotta, #B5502F);
+  background: #f5eae0;
+}
+.drop-zone-icon {
+  font-size: 3rem;
+}
+.drop-zone-text {
+  font-size: 0.95rem;
+  color: var(--color-earth-dark, #3B2A1A);
+}
+.file-input-hidden {
+  display: none;
+}
+.btn-browse-file {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: var(--color-terracotta, #B5502F);
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+.camera-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.btn-capture {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 24px;
+  background: var(--color-terracotta, #B5502F);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.recognition-status {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--color-earth-dark, #3B2A1A);
+  font-weight: 500;
+  text-align: center;
+}
+
+.recognition-results {
+  margin-top: 1.25rem;
+}
+.recognition-card {
+  border: 1px solid var(--color-border, #E2D8C3);
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--color-sandstone-light, #FAF5EC);
+  margin-bottom: 1.5rem;
+}
+.recognition-card.top-match {
+  border-color: var(--color-terracotta, #B5502F);
+}
+.recognition-header {
+  margin-bottom: 1rem;
+}
+.match-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--color-terracotta, #B5502F);
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+.match-badge.warning {
+  background: #d97706;
+}
+
+.recognition-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 1rem;
+}
+.comparison-item {
+  flex: 1;
+  max-width: 220px;
+  text-align: center;
+}
+.comparison-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #666);
+  margin-bottom: 4px;
+}
+.comparison-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #E2D8C3);
+}
+.comparison-divider {
+  font-size: 1.5rem;
+  color: var(--color-terracotta, #B5502F);
+}
+
+.recognition-info {
+  text-align: left;
+}
+.recognition-title {
+  font-size: 1.2rem;
+  color: var(--color-earth-dark, #3B2A1A);
+  margin-bottom: 4px;
+}
+.recognition-city {
+  font-size: 0.85rem;
+  color: var(--color-terracotta, #B5502F);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.recognition-summary {
+  font-size: 0.9rem;
+  color: var(--color-text, #333);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.confidence-bar-wrapper {
+  width: 100%;
+  height: 10px;
+  background: var(--color-sandstone, #E8DCC4);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.confidence-bar-fill {
+  height: 100%;
+  background: var(--color-terracotta, #B5502F);
+  transition: width 0.4s ease;
+}
+.confidence-bar-fill.fill-warning {
+  background: #d97706;
+}
+
+.btn-select-recognized {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  background: var(--color-earth-dark, #3B2A1A);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.other-matches-heading {
+  font-size: 1rem;
+  color: var(--color-earth-dark, #3B2A1A);
+  margin-bottom: 0.75rem;
+}
+.other-matches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.other-match-card {
+  border: 1px solid var(--color-border, #E2D8C3);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.other-match-card:hover {
+  transform: translateY(-2px);
+}
+.other-match-img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+}
+.other-match-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.other-match-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-earth-dark, #3B2A1A);
+}
+.other-match-confidence {
+  font-size: 0.75rem;
+  color: var(--color-terracotta, #B5502F);
+}
+
+/* Hide Skip to Main Content Link */
+.skip-to-content, .skip-link {
+  display: none !important;
+}
+
+
