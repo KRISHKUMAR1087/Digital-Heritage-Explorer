@@ -19,52 +19,6 @@
 </head>
 <body>
 
-  <!-- Main Application Header -->
-  <header class="site-header">
-    <div class="header-container">
-      <a href="#/" class="brand" aria-label="Digital Heritage Explorer Home">
-        <div class="brand-icon" aria-hidden="true">🏛️</div>
-        <div>
-          <h1 class="brand-title" data-i18n="brandTitle">Digital Heritage Explorer</h1>
-          <p class="brand-subtitle" data-i18n="brandSubtitle">Gujarat Historical Monuments &amp; Architectural Treasures</p>
-        </div>
-      </a>
-
-      <!-- Header Actions: Passport Badge, PWA Badge, Install Button, Multilingual Selector, Search & Photo Identifier -->
-      <div class="header-actions">
-        <!-- Offline Ready Status Badge -->
-        <span id="offline-ready-badge" class="passport-badge badge-pwa">🌐 Checking...</span>
-
-        <!-- PWA Install Button (Shown on install prompt) -->
-        <button type="button" class="btn-identify btn-pwa-install" id="btn-install-pwa" style="display: none;" aria-label="Install Digital Heritage Explorer App">
-          📲 Install App
-        </button>
-
-        <!-- Passport Counter Badge -->
-        <span id="passport-counter" class="passport-badge">Passport: 0 Stamped 🏵️</span>
-
-        <!-- Trip Planner Button -->
-        <button type="button" class="btn-identify btn-trip-planner" id="btn-open-trip-planner" aria-label="Open Trip Itinerary Planner">
-          🗺️ My Trip (<span class="trip-count-badge">0</span>)
-        </button>
-
-        <!-- Multilingual Language Selector (EN / GU / HI) -->
-        <div id="lang-selector-container"></div>
-
-        <!-- Search Input -->
-        <div class="header-search">
-          <span class="header-search-icon" aria-hidden="true">🔍</span>
-          <input type="search" id="search-input" placeholder="Search by site name, city, or keyword..." aria-label="Search heritage sites" />
-        </div>
-
-        <!-- Image Landmark Recognition Button -->
-        <button type="button" class="btn-identify" id="btn-identify-site" aria-label="Identify heritage site from photo" data-i18n="identifyBtn">
-          📷 Identify Monument
-        </button>
-      </div>
-    </div>
-  </header>
-
   <!-- Hero Landing Page Section -->
   <section class="landing-hero" id="landing-hero" aria-label="Gujarat Heritage Portal Landing Page">
     <div class="landing-hero-overlay"></div>
@@ -151,6 +105,52 @@
 
     </div>
   </section>
+
+  <!-- Main Application Header (Sticky Toolbar - appears after hero) -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <a href="#/" class="brand" aria-label="Digital Heritage Explorer Home">
+        <div class="brand-icon" aria-hidden="true">🏛️</div>
+        <div>
+          <h1 class="brand-title" data-i18n="brandTitle">Digital Heritage Explorer</h1>
+          <p class="brand-subtitle" data-i18n="brandSubtitle">Gujarat Historical Monuments &amp; Architectural Treasures</p>
+        </div>
+      </a>
+
+      <!-- Header Actions: Passport Badge, PWA Badge, Install Button, Multilingual Selector, Search & Photo Identifier -->
+      <div class="header-actions">
+        <!-- Offline Ready Status Badge -->
+        <span id="offline-ready-badge" class="passport-badge badge-pwa">🌐 Checking...</span>
+
+        <!-- PWA Install Button (Shown on install prompt) -->
+        <button type="button" class="btn-identify btn-pwa-install" id="btn-install-pwa" style="display: none;" aria-label="Install Digital Heritage Explorer App">
+          📲 Install App
+        </button>
+
+        <!-- Passport Counter Badge -->
+        <span id="passport-counter" class="passport-badge">Passport: 0 Stamped 🏵️</span>
+
+        <!-- Trip Planner Button -->
+        <button type="button" class="btn-identify btn-trip-planner" id="btn-open-trip-planner" aria-label="Open Trip Itinerary Planner">
+          🗺️ My Trip (<span class="trip-count-badge">0</span>)
+        </button>
+
+        <!-- Multilingual Language Selector (EN / GU / HI) -->
+        <div id="lang-selector-container"></div>
+
+        <!-- Search Input -->
+        <div class="header-search">
+          <span class="header-search-icon" aria-hidden="true">🔍</span>
+          <input type="search" id="search-input" placeholder="Search by site name, city, or keyword..." aria-label="Search heritage sites" />
+        </div>
+
+        <!-- Image Landmark Recognition Button -->
+        <button type="button" class="btn-identify" id="btn-identify-site" aria-label="Identify heritage site from photo" data-i18n="identifyBtn">
+          📷 Identify Monument
+        </button>
+      </div>
+    </div>
+  </header>
 
   <!-- Main Explorer Section Anchor -->
   <div id="explorer-section"></div>

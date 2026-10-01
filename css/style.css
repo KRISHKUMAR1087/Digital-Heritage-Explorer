@@ -3755,3 +3755,32 @@ body {
 }
 
 
+
+/* ==========================================================================
+   CTA Buttons - Single Row Override (Desktop)
+   ========================================================================== */
+.landing-cta-group {
+  flex-wrap: nowrap !important;
+  gap: 0.5rem !important;
+}
+
+.btn-hero-primary {
+  font-size: 0.92rem !important;
+  padding: 0.7rem 1.1rem !important;
+  white-space: nowrap;
+}
+
+.btn-hero-secondary,
+.btn-hero-accent,
+.btn-hero-outline {
+  font-size: 0.85rem !important;
+  padding: 0.7rem 1rem !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .landing-cta-group {
+    flex-wrap: wrap !important;
+    flex-direction: column !important;
+  }
+}
