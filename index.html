@@ -409,6 +409,54 @@
     </div>
   </div>
 
+  <!-- Digital Heritage Postcard Generator Modal Dialog -->
+  <div id="postcard-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="postcard-modal-title">
+    <div class="modal-container postcard-modal-container">
+      <button type="button" class="modal-close-btn" id="postcard-modal-close-btn" aria-label="Close postcard modal">✕</button>
+
+      <div class="postcard-modal-header">
+        <h2 class="postcard-modal-title" id="postcard-modal-title">🖼️ Digital Heritage Postcard Generator</h2>
+        <p class="postcard-modal-subtitle">Customize and download a vintage postcard keepsake of this heritage monument.</p>
+      </div>
+
+      <div class="postcard-modal-body">
+        <div class="postcard-preview-wrapper">
+          <canvas id="postcard-preview-canvas" width="1200" height="800" aria-label="Postcard preview"></canvas>
+          <div id="postcard-loading-spinner" class="postcard-loading-overlay" style="display: none;">
+            <div class="spinner-circle"></div>
+            <span>Rendering High-Res Postcard...</span>
+          </div>
+        </div>
+
+        <div class="postcard-controls-panel">
+          <div class="postcard-form-group">
+            <label class="postcard-label">Theme Style:</label>
+            <div class="postcard-theme-options" id="postcard-theme-options">
+              <button type="button" class="postcard-theme-btn active" data-theme="sandstone">🏛️ Sandstone</button>
+              <button type="button" class="postcard-theme-btn" data-theme="terracotta">🧱 Terracotta</button>
+              <button type="button" class="postcard-theme-btn" data-theme="royal">👑 Royal Gold</button>
+            </div>
+          </div>
+
+          <div class="postcard-form-group">
+            <label for="postcard-custom-msg" class="postcard-label">Personal Message / Caption:</label>
+            <input type="text" id="postcard-custom-msg" maxlength="110" placeholder="e.g. Greetings from Gujarat's architectural wonder!" />
+          </div>
+
+          <div class="postcard-actions-row">
+            <button type="button" id="btn-postcard-download-now" class="btn-postcard-action btn-download-primary">
+              📥 Download Postcard (PNG)
+            </button>
+            <button type="button" id="btn-postcard-share-now" class="btn-postcard-action btn-share-secondary">
+              📲 Share Postcard
+            </button>
+          </div>
+          <p id="postcard-status-msg" class="postcard-status-hint"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <p data-i18n="footerText">&copy; Digital Heritage Explorer — Preserving and exploring Gujarat cultural heritage. Built with Leaflet.js &amp; OpenStreetMap. Works offline.</p>
@@ -444,6 +492,7 @@
   <script src="js/quiz.js"></script>
   <script src="js/timeline.js"></script>
   <script src="js/community.js"></script>
+  <script src="js/sitesData.js"></script>
   <script src="js/app.js"></script>
 
 </body>

@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Modules
   GalleryComponent.init();
   PassportComponent.init();
+  if (window.PostcardComponent) PostcardComponent.init();
 
   I18nComponent.init((lang) => {
     renderCategoryChips(allSites);
@@ -50,153 +51,161 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set initial mobile view mode
   document.body.classList.add('mobile-view-list');
 
-  // Fetch Site Data from data/sites.json
+  function initAppData(sites) {
+    allSites = sites;
+
+    // Render Category Chips & Era Chips
+    renderCategoryChips(allSites);
+    renderEraChips();
+
+    // Initialize Site Comparison Module
+    if (window.SiteCompareComponent) {
+      SiteCompareComponent.init(allSites);
+    }
+
+    // Initialize Leaflet Map
+    MapComponent.init(
+      allSites,
+      handleMarkerClick,
+      handleDetailsClick
+    );
+
+    // Initialize Image Recognition Module
+    RecognitionComponent.init(
+      allSites,
+      handleRecognizedSiteSelect
+    );
+
+    // Initialize Heritage Trails Module
+    TrailsComponent.init((trailSiteIds) => {
+      activeTrailSiteIds = trailSiteIds;
+      applyFilters();
+    });
+
+    // Initialize Tourist Tools (Near Me & Hidden Gems)
+    TouristToolsComponent.init((userLocation) => {
+      // Location updated, re-apply filters & sort cards by GPS distance
+      applyFilters();
+    });
+
+    const simLocSelect = document.getElementById('simulated-location-select');
+    if (simLocSelect) {
+      simLocSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val) {
+          TouristToolsComponent.setSimulatedLocation(val, () => {
+            applyFilters();
+          });
+        }
+      });
+    }
+
+    // Initialize Trip Planner UI & Listeners
+    const btnOpenTrip = document.getElementById('btn-open-trip-planner');
+    if (btnOpenTrip) {
+      btnOpenTrip.addEventListener('click', () => {
+        if (window.PlannerComponent) PlannerComponent.openModal();
+      });
+    }
+    if (window.PlannerComponent) {
+      PlannerComponent.updateUI();
+    }
+
+    // Timeline Slider Listener
+    if (timelineSlider) {
+      timelineSlider.addEventListener('input', (e) => {
+        maxTimelineYear = parseInt(e.target.value, 10);
+        if (timelineYearLabel) {
+          timelineYearLabel.textContent = maxTimelineYear < 0 
+            ? `${Math.abs(maxTimelineYear)} BCE` 
+            : `${maxTimelineYear} AD`;
+        }
+        applyFilters();
+      });
+    }
+
+    // Initialize Smart Search & Advanced Filters Module
+    if (window.SearchComponent) {
+      SearchComponent.init(allSites, () => {
+        applyFilters();
+      });
+    }
+
+    // Smart Filter Dropdowns Listeners (UNESCO, Entry Fee, Open Now)
+    const selectUnesco = document.getElementById('filter-unesco');
+    if (selectUnesco) {
+      selectUnesco.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ unesco: e.target.value });
+      });
+    }
+
+    const selectEntry = document.getElementById('filter-entry');
+    if (selectEntry) {
+      selectEntry.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ entry: e.target.value });
+      });
+    }
+
+    const selectOpen = document.getElementById('filter-open');
+    if (selectOpen) {
+      selectOpen.addEventListener('change', (e) => {
+        if (window.SearchComponent) SearchComponent.updateParams({ open: e.target.value });
+      });
+    }
+
+    // Happening This Month Filter Button Listener
+    if (btnThisMonth) {
+      btnThisMonth.addEventListener('click', () => {
+        filterThisMonthOnly = !filterThisMonthOnly;
+        btnThisMonth.classList.toggle('active', filterThisMonthOnly);
+        applyFilters();
+      });
+    }
+
+    // Initial Render & Hash Routing
+    applyFilters();
+
+    window.addEventListener('hashchange', handleHashRouting);
+    handleHashRouting();
+
+    // Setup Search Listener with Debounce
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          searchQuery = e.target.value.trim().toLowerCase();
+          applyFilters();
+        }, 250);
+      });
+    }
+
+    setupMobileToggle();
+  }
+
+  // Fetch Site Data with automatic local fallback for direct file:// protocol access
   fetch('data/sites.json')
     .then(response => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return response.json();
     })
     .then(sites => {
-      allSites = sites;
-
-      // Render Category Chips & Era Chips
-      renderCategoryChips(allSites);
-      renderEraChips();
-
-      // Initialize Site Comparison Module
-      if (window.SiteCompareComponent) {
-        SiteCompareComponent.init(allSites);
-      }
-
-      // Initialize Leaflet Map
-      MapComponent.init(
-        allSites,
-        handleMarkerClick,
-        handleDetailsClick
-      );
-
-      // Initialize Image Recognition Module
-      RecognitionComponent.init(
-        allSites,
-        handleRecognizedSiteSelect
-      );
-
-      // Initialize Heritage Trails Module
-      TrailsComponent.init((trailSiteIds) => {
-        activeTrailSiteIds = trailSiteIds;
-        applyFilters();
-      });
-
-      // Initialize Tourist Tools (Near Me & Hidden Gems)
-      TouristToolsComponent.init((userLocation) => {
-        // Location updated, re-apply filters & sort cards by GPS distance
-        applyFilters();
-      });
-
-      const simLocSelect = document.getElementById('simulated-location-select');
-      if (simLocSelect) {
-        simLocSelect.addEventListener('change', (e) => {
-          const val = e.target.value;
-          if (val) {
-            TouristToolsComponent.setSimulatedLocation(val, () => {
-              applyFilters();
-            });
-          }
-        });
-      }
-
-      // Initialize Trip Planner UI & Listeners
-      const btnOpenTrip = document.getElementById('btn-open-trip-planner');
-      if (btnOpenTrip) {
-        btnOpenTrip.addEventListener('click', () => {
-          if (window.PlannerComponent) PlannerComponent.openModal();
-        });
-      }
-      if (window.PlannerComponent) {
-        PlannerComponent.updateUI();
-      }
-
-      // Timeline Slider Listener
-      if (timelineSlider) {
-        timelineSlider.addEventListener('input', (e) => {
-          maxTimelineYear = parseInt(e.target.value, 10);
-          if (timelineYearLabel) {
-            timelineYearLabel.textContent = maxTimelineYear < 0 
-              ? `${Math.abs(maxTimelineYear)} BCE` 
-              : `${maxTimelineYear} AD`;
-          }
-          applyFilters();
-        });
-      }
-
-      // Initialize Smart Search & Advanced Filters Module
-      if (window.SearchComponent) {
-        SearchComponent.init(allSites, () => {
-          applyFilters();
-        });
-      }
-
-      // Smart Filter Dropdowns Listeners (UNESCO, Entry Fee, Open Now)
-      const selectUnesco = document.getElementById('filter-unesco');
-      if (selectUnesco) {
-        selectUnesco.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ unesco: e.target.value });
-        });
-      }
-
-      const selectEntry = document.getElementById('filter-entry');
-      if (selectEntry) {
-        selectEntry.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ entry: e.target.value });
-        });
-      }
-
-      const selectOpen = document.getElementById('filter-open');
-      if (selectOpen) {
-        selectOpen.addEventListener('change', (e) => {
-          if (window.SearchComponent) SearchComponent.updateParams({ open: e.target.value });
-        });
-      }
-
-      // Happening This Month Filter Button Listener
-      if (btnThisMonth) {
-        btnThisMonth.addEventListener('click', () => {
-          filterThisMonthOnly = !filterThisMonthOnly;
-          btnThisMonth.classList.toggle('active', filterThisMonthOnly);
-          applyFilters();
-        });
-      }
-
-      // Initial Render & Hash Routing
-      applyFilters();
-
-      window.addEventListener('hashchange', handleHashRouting);
-      handleHashRouting();
-
-      // Setup Search Listener with Debounce
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => {
-            searchQuery = e.target.value.trim().toLowerCase();
-            applyFilters();
-          }, 250);
-        });
-      }
-
-      setupMobileToggle();
+      initAppData(sites);
     })
     .catch(error => {
-      console.error('Failed to load heritage sites JSON:', error);
-      const cardsGrid = document.getElementById('cards-grid');
-      if (cardsGrid) {
-        cardsGrid.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">⚠️</div>
-            <h3 class="empty-title">Error Loading Data</h3>
-            <p class="empty-desc">Could not load heritage site data. Please serve via local HTTP server (<code>python -m http.server</code>).</p>
-          </div>
-        `;
+      console.warn('Fetch data/sites.json failed (likely file:// CORS restrictions). Using embedded dataset fallback:', error.message);
+      if (window.EMBEDDED_SITES_DATA && Array.isArray(window.EMBEDDED_SITES_DATA) && window.EMBEDDED_SITES_DATA.length > 0) {
+        initAppData(window.EMBEDDED_SITES_DATA);
+      } else {
+        const cardsGrid = document.getElementById('cards-grid');
+        if (cardsGrid) {
+          cardsGrid.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">⚠️</div>
+              <h3 class="empty-title">Error Loading Data</h3>
+              <p class="empty-desc">Could not load heritage site data. Please serve via local HTTP server (<code>python -m http.server</code>).</p>
+            </div>
+          `;
+        }
       }
     });
 
