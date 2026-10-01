@@ -100,7 +100,7 @@
 
       <!-- Advanced Smart Filters Row (UNESCO, Entry Fee, Open Now) -->
       <div class="filter-row smart-filters-row">
-        <span class="filter-label">⚙️ Smart Filters:</span>
+        <span class="filter-label" data-i18n="smartFiltersLabel">⚙️ Smart Filters:</span>
         <div class="smart-selects-group">
           <select id="filter-unesco" class="smart-filter-select" aria-label="Filter by UNESCO World Heritage status">
             <option value="All">UNESCO: All Sites</option>
@@ -139,10 +139,10 @@
   <!-- Mobile View Toggle Bar -->
   <div class="mobile-toggle-bar">
     <div class="mobile-toggle-container" role="tablist" aria-label="Mobile View Switcher">
-      <button type="button" class="mobile-toggle-btn active" id="btn-view-list" role="tab" aria-selected="true">
+      <button type="button" class="mobile-toggle-btn active" id="btn-view-list" role="tab" aria-selected="true" data-i18n="listView">
         📋 List View
       </button>
-      <button type="button" class="mobile-toggle-btn" id="btn-view-map" role="tab" aria-selected="false">
+      <button type="button" class="mobile-toggle-btn" id="btn-view-map" role="tab" aria-selected="false" data-i18n="mapView">
         🗺️ Map View
       </button>
     </div>
@@ -176,21 +176,21 @@
       <button type="button" class="modal-close-btn" id="gem-close-btn" aria-label="Close suggestion modal">✕</button>
       
       <div class="identify-header">
-        <h2 class="identify-title" id="gem-title">💎 Suggest a Lesser-Known Heritage Gem</h2>
-        <p class="identify-subtitle">Help expand local heritage tourism by suggesting an unlisted historical monument or stepwell.</p>
+        <h2 class="identify-title" id="gem-title" data-i18n="gemTitle">💎 Suggest a Lesser-Known Heritage Gem</h2>
+        <p class="identify-subtitle" data-i18n="gemSubtitle">Help expand local heritage tourism by suggesting an unlisted historical monument or stepwell.</p>
       </div>
 
       <form id="gem-form" class="gem-form">
         <div class="form-group">
-          <label for="gem-name">Monument / Site Name *</label>
+          <label for="gem-name" data-i18n="gemNameLabel">Monument / Site Name *</label>
           <input type="text" id="gem-name" required placeholder="e.g. Brahma Kund, Sihor" />
         </div>
         <div class="form-group">
-          <label for="gem-city">City / District *</label>
+          <label for="gem-city" data-i18n="gemCityLabel">City / District *</label>
           <input type="text" id="gem-city" required placeholder="e.g. Bhavnagar District" />
         </div>
         <div class="form-group">
-          <label for="gem-category">Category</label>
+          <label for="gem-category" data-i18n="gemCategoryLabel">Category</label>
           <select id="gem-category">
             <option value="Stepwell">Stepwell</option>
             <option value="Temple">Temple</option>
@@ -200,11 +200,11 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="gem-desc">History &amp; Description</label>
+          <label for="gem-desc" data-i18n="gemDescLabel">History &amp; Description</label>
           <textarea id="gem-desc" rows="3" placeholder="Provide background history or directions..."></textarea>
         </div>
 
-        <button type="submit" class="btn-submit-gem">
+        <button type="submit" class="btn-submit-gem" data-i18n="gemSubmit">
           🚀 Submit Suggestion via GitHub Issue
         </button>
       </form>
@@ -217,16 +217,16 @@
       <button type="button" class="modal-close-btn" id="identify-close-btn" aria-label="Close identification modal">✕</button>
       
       <div class="identify-header">
-        <h2 class="identify-title" id="identify-title">🔍 Identify Monument by Photo</h2>
-        <p class="identify-subtitle">Upload a photo or snap a picture using your camera to identify the heritage site.</p>
+        <h2 class="identify-title" id="identify-title" data-i18n="identifyTitle">🔍 Identify Monument by Photo</h2>
+        <p class="identify-subtitle" data-i18n="identifySubtitle">Upload a photo or snap a picture using your camera to identify the heritage site.</p>
       </div>
 
       <!-- Tab Navigation -->
       <div class="identify-tabs" role="tablist">
-        <button type="button" class="identify-tab active" id="tab-upload" role="tab" aria-selected="true">
+        <button type="button" class="identify-tab active" id="tab-upload" role="tab" aria-selected="true" data-i18n="tabUpload">
           📁 Upload Image File
         </button>
-        <button type="button" class="identify-tab" id="tab-camera" role="tab" aria-selected="false">
+        <button type="button" class="identify-tab" id="tab-camera" role="tab" aria-selected="false" data-i18n="tabCamera">
           📷 Camera Capture
         </button>
       </div>
@@ -236,9 +236,9 @@
         <div id="panel-upload" class="identify-panel">
           <div class="drop-zone" id="drop-zone">
             <div class="drop-zone-icon">📷</div>
-            <p class="drop-zone-text">Drag &amp; drop a heritage photo here, or click to browse</p>
+            <p class="drop-zone-text" data-i18n="dropzoneText">Drag &amp; drop a heritage photo here, or click to browse</p>
             <input type="file" id="photo-upload-input" accept="image/*" class="file-input-hidden" />
-            <label for="photo-upload-input" class="btn-browse-file">Choose Image File</label>
+            <label for="photo-upload-input" class="btn-browse-file" data-i18n="chooseFile">Choose Image File</label>
           </div>
         </div>
 
@@ -248,7 +248,7 @@
             <video id="camera-stream" autoplay playsinline class="camera-video"></video>
             <div class="camera-overlay-frame"></div>
           </div>
-          <button type="button" class="btn-capture" id="btn-capture-photo">
+          <button type="button" class="btn-capture" id="btn-capture-photo" data-i18n="takePhoto">
             📸 Take Photo
           </button>
         </div>
@@ -283,19 +283,19 @@
         <!-- Facts Grid -->
         <div class="facts-grid">
           <div class="fact-item">
-            <span class="fact-label">Historical Period</span>
+            <span class="fact-label" data-i18n="historicalPeriod">Historical Period</span>
             <span class="fact-value" id="fact-period">-</span>
           </div>
           <div class="fact-item">
-            <span class="fact-label">Visiting Hours</span>
+            <span class="fact-label" data-i18n="visitingHours">Visiting Hours</span>
             <span class="fact-value" id="fact-timings">-</span>
           </div>
           <div class="fact-item">
-            <span class="fact-label">Entry Fee</span>
+            <span class="fact-label" data-i18n="entryFee">Entry Fee</span>
             <span class="fact-value" id="fact-entry-fee">-</span>
           </div>
           <div class="fact-item">
-            <span class="fact-label">Best Time to Visit</span>
+            <span class="fact-label" data-i18n="bestTime">Best Time to Visit</span>
             <span class="fact-value" id="fact-best-time">-</span>
           </div>
         </div>
@@ -338,7 +338,7 @@
 
         <!-- Actions & Verified Links -->
         <div class="modal-actions">
-          <button type="button" id="btn-create-postcard" class="btn-postcard" data-i18n="createPostcard">
+          <button type="button" id="btn-create-postcard" class="btn-postcard" data-i18n="downloadPostcard">
             🖼️ Download Postcard
           </button>
           <a href="#" id="btn-official-link" class="btn-official-link" target="_blank" rel="noopener noreferrer" data-i18n="officialLink">
@@ -376,8 +376,8 @@
       <button type="button" class="modal-close-btn" id="compare-modal-close-btn" aria-label="Close comparison modal">✕</button>
       
       <div class="compare-modal-header">
-        <h2 class="compare-modal-title" id="compare-modal-title">⚖️ Side-by-Side Heritage Site Comparison</h2>
-        <p class="compare-modal-subtitle">Compare history, architectural features, visiting hours, and cultural status.</p>
+        <h2 class="compare-modal-title" id="compare-modal-title" data-i18n="compareTitle">⚖️ Side-by-Side Heritage Site Comparison</h2>
+        <p class="compare-modal-subtitle" data-i18n="compareSubtitle">Compare history, architectural features, visiting hours, and cultural status.</p>
       </div>
 
       <div class="compare-modal-body" id="compare-modal-body">
@@ -388,7 +388,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <p>&copy; Digital Heritage Explorer — Preserving and exploring Gujarat cultural heritage. Built with Leaflet.js &amp; OpenStreetMap. Works offline.</p>
+    <p data-i18n="footerText">&copy; Digital Heritage Explorer — Preserving and exploring Gujarat cultural heritage. Built with Leaflet.js &amp; OpenStreetMap. Works offline.</p>
   </footer>
 
   <!-- Self-Hosted Leaflet JS -->

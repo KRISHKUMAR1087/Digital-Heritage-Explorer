@@ -49,7 +49,9 @@ const PassportComponent = (() => {
 
   function updateCounterUI() {
     if (counterElement) {
-      counterElement.textContent = `Passport: ${visitedSet.size} Stamped 🏵️`;
+      const label = window.I18nComponent ? I18nComponent.t('passportLabel') : 'Passport:';
+      const countText = window.I18nComponent ? I18nComponent.t('stampedCount') : 'Stamped';
+      counterElement.textContent = `${label} ${visitedSet.size} ${countText} 🏵️`;
     }
   }
 
@@ -57,6 +59,7 @@ const PassportComponent = (() => {
     init,
     isVisited,
     toggleVisited,
+    updateCounterUI,
     getVisitedCount: () => visitedSet.size
   };
 })();
