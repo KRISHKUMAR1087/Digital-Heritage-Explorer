@@ -142,11 +142,14 @@ body {
   background-color: rgba(250, 245, 236, 0.15);
   color: var(--color-sandstone);
   border: 1px solid var(--color-sandstone);
-  padding: 0.35rem 0.75rem;
+  padding: 0.55rem 1rem;
   border-radius: var(--radius-pill);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Multilingual Language Picker */
@@ -154,17 +157,18 @@ body {
   display: flex;
   background-color: rgba(250, 245, 236, 0.12);
   border-radius: var(--radius-pill);
-  padding: 2px;
+  padding: 4px;
   border: 1px solid var(--color-sandstone);
+  align-items: center;
 }
 
 .lang-btn {
   background: none;
   border: none;
   color: var(--color-cream);
-  padding: 0.3rem 0.65rem;
+  padding: 0.35rem 0.75rem;
   border-radius: var(--radius-pill);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
@@ -258,6 +262,12 @@ body {
   gap: 0.75rem;
   overflow-x: auto;
   padding-bottom: 0.15rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.filter-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .filter-label {
@@ -3039,4 +3049,10 @@ body {
 
 
 
+
+
+/* Missing popup CSS */
+.user-popup-content { padding: 0.5rem; text-align: center; }
+.user-popup-content .popup-live-distance { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: var(--color-brown); }
+.user-popup-content .popup-drive-time { font-weight: 600; color: var(--color-terracotta); }
 

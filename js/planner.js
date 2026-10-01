@@ -286,6 +286,7 @@ const PlannerComponent = (() => {
     }
     renderModalContent();
     modal.style.display = 'flex';
+    modal.classList.add('active'); // Added to trigger CSS opacity & visibility transitions
     modal.setAttribute('aria-hidden', 'false');
 
     if (window.AccessibilityComponent) {
@@ -299,7 +300,10 @@ const PlannerComponent = (() => {
   function closeModal() {
     const modal = document.getElementById('trip-planner-modal');
     if (modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('active'); // Remove active class for fade-out
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300); // Wait for transition
       modal.setAttribute('aria-hidden', 'true');
       if (window.AccessibilityComponent) {
         AccessibilityComponent.untrapFocus();
