@@ -89,6 +89,50 @@ const MapComponent = (() => {
     // Create markers for each site
     sites.forEach(site => {
       const marker = createSiteMarker(site, onMarkerClick, onDetailsClick);
+      const marker = L.marker([site.lat, site.lng], {
+        icon: createCustomPin(false),
+        alt: site.name
+      });
+
+      function buildPopupContent() {
+        const getSiteText = (s, f) => window.I18nComponent ? I18nComponent.getSiteText(s, f) : s[f];
+        const t = (k) => window.I18nComponent ? I18nComponent.t(k) : k;
+        return `
+          <div>
+            <img class="popup-media" src="${site.cover}" alt="${escapeHTML(getSiteText(site, 'name'))}" />
+            <div class="popup-body">
+              <h4 class="popup-title">${escapeHTML(getSiteText(site, 'name'))}</h4>
+              <div class="popup-city">${escapeHTML(getSiteText(site, 'city'))}</div>
+              <button class="popup-btn" data-site-id="${site.id}">${t('viewDetails')}</button>
+            </div>
+          </div>
+        `;
+      }
+
+      marker.bindPopup(() => buildPopupContent(), { maxWidth: 260 });
+
+      // Marker Click Event
+      marker.on('click', () => {
+        highlightMarkerPin(site.id);
+        if (typeof onMarkerClick === 'function') {
+          onMarkerClick(site.id);
+        }
+      });
+
+      // Handle popup "View Details" button click
+      marker.on('popupopen', (e) => {
+        const popupNode = e.popup.getElement();
+        const btn = popupNode ? popupNode.querySelector('.popup-btn') : null;
+        if (btn) {
+          btn.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            if (typeof onDetailsClick === 'function') {
+              onDetailsClick(site);
+            }
+          });
+        }
+      });
+
       markersMap.set(site.id, marker);
       activeFeatureGroup.addLayer(marker);
     });

@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCategoryChips(allSites);
     renderEraChips();
     applyFilters();
+    if (window.PassportComponent && PassportComponent.updateCounterUI) PassportComponent.updateCounterUI();
+    if (window.SiteCompareComponent && SiteCompareComponent.updateStickyBar) SiteCompareComponent.updateStickyBar();
+    if (window.PlannerComponent && PlannerComponent.updateUI) PlannerComponent.updateUI();
+    if (window.TrailsComponent && TrailsComponent.renderTrailChips) TrailsComponent.renderTrailChips();
+    if (window.GalleryComponent && GalleryComponent.refreshModal) GalleryComponent.refreshModal();
   });
 
   // Set initial mobile view mode
@@ -300,6 +305,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function getCategoryLabel(cat) {
+    if (!window.I18nComponent) return cat;
+    const catMap = {
+      'All': 'catAll',
+      'Stepwell': 'catStepwell',
+      'Temple': 'catTemple',
+      'Fort & Ruins': 'catFort',
+      'Mosque & Complex': 'catMosque',
+      'Palace': 'catPalace'
+    };
+    return catMap[cat] ? I18nComponent.t(catMap[cat]) : cat;
+  }
+
+  function getEraLabel(era) {
+    if (!window.I18nComponent) return era;
+    const eraMap = {
+      'All': 'eraAll',
+      'Harappan': 'eraHarappan',
+      'Mauryan': 'eraMauryan',
+      'Solanki': 'eraSolanki',
+      'Sultanate': 'eraSultanate',
+      'Colonial': 'eraColonial'
+    };
+    return eraMap[era] ? I18nComponent.t(eraMap[era]) : era;
+  }
+
   function renderCategoryChips(sites) {
     if (!chipsContainer) return;
     const categories = ['All', ...new Set(sites.map(s => s.category))];
@@ -309,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const chip = document.createElement('button');
       chip.className = `chip ${cat === currentCategory ? 'active' : ''}`;
       chip.type = 'button';
-      chip.textContent = cat;
+      chip.textContent = getCategoryLabel(cat);
 
       chip.addEventListener('click', () => {
         currentCategory = cat;
@@ -331,12 +362,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const chip = document.createElement('button');
       chip.className = `chip era-chip ${era === currentEra ? 'active' : ''}`;
       chip.type = 'button';
-      chip.textContent = era;
+      chip.textContent = getEraLabel(era);
 
       chip.addEventListener('click', () => {
         currentEra = era;
         const allEraChips = eraChipsContainer.querySelectorAll('.chip');
-        allEraChips.forEach(c => c.classList.toggle('active', c.textContent === era));
+        allEraChips.forEach(c => c.classList.toggle('active', c.textContent === getEraLabel(era)));
         applyFilters();
       });
 

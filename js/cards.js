@@ -42,6 +42,7 @@ const CardsComponent = (() => {
       card.setAttribute('aria-label', `View ${getSiteText(site, 'name')} details`);
 
       const openStatus = TouristToolsComponent ? TouristToolsComponent.getOpenStatus(site) : { label: 'Open', isOpen: true };
+      const statusText = openStatus.isOpen ? t('openNow') : t('closedNow');
       const isVisited = PassportComponent.isVisited(site.id);
 
       // Distance calculation if user location active
@@ -50,6 +51,7 @@ const CardsComponent = (() => {
         const distKm = TouristToolsComponent.calculateDistance(userLoc.lat, userLoc.lng, site.lat, site.lng);
         const formattedDist = TouristToolsComponent.formatDistance(distKm);
         distanceHtml = `<div class="card-distance-badge">📍 <strong>${formattedDist}</strong> from your location</div>`;
+        distanceHtml = `<span class="card-distance">📍 ${distKm} ${t('kmAway')}</span>`;
       }
 
       card.innerHTML = `
@@ -61,7 +63,7 @@ const CardsComponent = (() => {
         <div class="card-content">
           <div class="card-meta-line">
             <span class="card-location">${escapeHTML(getSiteText(site, 'city'))}</span>
-            <span class="open-status-badge ${openStatus.isOpen ? 'open' : 'closed'}">${openStatus.label}</span>
+            <span class="open-status-badge ${openStatus.isOpen ? 'open' : 'closed'}">${statusText}</span>
           </div>
           
           <h3 class="card-title">${escapeHTML(getSiteText(site, 'name'))}</h3>
@@ -72,15 +74,15 @@ const CardsComponent = (() => {
           <div class="card-footer">
             <label class="card-compare-label" title="Select to compare two sites side-by-side">
               <input type="checkbox" class="card-compare-checkbox" data-site-id="${site.id}" ${window.SiteCompareComponent && SiteCompareComponent.isSelected(site.id) ? 'checked' : ''} />
-              <span>Compare</span>
+              <span>${t('compare')}</span>
             </label>
 
             <button class="btn-trip-toggle ${window.PlannerComponent && PlannerComponent.isInTrip(site.id) ? 'in-trip' : ''}" data-site-id="${site.id}" aria-label="Toggle trip itinerary">
-              ${window.PlannerComponent && PlannerComponent.isInTrip(site.id) ? '✅ In Trip' : '🗺️ Add to Trip'}
+              ${window.PlannerComponent && PlannerComponent.isInTrip(site.id) ? t('inTrip') : t('addToTrip')}
             </button>
 
             <button class="btn-stamp" aria-label="Stamp passport for ${escapeHTML(getSiteText(site, 'name'))}" title="Toggle passport stamp">
-              ${isVisited ? '🏵️ Stamped' : '🏵️ Stamp'}
+              ${isVisited ? t('stamped') : t('stamp')}
             </button>
 
             <button class="btn-details" aria-label="View details for ${escapeHTML(getSiteText(site, 'name'))}">
